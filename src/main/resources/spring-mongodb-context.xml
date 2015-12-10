@@ -11,24 +11,12 @@
                            http://www.springframework.org/schema/util/spring-util.xsd">
     
     <context:property-placeholder location="classpath:mongodb.properties" />
-    
-    <!-- mongo.hostname=127.0.0.1
-	mongo.port=27017
-	mongo.database=admin
-	mongo.username=root
-	mongo.password=root
-	mongo.connectionsPerHost=8
-	mongo.threadsAllowedToBlockForConnectionMultiplier=4
-	mongo.connectTimeout=1000
-	mongo.maxWaitTime=1500
-	mongo.socketTimeout=1500 -->
-    
     <bean id="mongoUtil" class="com.musiclist.mongo.MongoUtil" init-method="init" destroy-method="close">
         <property name="hostname" value="${mongo.hostname}"/>
         <property name="port" value="${mongo.port}"/>
         <property name="userName" value="${mongo.username}"/>
         <property name="password" value="${mongo.password}"/>
-        <property name="database" value="${mongo.database}"/>
+        <property name="databaseName" value="${mongo.database}"/>
         <property name="connectionsPerHost" value="${mongo.connectionsPerHost}"/>
         <property name="connectTimeout" value="${mongo.connectTimeout}"/>
         <property name="maxWaitTime" value="${mongo.maxWaitTime}"/>

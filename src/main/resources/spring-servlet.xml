@@ -24,6 +24,12 @@
     <context:annotation-config />  
     <context:component-scan base-package="com.jpa.controller"/>
     
+    <mvc:annotation-driven /> 
+	<mvc:resources location="/static/image/" mapping="/static/image/**"/> 
+	<mvc:resources location="/static/css/" mapping="/static/css/**"/> 
+	<mvc:resources location="/static/js/" mapping="/static/js/**"/>
+    
+    
     <bean id="fastJsonHttpMessageConverter"
 		class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
 		<property name="supportedMediaTypes">
@@ -45,8 +51,8 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/"></property>
-		<property name="suffix" value=".jsp"></property>
+		<property name="prefix" value="/html"></property>
+		<property name="suffix" value=".html"></property>
 	</bean>
 
 	<!-- 支持上传文件 -->

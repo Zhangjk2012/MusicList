@@ -3,14 +3,13 @@ package com.musiclist.mongo;
 import java.util.Arrays;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions.Builder;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoDatabase;
 
-@Service("mongoUtil")
 public class MongoUtil {
     
     private static Logger logger = Logger.getLogger(MongoUtil.class);
@@ -29,7 +28,7 @@ public class MongoUtil {
     
     private String password;
     
-    private String database;
+    private String databaseName;
     
     private int connectionsPerHost=8;
     
@@ -44,7 +43,7 @@ public class MongoUtil {
     protected void init() {
         try {
             logger.info("Init the mongo db info.");
-            mongoCredential = MongoCredential.createCredential(userName, database, password.toCharArray());
+            mongoCredential = MongoCredential.createCredential(userName, databaseName, password.toCharArray());
             ServerAddress serverAddress = new ServerAddress(hostname, port); 
             builder = new Builder();
             builder.connectionsPerHost(connectionsPerHost);
@@ -57,6 +56,12 @@ public class MongoUtil {
         } catch (Exception e) {
             logger.error("Init Mongo db info error.",e);
         }
+    }
+    
+    public Object getRecord() {
+        MongoDatabase db = mongoClient.getDatabase(databaseName);
+        db.getCollection("");
+        return null;
     }
     
     protected void close() {
@@ -98,14 +103,6 @@ public class MongoUtil {
         this.password = password;
     }
 
-    public String getDatabase() {
-        return database;
-    }
-
-    public void setDatabase(String database) {
-        this.database = database;
-    }
-
     public int getConnectionsPerHost() {
         return connectionsPerHost;
     }
@@ -145,6 +142,14 @@ public class MongoUtil {
 
     public void setSocketTimeout(int socketTimeout) {
         this.socketTimeout = socketTimeout;
+    }
+
+    public String getDatabaseName() {
+        return databaseName;
+    }
+
+    public void setDatabaseName(String databaseName) {
+        this.databaseName = databaseName;
     }
     
 }
