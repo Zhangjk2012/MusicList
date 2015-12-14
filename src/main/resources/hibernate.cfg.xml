@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="dialect">${hibernate.dialect}</property>
+		<property name="jdbc.batch_size">${hibernate.jdbc.batch_size}</property>
+		<property name="jdbc.fetch_size">${hibernate.jdbc.fetch_size}</property>
+		<property name="query.substitutions">${hibernate.query.substitutions}</property>
+		<property name="cache.region.factory_class">${hibernate.cache.region.factory_class}</property>
+		<property name="cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</property>
+		<property name="cache.use_query_cache">${hibernate.cache.use_query_cache}</property>
+		<property name="transaction.coordinator_class">${hibernate.transaction.coordinator_class}</property>
+		<property name="cache.provider_configuration_file_resource_path">${hibernate.cache.provider_configuration_file_resource_path}</property>
+		<!-- 显示sql语句 -->
+		<property name="show_sql">${hibernate.show_sql}</property>
+        <property name="hbm2ddl.auto">${hibernate.hbm2ddl.auto}</property>
+	</session-factory>
+</hibernate-configuration>
