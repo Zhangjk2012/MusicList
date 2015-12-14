@@ -43,15 +43,15 @@ public class MongoUtil {
     protected void init() {
         try {
             logger.info("Init the mongo db info.");
-            mongoCredential = MongoCredential.createCredential(userName, databaseName, password.toCharArray());
-            ServerAddress serverAddress = new ServerAddress(hostname, port); 
-            builder = new Builder();
-            builder.connectionsPerHost(connectionsPerHost);
-            builder.connectTimeout(connectTimeout);
-            builder.threadsAllowedToBlockForConnectionMultiplier(threadsAllowedToBlockForConnectionMultiplier);
-            builder.socketTimeout(socketTimeout);
-            builder.maxWaitTime(maxWaitTime);
-            mongoClient = new MongoClient(serverAddress, Arrays.asList(mongoCredential),builder.build()); 
+//            mongoCredential = MongoCredential.createCredential(userName, databaseName, password.toCharArray());
+//            ServerAddress serverAddress = new ServerAddress(hostname, port); 
+//            builder = new Builder();
+//            builder.connectionsPerHost(connectionsPerHost);
+//            builder.connectTimeout(connectTimeout);
+//            builder.threadsAllowedToBlockForConnectionMultiplier(threadsAllowedToBlockForConnectionMultiplier);
+//            builder.socketTimeout(socketTimeout);
+//            builder.maxWaitTime(maxWaitTime);
+//            mongoClient = new MongoClient(serverAddress, Arrays.asList(mongoCredential),builder.build()); 
             logger.info("Init Succcess!");
         } catch (Exception e) {
             logger.error("Init Mongo db info error.",e);

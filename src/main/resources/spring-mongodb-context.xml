@@ -10,7 +10,6 @@
                            http://www.springframework.org/schema/util 
                            http://www.springframework.org/schema/util/spring-util.xsd">
     
-    <context:property-placeholder location="classpath:mongodb.properties" />
     <bean id="mongoUtil" class="com.musiclist.mongo.MongoUtil" init-method="init" destroy-method="close">
         <property name="hostname" value="${mongo.hostname}"/>
         <property name="port" value="${mongo.port}"/>
