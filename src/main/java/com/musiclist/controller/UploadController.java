@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -19,7 +20,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 public class UploadController { 
 	
 	@RequestMapping("/upload2"	)
-	public String upload2(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
+	public  @ResponseBody String upload2(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		if(multipartResolver.isMultipart(request)){
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
@@ -41,7 +42,7 @@ public class UploadController {
 				System.out.println(finaltime - pre);
 			}
 		}
-		return "/success";
+		return "myFileName";
 	}
 	
 	@RequestMapping("/toUpload"	) 
