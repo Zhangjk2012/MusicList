@@ -121,7 +121,7 @@ function createFrame(url) {
 		              <li><div>
                         <a target="mainFrame" href="admin/album">专辑管理</a></div></li>
 		              <li><div>
-                        <a target="mainFrame" href="Product/Default.htm">歌曲管理</a></div></li>
+                        <a target="mainFrame" href="admin/song">歌曲管理</a></div></li>
 		              <li><div>
                         <a target="mainFrame" href="Product/Default.htm">新碟管理</a></div></li>
 		              <li><div>

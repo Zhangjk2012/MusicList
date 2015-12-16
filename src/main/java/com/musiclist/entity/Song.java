@@ -35,8 +35,8 @@ public class Song implements Serializable{
     private Integer singer;
     
     /** 所属专辑 */
-    @Column(name = "albums")
-    private Integer albums;
+    @Column(name = "album")
+    private Integer album;
     
     /** 图片路径 */
     @Column(name = "picture", length = 100)
@@ -46,8 +46,8 @@ public class Song implements Serializable{
     @Column(name = "brief_introduction", length = 500)
     private String briefIntroduction;
     
-    /** 歌词路径 */
-    @Column(name = "lyric", length = 100)
+    /** 歌词 */
+    @Column(name = "lyric", length = 500)
     private String lyric;
     
     /** 文件路径 */
@@ -80,14 +80,6 @@ public class Song implements Serializable{
 
     public void setSinger(Integer singer) {
         this.singer = singer;
-    }
-
-    public Integer getAlbums() {
-        return albums;
-    }
-
-    public void setAlbums(Integer albums) {
-        this.albums = albums;
     }
 
     public String getPicture() {
@@ -129,6 +121,14 @@ public class Song implements Serializable{
     public void setSongFlag(boolean songFlag) {
         this.songFlag = songFlag;
     }
+
+	public Integer getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(Integer album) {
+		this.album = album;
+	}
     
     
     

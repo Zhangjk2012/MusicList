@@ -37,6 +37,7 @@ public class Album implements Serializable{
     
     /** 发行时间 */
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "publish_time", length = 19)
     private Date publishTime;
     
