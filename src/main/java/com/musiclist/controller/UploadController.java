@@ -14,40 +14,59 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.musiclist.utils.MD5Util;
+
 
 @Controller
-@RequestMapping("/file")
+@RequestMapping("admin/file")
 public class UploadController { 
 	
-	@RequestMapping("/upload2"	)
-	public  @ResponseBody String upload2(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
+	@RequestMapping("/uploadImg"	)
+	public  @ResponseBody String uploadImg(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
+	    
+	    String path = request.getSession().getServletContext().getRealPath("/");
+	    String absolutPath = "";
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		if(multipartResolver.isMultipart(request)){
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
 			Iterator<String> iter = multiRequest.getFileNames();
 			while(iter.hasNext()){
-				int pre = (int) System.currentTimeMillis();
 				MultipartFile file = multiRequest.getFile(iter.next());
 				if(file != null){
 					String myFileName = file.getOriginalFilename();
+					String ext = myFileName.substring(myFileName.lastIndexOf("."));
+					String md5 = MD5Util.getFileMD5String(file.getBytes());
+					String newFile = System.currentTimeMillis()+md5+ext;
+					if (ext.equalsIgnoreCase("mp4")) {
+					    
+					} else {
+					    path += "img/"+newFile;
+					    absolutPath = "img/"+newFile;
+					}
 					if(myFileName.trim() !=""){
-						System.out.println(myFileName);
-						String fileName = "demoUpload" + file.getOriginalFilename();
-						String path = "D:/" + fileName;
+						System.out.println(path);
 						File localFile = new File(path);
 						file.transferTo(localFile);
 					}
 				}
-				int finaltime = (int) System.currentTimeMillis();
-				System.out.println(finaltime - pre);
 			}
 		}
-		return "myFileName";
+		return absolutPath;
 	}
 	
-	@RequestMapping("/toUpload"	) 
-	public String toUpload() {
-		return "/upload";
+	@RequestMapping("deleteImg")
+	public String deleteImg(String filePath,HttpServletRequest request) {
+	    try {
+	        String path = request.getSession().getServletContext().getRealPath("/");
+	        filePath = path+filePath;
+	        File f = new File(filePath);
+	        if (f.exists()) {
+	            f.delete();
+	        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	    return null;
 	}
 	
 }

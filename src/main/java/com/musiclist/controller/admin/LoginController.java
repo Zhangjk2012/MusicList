@@ -1,4 +1,4 @@
-package com.musiclist.controller;
+package com.musiclist.controller.admin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,6 +45,14 @@ public class LoginController {
         }
     }
     
+    @RequestMapping("logout")
+    public String logout(HttpSession session) {
+        System.out.println("Logout!!");
+        session.removeAttribute(Config.SESSIONCONTEXT);
+        return "redirect:preLogin";
+    }
+    
+    
     @RequestMapping("preLogin")
     public String preLogin() {
         return "admin/login";
@@ -52,6 +60,7 @@ public class LoginController {
     
     @RequestMapping("index")
     public String postLogin(String username,ModelMap model) {
+        System.out.println("index");
         model.addAttribute("username", username);
         return "admin/admin";
     }

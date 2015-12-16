@@ -70,6 +70,7 @@ function InitLeftMenu() {
         addTab(tabTitle, url);
         $('.easyui-accordion li div').removeClass("selected");
         $(this).parent().addClass("selected");
+        return false;
     }).hover(function () {
         $(this).parent().addClass("hover");
     }, function () {
@@ -116,9 +117,9 @@ function createFrame(url) {
 		          <li><div>
                         <a target="mainFrame" href="Product/Default.htm">网站设置</a></div></li>
 		              <li><div>
-                        <a target="mainFrame" href="Product/Default.htm">歌手管理</a></div></li>
+                        <a target="mainFrame" href="admin/singer">歌手管理</a></div></li>
 		              <li><div>
-                        <a target="mainFrame" href="Product/Default.htm">专辑管理</a></div></li>
+                        <a target="mainFrame" href="admin/album">专辑管理</a></div></li>
 		              <li><div>
                         <a target="mainFrame" href="Product/Default.htm">歌曲管理</a></div></li>
 		              <li><div>

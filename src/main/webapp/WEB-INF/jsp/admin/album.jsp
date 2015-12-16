@@ -9,7 +9,7 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>歌手管理页面</title>
+<title>专辑管理页面</title>
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/bootstrap/easyui.css" />
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="static/uploadify/uploadify.css" />
@@ -26,23 +26,27 @@
 <script type="text/javascript">
 	var datagrid;
 	$(function(){
-		datagrid=$("#singerlist").datagrid({
-			url:"admin/singerlist",//加载的URL
+		datagrid=$("#albumlist").datagrid({
+			url:"admin/albumlist",//加载的URL
 		    isField:"id",
 			pagination:true,//显示分页
 			rownumbers:true,
 			fit:true,//自动补全
 			fitColumns:true,
 			iconCls:"icon-save",//图标
-			title:"歌手管理",
+			title:"专辑管理",
 			singleSelect:true,
 			frozenColumns:[[ 
                 {field:'ck',checkbox:true} 
             ]], 
 			columns:[[      //每个列具体内容
-	              {field:'id',title:'id',hidden:true,width:100},   
-	              {field:'name',title:'歌手名称',width:100},   
-	              {field:'briefIntroduction',title:'歌手简介',width:100,formatter:function(val,row){
+	              {field:'id',title:'id',hidden:true},   
+	              {field:'name',title:'专辑名称',width:50},
+	              {field:'singer',title:'singer',hidden:true},
+                  {field:'singerName',title:'歌手',width:50},
+                  {field:'publishTime',title:'发行日期',width:50},
+                  {field:'publishCompany',title:'发行公司',width:50},
+	              {field:'briefIntroduction',title:'专辑简介',width:50,formatter:function(val,row){
 	            	  if (val == undefined ||val == "") {
                           return "";
                       }
@@ -55,12 +59,12 @@
 	            	  var content = '<span title="' + val + '" class="note">' + text + '</span>';
                          return content;
                      }},
-                     {field:'picture',title:'歌手图片',width:100,formatter:function(val,row){
+                     {field:'picture',title:'专辑图片',width:50,formatter:function(val,row){
                     	 if (val == undefined ||val == "") {
                              return "";
                          }
-                   	  return '<img width=30 height=30 src="'+row.picture+'" alt="歌手图片" />';
-                     }}
+                   	  return '<img width=30 height=30 src="'+row.picture+'" alt="专辑图片" />';
+                     }},
 	          ]],
 	          onLoadSuccess : function(data) {
 					$(".note").tooltip({
@@ -123,7 +127,7 @@
 						}
 			} ]
 		});
-		var p = $('#singerlist').datagrid('getPager'); 
+		var p = $('#albumlist').datagrid('getPager'); 
 		$(p).pagination({ 
 	        pageSize: 20,//每页显示的记录条数，默认为10 
 	        pageList: [20],//可以设置每页记录条数的列表 
@@ -134,9 +138,10 @@
 
 		$('#win').window({
 			width : 500,
-			height : 400,
+			height : 500,
 			modal : true,
 			closed : true,
+			resizable:false,
 			minimizable : false,
 			maximizable : false,
 			collapsible : false,
@@ -202,9 +207,15 @@
 	            clearUpdateForm();
 	        }
 	    });
+		$('#singer').combobox({   
+		    url:'admin/singercombolist',   
+		    valueField:'id',   
+		    textField:'name',
+		    editable:false
+		});
 	});
 	function submitForm() {
-		$('#singerform').form('submit', {
+		$('#albumform').form('submit', {
 			onSubmit : function() {
 				return $(this).form('enableValidation').form('validate');
 			},
@@ -214,12 +225,12 @@
                     title : '成功'
                 });
 				$('#win').window('close');
-				$("#singerlist").datagrid("reload");
+				$("#albumlist").datagrid("reload");
 			}
 		});
 	}
 	function clearForm() {
-		$('#singerform').form('clear');
+		$('#albumform').form('clear');
 		$('#file_upload').uploadify('cancel', '*');
 		$('#img').attr("src","");
 	}
@@ -244,7 +255,7 @@
             success : function(data) {
                 $.messager.show({msg : "修改成功。",title : '成功'});
                 $('#updateWin').window('close');
-                $("#singerlist").datagrid("reload");
+                $("#albumlist").datagrid("reload");
             }
         });
     }
@@ -271,20 +282,36 @@
 
 </head>
 <body>
-	<table id="singerlist"></table>
-	<div id="win" iconCls="icon-save" title="歌手信息">
-        <form id="singerform" action="admin/addSinger" data-options="novalidate:true" method="post" enctype="multipart/form-data">
+	<table id="albumlist"></table>
+	<div id="win" iconCls="icon-save" title="专辑信息">
+        <form id="albumform" action="admin/addAlbum" data-options="novalidate:true" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
-                    <td>歌手名称:</td>
+                    <td>专辑名称:</td>
                     <td><input name="name" data-options="required:true" class="f1 easyui-textbox"></input></td>
+                </tr>
+                <tr>
+                    <td>歌手:</td>
+                    <td>
+                        <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="singer" name="singer">
+                    </td>
+                </tr>
+                <tr>
+                    <td>发行日期:</td>
+                    <td>
+                    <input name="publishTime" data-options="required:true,editable:false" class="f1 easyui-datebox"></input></td>
+                </tr>
+                <tr>
+                    <td>发行公司:</td>
+                    <td>
+                    <input name="publishCompany" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
                 </tr>
                 <tr>
                     <td>简介:</td>
                     <td><input name="briefIntroduction" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
                 </tr>
                 <tr>
-                    <td>歌手图片:</td>
+                    <td>专辑图片:</td>
                     <td><img id="img" class="f1" height="100" src=""/></td>
                 </tr>
                 <tr>
@@ -310,11 +337,29 @@
 	    	<a href="javascript:void(0)" icon="icon-cancel" class="easyui-linkbutton" onclick="closeWin()">取消</a>
 	    </div>
 	</div>
-	<div id="updateWin" iconCls="icon-edit" title="修改歌手信息">
+	<div id="updateWin" iconCls="icon-edit" title="修改专辑信息">
         <form id="updateform" action="admin/updateSinger" data-options="novalidate:true" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
-                    <td>歌手名称:</td>
+                    <td>专辑名称:</td>
+                    <td>
+                    <input name="id" type="hidden"></input>
+                    <input name="name" data-options="required:true" class="f1 easyui-textbox"></input></td>
+                </tr>
+                <tr>
+                    <td>歌手:</td>
+                    <td>
+                    <input name="id" type="hidden"></input>
+                    <input name="name" data-options="required:true" class="f1 easyui-textbox"></input></td>
+                </tr>
+                <tr>
+                    <td>发行日期:</td>
+                    <td>
+                    <input name="id" type="hidden"></input>
+                    <input name="name" data-options="required:true" class="f1 easyui-textbox"></input></td>
+                </tr>
+                <tr>
+                    <td>发行公司:</td>
                     <td>
                     <input name="id" type="hidden"></input>
                     <input name="name" data-options="required:true" class="f1 easyui-textbox"></input></td>
@@ -324,7 +369,7 @@
                     <td><input name="briefIntroduction" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
                 </tr>
                 <tr>
-                    <td>歌手图片:</td>
+                    <td>专辑图片:</td>
                     <td><img id="updateImg" name="update_img" class="f1" height="100" src=""/></td>
                 </tr>
                 <tr>

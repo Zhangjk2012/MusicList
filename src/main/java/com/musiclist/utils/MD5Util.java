@@ -1,5 +1,10 @@
 package com.musiclist.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 
 /**  
@@ -7,6 +12,10 @@ import java.security.MessageDigest;
  * @date 2015年12月14日 下午4:11:11
  */
 public class MD5Util {
+    
+    private static final char HEX_DIGITS[] = { '0', '1', '2', '3', '4', '5',
+        '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+    
     /*** 
      * MD5加码 生成32位md5码 
      */  
@@ -33,16 +42,36 @@ public class MD5Util {
         return hexValue.toString();  
     }  
   
-    /** 
-     * 加密解密算法 执行一次加密，两次解密 
-     */   
-    public static String convertMD5(String inStr){  
-  
-        char[] a = inStr.toCharArray();  
-        for (int i = 0; i < a.length; i++){  
-            a[i] = (char) (a[i] ^ 't');  
-        }  
-        String s = new String(a);  
-        return s;
-    }  
+    /**
+     *  获取文件的MD5值
+     * @param file 目标文件
+     * @return MD5字符串
+     */
+    public static String getFileMD5String(byte[] bytes) {
+        String ret = "";
+        try {
+            MessageDigest md5 = null;  
+            md5 = MessageDigest.getInstance("MD5");  
+            md5.update(bytes);
+            ret = bytesToHex(md5.digest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+    
+    public static String bytesToHex(byte bytes[]) {
+        return bytesToHex(bytes, 0, bytes.length);
+
+    }
+    public static String bytesToHex(byte bytes[], int start, int end) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = start; i < start + end; i++) {
+            sb.append(byteToHex(bytes[i]));
+        }
+        return sb.toString();
+    }
+    public static String byteToHex(byte bt) {
+        return HEX_DIGITS[(bt & 0xf0) >> 4] + "" + HEX_DIGITS[bt & 0xf];
+    }
 }

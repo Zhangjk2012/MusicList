@@ -6,5 +6,6 @@ package com.musiclist.config;
 public class Config {
     
     public static String SESSIONCONTEXT = "musiclist";
+    public static String UPLOADFILEPATH = "img/";
     
 }
