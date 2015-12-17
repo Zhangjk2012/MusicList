@@ -26,8 +26,8 @@ public class AlbumService {
         return albumDao.save(album);
     }
     
-    public List<Object[]> getAlbumIdAndName() {
-        return albumDao.getAlbumIdAndName();
+    public List<Object[]> getAlbumIdAndName(int singer) {
+        return albumDao.getAlbumIdAndName(singer);
     }
     
     public List<Album> getAlbums(int rows,int page) {

@@ -37,9 +37,9 @@ public class AlbumDao extends BaseDao{
     }
     
     @SuppressWarnings("unchecked")
-    public List<Object[]> getAlbumIdAndName() {
-        String hql = "select s.id,s.name From Album s order by s.id desc";
-        return getSession().createQuery(hql).list();
+    public List<Object[]> getAlbumIdAndName(int singer) {
+        String hql = "select s.id,s.name From Album s where s.singer=:id order by s.id desc";
+        return getSession().createQuery(hql).setInteger("id", singer).list();
     }
     
 }

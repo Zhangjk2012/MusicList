@@ -9,7 +9,7 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>歌手管理页面</title>
+<title>歌手管理</title>
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/bootstrap/easyui.css" />
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="static/uploadify/uploadify.css" />

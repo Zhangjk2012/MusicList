@@ -34,6 +34,10 @@ public class Song implements Serializable{
     @Column(name = "singer")
     private Integer singer;
     
+    /** 歌曲类型 */
+    @Column(name = "song_category")
+    private Integer songCategory;
+    
     /** 所属专辑 */
     @Column(name = "album")
     private Integer album;
@@ -54,9 +58,21 @@ public class Song implements Serializable{
     @Column(name = "song_path", length = 100)
     private String songPath;
     
+    /** 文件名称 */
+    @Column(name = "song_name", length = 100)
+    private String songName;
+    
     /** MP3、MP4标志 ,true is MP3,false is MP4*/
     @Column(name = "song_flag")
     private boolean songFlag;
+    
+    /** 是否设置为新歌推荐 */
+    @Column(name = "new_song")
+    private boolean newSong;
+    
+    /** 投票数 */
+    @Column(name = "vote_num")
+    private Long voteNum;
 
     public Integer getId() {
         return id;
@@ -129,6 +145,38 @@ public class Song implements Serializable{
 	public void setAlbum(Integer album) {
 		this.album = album;
 	}
+
+    public Integer getSongCategory() {
+        return songCategory;
+    }
+
+    public void setSongCategory(Integer songCategory) {
+        this.songCategory = songCategory;
+    }
+
+    public String getSongName() {
+        return songName;
+    }
+
+    public void setSongName(String songName) {
+        this.songName = songName;
+    }
+
+    public boolean isNewSong() {
+        return newSong;
+    }
+
+    public void setNewSong(boolean newSong) {
+        this.newSong = newSong;
+    }
+
+    public Long getVoteNum() {
+        return voteNum;
+    }
+
+    public void setVoteNum(Long voteNum) {
+        this.voteNum = voteNum;
+    }
     
     
     

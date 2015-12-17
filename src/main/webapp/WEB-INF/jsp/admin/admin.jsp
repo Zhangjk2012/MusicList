@@ -113,25 +113,23 @@ function createFrame(url) {
 	<div region="west" title="导航菜单" split="true" style="width: 220px">
 	       <div class="easyui-accordion" style="width:210px;height:400px">
 		        <div title="系统管理" style="overflow:auto;padding:10px;">
-		          <ul>
-		          <li><div>
-                        <a target="mainFrame" href="Product/Default.htm">网站设置</a></div></li>
-		              <li><div>
-                        <a target="mainFrame" href="admin/singer">歌手管理</a></div></li>
-		              <li><div>
-                        <a target="mainFrame" href="admin/album">专辑管理</a></div></li>
-		              <li><div>
-                        <a target="mainFrame" href="admin/song">歌曲管理</a></div></li>
-		              <li><div>
-                        <a target="mainFrame" href="Product/Default.htm">新碟管理</a></div></li>
-		              <li><div>
-                        <a target="mainFrame" href="Product/Default.htm">投票管理</a></div></li>
-		              <li><div>
-                        <a target="mainFrame" href="Product/Default.htm">推荐歌曲管理</a></div></li>
-		              <li><div>
-                        <a target="mainFrame" href="Product/Default.htm">标题栏管理</a></div></li>
-		          </ul>
-		        </div>
+				<ul>
+					<li><div>
+							<a target="mainFrame" href="admin/singer">歌手管理</a>
+						</div></li>
+					<li><div>
+							<a target="mainFrame" href="admin/album">专辑管理</a>
+						</div></li>
+					<li><div>
+                        <a target="mainFrame" href="admin/songcategory">歌曲类型管理</a></div></li>
+					<li><div>
+							<a target="mainFrame" href="admin/song">歌曲管理</a>
+						</div></li>
+					<li><div>
+							<a target="mainFrame" href="admin/titlebar">标题栏管理</a>
+						</div></li>
+				</ul>
+			</div>
 		    </div>
 	</div>
 

@@ -1,5 +1,6 @@
 package com.musiclist.controller.admin;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -34,13 +35,13 @@ public class AlbumController {
     @RequestMapping("addAlbum")
     public @ResponseBody String addAlbum(Album album) {
         try {
+            album.setUploadTime(new Date());
             System.out.println("The id is:"+albumService.saveAlbum(album));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "success";
     }
-    
     
     @RequestMapping("deleteAlbum")
     public @ResponseBody String deleteAlbum(int id) {
@@ -69,10 +70,10 @@ public class AlbumController {
     }
     
     @RequestMapping(value="albumcombolist",produces="text/html;charset=UTF-8")
-    public @ResponseBody String albumComboList() {
+    public @ResponseBody String albumComboList(int singer) {
         JSONArray newArray = new JSONArray();  
         try {
-            List<Object[]> list = albumService.getAlbumIdAndName();
+            List<Object[]> list = albumService.getAlbumIdAndName(singer);
             if (list != null) {
                 for (Object[] objects : list) {
                     JSONObject o = new JSONObject();

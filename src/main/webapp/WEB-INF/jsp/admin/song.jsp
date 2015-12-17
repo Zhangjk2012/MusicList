@@ -9,7 +9,7 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>歌曲管理页面</title>
+<title>歌曲管理</title>
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/bootstrap/easyui.css" />
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="static/uploadify/uploadify.css" />
@@ -25,6 +25,7 @@
 </style>
 <script type="text/javascript">
 	var datagrid;
+	var rowId;
 	$(function(){
 		datagrid=$("#songlist").datagrid({
 			url:"admin/songlist",//加载的URL
@@ -38,13 +39,35 @@
                 {field:'ck',checkbox:true} 
             ]], 
 			columns:[[      //每个列具体内容
-	              {field:'id',title:'id',hidden:true},   
 	              {field:'name',title:'歌曲名称',width:50},
-	              {field:'singer',title:'singer',hidden:true},
+	              {field:'songCategoryName',title:'歌曲类型',width:50},
                   {field:'singerName',title:'歌手',width:50},
-                  {field:'album',title:'singer',hidden:true},
                   {field:'albumName',title:'专辑',width:50},
-                  {field:'songFlag',title:'MP3/MP4',width:50},
+                  {field:'voteNum',title:'投票数',width:50},
+                  {field:'newSong',title:'是否新歌推荐',width:50,formatter:function(val,row){
+                      if (val == undefined) {
+                          return "";
+                      }
+                      var text;
+                      if (val === true) {
+                          text = '是';
+                      } else {
+                          text = '否';
+                      }
+                      return text;
+                  }},
+                  {field:'songFlag',title:'MP3/MP4',width:50,formatter:function(val,row){
+                      if (val == undefined) {
+                          return "";
+                      }
+                      var text;
+                      if (val === true) {
+                          text = 'MP3';
+                      } else {
+                          text = 'MP4';
+                      }
+                      return text;
+                  }},
 	              {field:'briefIntroduction',title:'歌曲简介',width:50,formatter:function(val,row){
 	            	  if (val == undefined ||val == "") {
                           return "";
@@ -96,7 +119,7 @@
 								function(t) {
 									if (t) {
 										$.ajax({
-											url : 'admin/deletesong',
+											url : 'admin/deleteSong',
 											data : row,
 											method:'post',
 											dataType : 'json',
@@ -121,6 +144,7 @@
                             if (row <= 0) {
                                 $.messager.alert('警告', '您没有选择','error');
                             } else {
+                            	rowId = row;
                             	winUpdateOpen(row);
                             }
 						}
@@ -135,19 +159,6 @@
 	        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
 	    }); 
 
-		$('#win').window({
-			width : 500,
-			height : 500,
-			modal : true,
-			closed : true,
-			resizable:false,
-			minimizable : false,
-			maximizable : false,
-			collapsible : false,
-			onBeforeClose : function() {
-				clearForm();
-			}
-		});
 		$('#file_upload').uploadify({
 			'swf' : 'static/uploadify/uploadify.swf', //FLash文件路径
 			'buttonText' : '浏  览', //按钮文本
@@ -197,28 +208,74 @@
         $('#song_upload').uploadify({
             'swf' : 'static/uploadify/uploadify.swf', //FLash文件路径
             'buttonText' : '浏  览', //按钮文本
-            'uploader' : 'file/uploadImg', //处理文件上传Action
+            'uploader' : 'file/uploadSong', //处理文件上传Action
             'queueID' : 'songQueue', //队列的ID
             folder : 'uploader',
             'queueSizeLimit' : 1, //队列最多可上传文件数量，默认为999
             'auto' : false, //选择文件后是否自动上传，默认为true
             'method' : "post",
             'multi' : false, //是否为多选，默认为true
-            'removeCompleted' : false, //是否完成后移除序列，默认为true
+            'removeCompleted' : true, //是否完成后移除序列，默认为true
             'fileSizeLimit' : '20MB', //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
             'fileTypeDesc' : 'Image Files', //文件描述
             'fileTypeExts' : '*.mp3; *.mp4', //上传的文件后缀过滤器
             onUploadSuccess : function(file, data, response) { //一个文件上传成功后的响应事件处理
-                $('#updatePicture').val(data);
-                $('#updateImg').attr("src",data);
+            	var obj = eval ("(" + data + ")");;
+                $('#songFlag').val(obj.flag);
+                $('#songPath').val(obj.path);
+                $('#songName').val(file.name);
             },
             onUploadStart : function(file) {
                 //$("#file_upload").uploadify("settings", "formData", { "imgType": "other","imgMode":"big") });
             }
         });
+        
+        $('#update_song_upload').uploadify({
+            'swf' : 'static/uploadify/uploadify.swf', //FLash文件路径
+            'buttonText' : '浏  览', //按钮文本
+            'uploader' : 'file/uploadSong', //处理文件上传Action
+            'queueID' : 'updateSongQueue', //队列的ID
+            folder : 'uploader',
+            'queueSizeLimit' : 1, //队列最多可上传文件数量，默认为999
+            'auto' : false, //选择文件后是否自动上传，默认为true
+            'method' : "post",
+            'multi' : false, //是否为多选，默认为true
+            'removeCompleted' : true, //是否完成后移除序列，默认为true
+            'fileSizeLimit' : '20MB', //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
+            'fileTypeDesc' : 'Image Files', //文件描述
+            'fileTypeExts' : '*.mp3; *.mp4', //上传的文件后缀过滤器
+            onUploadSuccess : function(file, data, response) { //一个文件上传成功后的响应事件处理
+                var obj = eval ("(" + data + ")");;
+                $('#updateFlag').val(obj.flag);
+                $('#updatePath').val(obj.path);
+                $('#updateName').val(file.name);
+            },
+            onUploadStart : function(file) {
+                //$("#file_upload").uploadify("settings", "formData", { "imgType": "other","imgMode":"big") });
+            }
+        });
+        
+        $('#win').window({
+            width : 500,
+            height : 650,
+            modal : true,
+            closed : true,
+            resizable:false,
+            minimizable : false,
+            maximizable : false,
+            collapsible : false,
+            onBeforeClose : function() {
+                clearForm();
+            },
+            onOpen:function() {
+            	singer.combobox("reload","admin/singercombolist");
+            	songCategory.combobox("reload","admin/songcategorycombolist");
+            }
+        });
+        
 		$('#updateWin').window({
 	        width : 500,
-	        height : 400,
+	        height : 650,
 	        modal : true,
 	        closed : true,
 	        minimizable : false,
@@ -226,20 +283,58 @@
 	        collapsible : false,
 	        onBeforeClose : function() {
 	            clearUpdateForm();
-	        }
+	        },
+            onOpen:function() {
+            	updateSinger.combobox("reload","admin/singercombolist");
+            	updateSongCategory.combobox("reload","admin/songcategorycombolist");
+            }
 	    });
-		$('#singer').combobox({   
-		    url:'admin/singercombolist',   
+		
+		var singer = $('#singer').combobox({   
 		    valueField:'id',   
 		    textField:'name',
-		    editable:false
+		    editable:false,
+		    onChange:function(newValue, oldValue){
+	            $.get('admin/albumcombolist',{singer:newValue},function(data){
+	            	album.combobox("clear").combobox('loadData',data);
+	            },'json');
+	        }
 		});
-		$('#updateSinger').combobox({   
-		    url:'admin/singercombolist',   
-		    valueField:'id',   
-		    textField:'name',
-		    editable:false
-		});
+		
+		var songCategory = $('#songCategory').combobox({   
+            valueField:'id',   
+            textField:'name',
+            editable:false
+        });
+		var album = $('#album').combobox({   
+            valueField:'id',   
+            textField:'name',
+            editable:false
+        });
+		
+		var updateSinger = $('#updateSinger').combobox({   
+            valueField:'id',   
+            textField:'name',
+            editable:false,
+            onChange:function(newValue, oldValue){
+                $.get('admin/albumcombolist',{singer:newValue},function(data){
+                	updateAlbum.combobox("clear").combobox('loadData',data);
+                	updateAlbum.combobox("select",rowId.album);
+                },'json');
+            }
+        });
+        
+        var updateSongCategory = $('#updateSongCategory').combobox({   
+            valueField:'id',   
+            textField:'name',
+            editable:false
+        });
+        var updateAlbum = $('#updateAlbum').combobox({   
+            valueField:'id',   
+            textField:'name',
+            editable:false
+        });
+		
 	});
 	function submitForm() {
 		$('#songform').form('submit', {
@@ -259,6 +354,7 @@
 	function clearForm() {
 		$('#songform').form('clear');
 		$('#file_upload').uploadify('cancel', '*');
+		$('#song_upload').uploadify('cancel', '*');
 		$('#img').attr("src","");
 	}
 	function closeWin() {
@@ -271,7 +367,14 @@
 	function clearUplaoder() {
 		$('#file_upload').uploadify('cancel', '*');
 		$('#picture').val("");
+		$('#song_upload').uploadify('cancel', '*');
 		$('#img').attr("src","");
+	}
+	
+	function clearUpdateSongUploader() {
+		$('#song_upload').uploadify('cancel', '*');
+		$('#updatePath').val("");
+		$('#updateFlag').val("");
 	}
 	
 	function submitUpdateForm() {
@@ -299,6 +402,7 @@
         $('#updateWin').window('open');
         $('#updateform').form("load",row);
         $('#updateImg').attr("src",row.picture);
+        $('#updateAlbum').combobox("select",row.album);
     }
     function clearUpdateUplaoder() {
         $('#update_upload').uploadify('cancel', '*');
@@ -311,11 +415,17 @@
 <body>
 	<table id="songlist"></table>
 	<div id="win" iconCls="icon-save" title="歌曲信息">
-        <form id="songform" action="admin/addsong" data-options="novalidate:true" method="post" enctype="multipart/form-data">
+        <form id="songform" action="admin/addSong" data-options="novalidate:true" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
-                    <td>歌曲名称:</td>
+                    <td>名称:</td>
                     <td><input name="name" data-options="required:true" class="f1 easyui-textbox"></input></td>
+                </tr>
+                <tr>
+                    <td>类型:</td>
+                    <td>
+                        <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="songCategory" name="songCategory">
+                    </td>
                 </tr>
                 <tr>
                     <td>歌手:</td>
@@ -326,7 +436,8 @@
                 <tr>
                     <td>专辑:</td>
                     <td>
-                    <input name="publishTime" data-options="required:true,editable:false" class="f1 easyui-datebox"></input></td>
+                        <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="album" name="album">
+                    </td>
                 </tr>
                 <tr>
                     <td>歌词:</td>
@@ -338,10 +449,28 @@
                     <td><input name="briefIntroduction" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
                 </tr>
                 <tr>
-                    <td>歌曲:</td>
+                    <td>设置为新歌推荐:</td>
+                    <td>
+                        <input type="radio" value="true" name="newSong" checked="checked"/>是
+                        <input type="radio" value="false" name="newSong"/>否
+                    </td>
+                </tr>
+                <tr>
+                    <td>初始投票数:</td>
+                    <td>
+                        <input class="easyui-numberbox" name="voteNum" value="0"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>文件名称:</td>
+                    <td><input id="songName" name="songName" class="f1"></input></td>
+                </tr>
+                <tr>
+                    <td>歌曲文件:</td>
                     <td>
 						<div>
-                            <input type="hidden" id="picture" name="songPath" />
+                            <input type="hidden" id="songPath" name="songPath" />
+                            <input type="hidden" id="songFlag" name="songFlag" />
                             <div id="songQueue"></div>
                             <input id="song_upload" name="song_upload" type="file" multiple="multiple">
                         </div>
@@ -381,13 +510,19 @@
 	    </div>
 	</div>
 	<div id="updateWin" iconCls="icon-edit" title="修改歌曲信息">
-        <form id="updateform" action="admin/updatesong" data-options="novalidate:true" method="post" enctype="multipart/form-data">
+        <form id="updateform" action="admin/updateSong" data-options="novalidate:true" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
-                    <td>歌曲名称:</td>
+                    <td>名称:</td>
                     <td>
                     <input name="id" type="hidden"></input>
                     <input name="name" data-options="required:true" class="f1 easyui-textbox"></input></td>
+                </tr>
+                <tr>
+                    <td>类型:</td>
+                    <td>
+                        <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="updateSongCategory" name="songCategory">
+                    </td>
                 </tr>
                 <tr>
                     <td>歌手:</td>
@@ -396,18 +531,53 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>发行日期:</td>
+                    <td>专辑:</td>
                     <td>
-                    <input name="publishTime" data-options="required:true,editable:false" class="f1 easyui-datebox"></input></td>
+                        <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="updateAlbum" name="album">
+                    </td>
                 </tr>
                 <tr>
-                    <td>发行公司:</td>
+                    <td>歌词:</td>
                     <td>
-                    <input name="publishCompany" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
+                    <input name="lyric" data-options="multiline:true" style="height:100px" class="f1 easyui-textbox"></input></td>
                 </tr>
                 <tr>
                     <td>简介:</td>
                     <td><input name="briefIntroduction" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
+                </tr>
+                <tr>
+                    <td>设置为新歌推荐:</td>
+                    <td>
+                        <input type="radio" value="true" name="newSong"/>是
+                        <input type="radio" value="false" name="newSong"/>否
+                    </td>
+                </tr>
+                <tr>
+                    <td>初始投票数:</td>
+                    <td>
+                        <input class="easyui-numberbox" name="voteNum" value="0"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>文件名称:</td>
+                    <td><input id="updateName" data-options="required:true" readonly="readonly" name="songName" class="f1"></input></td>
+                </tr>
+                <tr>
+                    <td>歌曲文件:</td>
+                    <td>
+                        <div>
+                            <input type="hidden" id="updatePath" name="songPath" />
+                            <input type="hidden" id="updateFlag" name="songFlag" />
+                            <div id="updateSongQueue"></div>
+                            <input id="update_song_upload" name="update_song_upload" type="file" multiple="multiple">
+                        </div>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" id="btnUpload"
+                                onclick="javascript: $('#update_song_upload').uploadify('upload', '*')">上传</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" id="btnCancelUpload"
+                            onclick="javascript:clearUpdateSongUploader()">取消</a>
+                    </td>
                 </tr>
                 <tr>
                     <td>歌曲图片:</td>

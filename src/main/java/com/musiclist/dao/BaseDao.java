@@ -1,5 +1,6 @@
 package com.musiclist.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -23,14 +24,6 @@ public class BaseDao {
      */
     public Session getSession() {
         return sessionFactory.getCurrentSession();
-    }
-
-    public void flush() {
-        getSession().flush();
-    }
-
-    public void clear() {
-        getSession().clear();
     }
 
     /**
@@ -70,13 +63,13 @@ public class BaseDao {
      * 保存
      * @param bean 
      */
-    public void save(Object bean) {
+    public Serializable save(Object bean) {
         try {
             Session session = getSession();
-            session.save(bean);
-            session.flush();
+            return session.save(bean);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -87,7 +80,6 @@ public class BaseDao {
     public void update(Object bean) {
         Session session = getSession();
         session.update(bean);
-        session.flush();
     }
 
     /**
@@ -97,7 +89,6 @@ public class BaseDao {
     public void delete(Object bean) {
         Session session = getSession();
         session.delete(bean);
-        session.flush();
     }
 
     /**
@@ -109,7 +100,6 @@ public class BaseDao {
         Session session = getSession();
         Object obj = session.get(c, id);
         session.delete(obj);
-        flush();
     }
 
     /**

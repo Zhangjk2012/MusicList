@@ -56,7 +56,11 @@ public class Album implements Serializable{
     /** 专辑简介 */
     @Column(name = "brief_introduction", length = 500)
     private String briefIntroduction;
-
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "upload_time", length = 19)
+    private Date uploadTime;
+    
     public Integer getId() {
         return id;
     }
@@ -111,6 +115,14 @@ public class Album implements Serializable{
 
     public void setBriefIntroduction(String briefIntroduction) {
         this.briefIntroduction = briefIntroduction;
+    }
+
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
     }
     
     
