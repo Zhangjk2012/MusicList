@@ -73,6 +73,10 @@ public class Song implements Serializable{
     /** 投票数 */
     @Column(name = "vote_num")
     private Long voteNum;
+    
+    /** 时长 */
+    @Column(name="track_length")
+    private String trackLength;
 
     public Integer getId() {
         return id;
@@ -176,6 +180,14 @@ public class Song implements Serializable{
 
     public void setVoteNum(Long voteNum) {
         this.voteNum = voteNum;
+    }
+
+    public String getTrackLength() {
+        return trackLength;
+    }
+
+    public void setTrackLength(String trackLength) {
+        this.trackLength = trackLength;
     }
     
     

@@ -33,8 +33,6 @@
 			rownumbers:true,
 			fit:true,//自动补全
 			fitColumns:true,
-			iconCls:"icon-save",//图标
-			title:"专辑管理",
 			singleSelect:true,
 			frozenColumns:[[ 
                 {field:'ck',checkbox:true} 
@@ -147,7 +145,10 @@
 			collapsible : false,
 			onBeforeClose : function() {
 				clearForm();
-			}
+			},
+            onOpen:function() {
+                singer.combobox("reload","admin/singercombolist");
+            }
 		});
 		$('#file_upload').uploadify({
 			'swf' : 'static/uploadify/uploadify.swf', //FLash文件路径
@@ -205,22 +206,21 @@
 	        collapsible : false,
 	        onBeforeClose : function() {
 	            clearUpdateForm();
+	        },
+	        onOpen:function() {
+	        	updateSinger.combobox("reload","admin/singercombolist");
 	        }
 	    });
-		$('#singer').combobox({   
-		    url:'admin/singercombolist',   
+		var singer = $('#singer').combobox({   
 		    valueField:'id',   
 		    textField:'name',
 		    editable:false
 		});
-		$('#updateSinger').combobox({   
-		    url:'admin/singercombolist',   
+		var updateSinger = $('#updateSinger').combobox({   
 		    valueField:'id',   
 		    textField:'name',
 		    editable:false
 		});
-		//var data = $('#singer').combobox("getData");
-		//$('#updateSinger').combobox('loadData',data);
 	});
 	function submitForm() {
 		$('#albumform').form('submit', {

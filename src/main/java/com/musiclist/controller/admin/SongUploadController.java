@@ -7,6 +7,11 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jaudiotagger.audio.mp3.MP3AudioHeader;
+import org.jaudiotagger.audio.mp3.MP3File;
+import org.jaudiotagger.audio.mp4.Mp4FileReader;
+import org.jaudiotagger.audio.mp4.Mp4TagReader;
+import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +32,9 @@ public class SongUploadController {
 	    
 	    String path = request.getSession().getServletContext().getRealPath("/");
 	    String absolutPath = "";
+	    String trackLength = "";
+	    String result = "";
+	    String info = "";
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		String extRt = "";
 		if(multipartResolver.isMultipart(request)){
@@ -51,6 +59,22 @@ public class SongUploadController {
 					if(myFileName.trim() !=""){
 						File localFile = new File(path);
 						file.transferTo(localFile);
+						if (extRt.equals("1")) {
+						    MP3File mp3File = null;
+						    try {
+						        mp3File = new MP3File(localFile);
+						        MP3AudioHeader audioHeader = (MP3AudioHeader) mp3File.getAudioHeader();
+						        trackLength = audioHeader.getTrackLengthAsString();
+						        result = "true";
+						    } catch (Exception e) {
+						        localFile.delete();
+						        result = "false";
+						        info = "请上传正确的MP3文件。";
+						        e.printStackTrace();
+						    }  
+						} else {
+						    result = "true";
+						}
 					}
 				}
 			}
@@ -58,6 +82,9 @@ public class SongUploadController {
 		JSONObject o = new JSONObject();
 		o.put("path", absolutPath);
 		o.put("flag", extRt);
+		o.put("trackLength", trackLength);
+		o.put("result", result);
+		o.put("info", info);
 		return o.toJSONString();
 	}
 	

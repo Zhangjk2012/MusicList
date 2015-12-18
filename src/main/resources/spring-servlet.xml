@@ -25,6 +25,7 @@
     <context:component-scan base-package="com.musiclist.controller"/>
     
     <mvc:annotation-driven /> 
+    <mvc:resources location="/html/" mapping="/html/**"/>
 	<!-- <mvc:resources location="/static/css/" mapping="/static/css/**"/> 
 	<mvc:resources location="/admin/login.html" mapping="/admin/login.html"/> 
 	<mvc:resources location="/static/js/" mapping="/static/js/**"/> -->

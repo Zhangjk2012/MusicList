@@ -220,10 +220,15 @@
             'fileTypeDesc' : 'Image Files', //文件描述
             'fileTypeExts' : '*.mp3; *.mp4', //上传的文件后缀过滤器
             onUploadSuccess : function(file, data, response) { //一个文件上传成功后的响应事件处理
-            	var obj = eval ("(" + data + ")");;
-                $('#songFlag').val(obj.flag);
-                $('#songPath').val(obj.path);
-                $('#songName').val(file.name);
+            	var obj = eval ("(" + data + ")");
+                if (obj.result === "true") {
+	                $('#songFlag').val(obj.flag);
+	                $('#songPath').val(obj.path);
+	                $('#songName').val(file.name);
+	                $('#trackLength').val(obj.trackLength);
+                } else {
+                	$.messager.alert("失败", obj.info); 
+                }
             },
             onUploadStart : function(file) {
                 //$("#file_upload").uploadify("settings", "formData", { "imgType": "other","imgMode":"big") });
@@ -246,9 +251,14 @@
             'fileTypeExts' : '*.mp3; *.mp4', //上传的文件后缀过滤器
             onUploadSuccess : function(file, data, response) { //一个文件上传成功后的响应事件处理
                 var obj = eval ("(" + data + ")");;
-                $('#updateFlag').val(obj.flag);
-                $('#updatePath').val(obj.path);
-                $('#updateName').val(file.name);
+                if (obj.result === true) {
+	                $('#updateFlag').val(obj.flag);
+	                $('#updatePath').val(obj.path);
+	                $('#updateName').val(file.name);
+                    $('#updateTrackLength').val(obj.trackLength);
+                } else {
+                    $.messager.alert("失败", obj.info); 
+                }
             },
             onUploadStart : function(file) {
                 //$("#file_upload").uploadify("settings", "formData", { "imgType": "other","imgMode":"big") });
@@ -367,12 +377,19 @@
 	function clearUplaoder() {
 		$('#file_upload').uploadify('cancel', '*');
 		$('#picture').val("");
-		$('#song_upload').uploadify('cancel', '*');
 		$('#img').attr("src","");
 	}
 	
+	function clearSongUplaoder() {
+        $('#song_upload').uploadify('cancel', '*');
+        $('#songPath').val("");
+        $('#songFlag').val("");
+        $('#songName').val("");
+        $('#trackLength').val("");
+    }
+	
 	function clearUpdateSongUploader() {
-		$('#song_upload').uploadify('cancel', '*');
+		$('#update_song_upload').uploadify('cancel', '*');
 		$('#updatePath').val("");
 		$('#updateFlag').val("");
 	}
@@ -393,6 +410,7 @@
         $('#updateform').form('clear');
         $('#update_upload').uploadify('cancel', '*');
         $('#updateImg').attr("src","");
+        $('#update_song_upload').uploadify('cancel', '*');
     }
     function closeUpdateWin() {
         $('#updateWin').window('close');
@@ -402,7 +420,6 @@
         $('#updateWin').window('open');
         $('#updateform').form("load",row);
         $('#updateImg').attr("src",row.picture);
-        $('#updateAlbum').combobox("select",row.album);
     }
     function clearUpdateUplaoder() {
         $('#update_upload').uploadify('cancel', '*');
@@ -463,7 +480,11 @@
                 </tr>
                 <tr>
                     <td>文件名称:</td>
-                    <td><input id="songName" name="songName" class="f1"></input></td>
+                    <td><input id="songName" class="easyui-validatebox" data-options="required:true" readonly="readonly" name="songName" class="f1"></input></td>
+                </tr>
+                <tr>
+                    <td>时长:</td>
+                    <td><input id="trackLength" readonly="readonly" name="trackLength" class="f1"></input></td>
                 </tr>
                 <tr>
                     <td>歌曲文件:</td>
@@ -479,7 +500,7 @@
 						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnUpload"
                                 onclick="javascript: $('#song_upload').uploadify('upload', '*')">上传</a>
                         <a href="javascript:void(0)" class="easyui-linkbutton" id="btnCancelUpload"
-                            onclick="javascript:clearUplaoder()">取消</a>
+                            onclick="javascript:clearSongUplaoder()">取消</a>
 					</td>
                 </tr>
                 <tr>
@@ -561,6 +582,10 @@
                 <tr>
                     <td>文件名称:</td>
                     <td><input id="updateName" data-options="required:true" readonly="readonly" name="songName" class="f1"></input></td>
+                </tr>
+                <tr>
+                    <td>时长:</td>
+                    <td><input id="updateTrackLength" readonly="readonly" name="trackLength" class="f1"></input></td>
                 </tr>
                 <tr>
                     <td>歌曲文件:</td>
