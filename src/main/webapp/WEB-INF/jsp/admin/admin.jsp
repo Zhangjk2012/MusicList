@@ -105,7 +105,7 @@ function createFrame(url) {
 			<h1>音乐榜管理系统</h1>
 			<div style="float: right">
 				<span >欢迎登录：${username}.</span> 
-				<a href="#">退出</a>
+				<a href="admin/logout">退出</a>
 			</div>
 		</header>
 	</div>
