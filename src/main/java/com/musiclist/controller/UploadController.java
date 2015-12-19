@@ -44,7 +44,6 @@ public class UploadController {
 					    absolutPath = "img/"+newFile;
 					}
 					if(myFileName.trim() !=""){
-						System.out.println(path);
 						File localFile = new File(path);
 						file.transferTo(localFile);
 					}

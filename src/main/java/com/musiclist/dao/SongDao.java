@@ -28,7 +28,7 @@ public class SongDao extends BaseDao {
     public List<Object[]> getSongs(int page, int rows) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT song.id,song.brief_introduction,song.name,song.picture,song.song_flag,song.album,song.singer,song.song_category,song.lyric,");
-        sb.append("category.name categoryName,s.`name` singerName ,a.`name` albumName, song.song_name,song.song_path,song.new_song,song.vote_num ");
+        sb.append("category.name categoryName,s.`name` singerName ,a.`name` albumName, song.song_name,song.song_path,song.new_song,song.vote_num,song.track_length ");
         sb.append(" FROM music_song song");
         sb.append(" LEFT JOIN music_song_category category ON category.id = song.song_category");
         sb.append(" LEFT JOIN music_singer s ON s.id = song.singer");

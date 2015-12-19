@@ -251,7 +251,7 @@
             'fileTypeExts' : '*.mp3; *.mp4', //上传的文件后缀过滤器
             onUploadSuccess : function(file, data, response) { //一个文件上传成功后的响应事件处理
                 var obj = eval ("(" + data + ")");;
-                if (obj.result === true) {
+                if (obj.result === "true") {
 	                $('#updateFlag').val(obj.flag);
 	                $('#updatePath').val(obj.path);
 	                $('#updateName').val(file.name);

@@ -80,7 +80,7 @@
         </property>  
     </bean>  
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="10000000"/>
+        <property name="maxUploadSize" value="20971520"/>
     </bean>
   
     <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>

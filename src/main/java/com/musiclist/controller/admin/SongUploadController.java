@@ -47,7 +47,7 @@ public class SongUploadController {
 					String ext = myFileName.substring(myFileName.lastIndexOf("."));
 					String md5 = MD5Util.getFileMD5String(file.getBytes());
 					String newFile = System.currentTimeMillis()+md5+ext;
-					if (ext.equalsIgnoreCase("mp4")) {
+					if (ext.equalsIgnoreCase(".mp4")) {
 					    path += "mp4/"+newFile;
                         absolutPath = "mp4/"+newFile;
                         extRt = "0";

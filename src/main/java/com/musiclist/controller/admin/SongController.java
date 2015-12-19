@@ -91,6 +91,7 @@ public class SongController {
                     jo.put("songPath",  a[13]);
                     jo.put("newSong",  a[14]);
                     jo.put("voteNum",  a[15]);
+                    jo.put("trackLength",  a[16]);
                     newArray.add(jo);
                 }
                 o.put("rows", newArray);
