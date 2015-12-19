@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>音乐榜系统</title>
+<link rel="stylesheet" href="static/jplayer/css/player.css" type="text/css" media="all" />
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+<script type="text/javascript" src="static/jplayer/jquery.jplayer.min.js"></script>
+<script type="text/javascript" src="static/jplayer/jplayer.cleanskin.js"></script>
+
+<style type="text/css">
+</style>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		$('#uniquePlayer-1').videoPlayer(
+                {
+                    name: '一眼万年',
+                    media: {
+                        mp3: 'mp3/14503332561937C7D36B406C1768D5ED8DEC202203D73.mp3'
+                    },
+                     
+                    size: {
+                        width: '1280px'
+                    },
+                     
+                    // These go directly to jPlayer object, allowing you to rewrite any player setting
+                    loadstart: function() {
+                        //alert('Video loading started!');
+                    }
+                     
+                }       
+        )	
+    });
+</script>
+</head>
+<body>
+    <div id="uniquePlayer-1" class="webPlayer light audioPlayer">
+        <div id="uniqueContainer-1" class="videoPlayer"></div>
+    </div>
+</body>
+</html>
