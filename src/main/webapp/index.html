@@ -1,83 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head>
-<meta charset="UTF-8">
-<title>音乐榜系统</title>
-<link rel="stylesheet" href="static/jplayer/skin/blue.monday/css/jplayer.blue.monday.css" type="text/css" media="all" />
+<title>音乐榜</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="styles/divers.css">
+<link rel="stylesheet" href="styles/core.css">
+<link rel="stylesheet" href="styles/lstyle.css">
+<link rel="stylesheet" href="static/jplayer/css/player.css" type="text/css" media="all" />
+
 <script type="text/javascript" src="static/js/jquery.min.js"></script>
+<script type="text/javascript" src="js/paybutton.js" ></script>
+<script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="static/jplayer/jquery.jplayer.min.js"></script>
+<script type="text/javascript" src="static/jplayer/jplayer.cleanskin.js"></script>
 
-<style type="text/css">
-</style>
-
-<script type="text/javascript">
-
-$(document).ready(function(){
-        $("#jquery_jplayer_1").jPlayer({ 
-            ready: function () { 
-                $(this).jPlayer("setMedia", { 
-                    mp3: "mp3/14503332561937C7D36B406C1768D5ED8DEC202203D73.mp3", 
-                }).jPlayer("play"); // auto play 
-            }, 
-            ended: function (event) { 
-                $(this).jPlayer("play"); 
-            }, 
-            swfPath: "static/jplayer", 
-            supplied: "mp3",
-            wmode: "window",
-            useStateClassSkin: true,
-            autoBlur: false,
-            smoothPlayBar: true,
-            keyEnabled: true,
-            remainingDuration: true,
-            toggleDuration: true
-        }).bind($.jPlayer.event.play, function() { // pause other instances of player when current one play 
-            $(this).jPlayer("pauseOthers"); 
-        }); 
-});
-</script>
 </head>
+
 <body>
-    <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-    
-    <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
-        <div class="jp-type-single">
-            <div class="jp-gui jp-interface">
-                <div class="jp-controls">
-                    <button class="jp-play" role="button" tabindex="0">play</button>
-                    <button class="jp-stop" role="button" tabindex="0">stop</button>
-                </div>
-                <div class="jp-progress">
-                    <div class="jp-seek-bar">
-                        <div class="jp-play-bar"></div>
-                    </div>
-                </div>
-                <div class="jp-volume-controls">
-                    <button class="jp-mute" role="button" tabindex="0">mute</button>
-                    <button class="jp-volume-max" role="button" tabindex="0">max
-                        volume</button>
-                    <div class="jp-volume-bar">
-                        <div class="jp-volume-bar-value"></div>
-                    </div>
-                </div>
-                <div class="jp-time-holder">
-                    <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
-                    <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
-                    <!-- <div class="jp-toggles">
-                        <button class="jp-repeat" role="button" tabindex="0">repeat</button>
-                    </div> -->
-                </div>
-            </div>
-            <div class="jp-details">
-                <div class="jp-title" aria-label="title">哈哈哈</div>
-            </div>
-            <div class="jp-no-solution">
-                <span>Update Required</span> To play the media you will need to
-                either update your browser to a recent version or update your <a
-                    href="http://get.adobe.com/flashplayer/" target="_blank">Flash
-                    plugin</a>.
-            </div>
-        </div>
-    </div>
+    <iframe name="contentFrame" id="contentFrame" class="g-iframe" scrolling="auto" frameborder="0" src="main.html"></iframe>
+	<div class="g-btmbar">
+		<div class="m-playbar m-playbar-unlock"
+			style="top: -7px; visibility: visible;"
+			id="auto-id-KJiuXsacyFLXqdgC">
+			<div class="updn">
+				<div class="left f-fl">
+					<a href="javascript:;" class="btn" id="locktbn" hidefocus="true"
+						data-action="lock"></a>
+				</div>
+				<div class="right f-fl"></div>
+			</div>
+			<div class="bg"></div>
+			<div class="hand" title="展开播放条"></div>
+			<div class="wrap" id="g_player">
+				<div id="uniquePlayer-1" class="webPlayer light audioPlayer">
+			        <div id="uniqueContainer-1" class="videoPlayer">
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$(function(){
+		$('#uniquePlayer-1').videoPlayer({
+             name : '献给爱丽丝',
+             media : {
+                 mp3 : 'mp3/1450577114679BCD2F87A68D3DE298862FD4BA9F4BC77.mp3'
+             },
+             size : {
+                 width : '980px'
+             },
+             loadstart : function() {
+                 
+             }
+         })
+	});
+	function play(url,name) {
+		var media = {mp3 : url}
+		//$("#uniquePlayer-1").jPlayer("setMedia", media).jPlayer("play");
+	}
+	</script>
 </body>
 </html>

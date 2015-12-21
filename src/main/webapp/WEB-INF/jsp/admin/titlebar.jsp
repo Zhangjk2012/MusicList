@@ -223,7 +223,7 @@
 		});
 	}
 	function clearForm() {
-		$('#songcategoryform').form('clear');
+		$('#titlebarform').form('clear');
 		$('#file_upload').uploadify('cancel', '*');
 		$('#img').attr("src","");
 	}

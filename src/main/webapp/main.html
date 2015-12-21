@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html >
+<head>
+<title>主页</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="styles/divers.css">
+<link rel="stylesheet" href="styles/core.css">
+<link rel="stylesheet" href="styles/lstyle.css">
+
+</head>
+<body>
+	<div id="nav">
+	
+	</div>
+    <!-- 轮播图START -->
+	<div id="banner" style="display: none;">
+		<div class="bannerCon">
+	        <div class="before"><img src="images/left.png" width="32" heigth="63" alt="" /></div>
+	        <div class="after"><img src="images/right.png" width="32" height="63" alt="" /></div>
+	        <div id="scroll" class="scroll">
+	        </div>
+	        <div class="bannerBut">
+	        	<ul id="bannerButUL" style="display: none">
+				</ul>
+	        </div>   
+	    </div>
+	</div>
+	<!-- 轮播图END -->
+	<div id="discover-module" class="g-bd1 f-cb">
+		<div class="g-mn1">
+			<div class="g-mn1c">
+				<div class="g-wrap3">
+					<div class="n-rcmd">
+						<div class="v-hd2">
+							<a href="hotlist" class="tit f-ff2 f-tdn">热门推荐</a>
+							<div class="tab">
+								 <a href="/discover/playlist/?cat=%E6%B5%81%E8%A1%8C" class="s-fc3">流行</a>
+								<span class="line">|</span> <a
+									href="rack.html" class="s-fc3">摇滚</a>
+							</div>
+							
+							<span class="more"><a href="/discover/playlist/"
+								class="s-fc3">更多</a><i class="cor s-bg s-bg-6">&nbsp;</i></span>
+						</div>
+						
+						<!-- --sdfsdfsd -->
+						
+						<ul id="hotul" class="m-cvrlst f-cb">
+						</ul>
+					</div>
+					<div class="n-rcmd" id="personalRec"></div>
+					<div class="n-new">
+						<div class="v-hd2">
+							<a href="newdisc.html" class="tit f-ff2 f-tdn">新碟上架</a> <span
+								class="more"><a href="/discover/album/" class="s-fc3">更多</a><i
+								class="cor s-bg s-bg-6">&nbsp;</i></span>
+						</div>
+						<div class="n-disk">
+							<div class="inner" id="album-roller">
+								<a id="roller-right" hidefocus="true" href="javascript:void(0)" class="click-flag pre s-bg s-bg-7 f-tdn">&nbsp;</a>
+								<div id="newAlbum" class="roll f-pr">
+								</div>
+								<a id="roller-left" hidefocus="true" href="javascript:void(0)"
+									class="click-flag nxt s-bg s-bg-8 f-tdn">&nbsp;</a>
+							</div>
+						</div>
+					</div>
+					<div class="n-bill">
+						<div class="v-hd2">
+							<a href="toplist.html" class="tit f-ff2 f-tdn">榜单</a> <span
+								class="more"><a href="/discover/toplist" class="s-fc3">更多</a><i
+								class="cor s-bg s-bg-6">&nbsp;</i></span>
+						</div>
+						<div class="n-bilst" id="top-flag">
+							<dl class="blk ">
+								<dt class="top">
+									<div class="cver u-cover u-cover-4">
+										<img class="j-img"
+											data-src="http://p4.music.126.net/TkNqminF5jTCzk12Mf5Acg==/7744959906898786.jpg?param=100y100"
+											src="http://p4.music.126.net/TkNqminF5jTCzk12Mf5Acg==/7744959906898786.jpg?param=100y100">
+										<a href="/discover/toplist?id=19723756" class="msk"
+											title="摇滚音乐榜"></a>
+									</div>
+									<div class="tit">
+										<a href="/discover/toplist?id=19723756" title="摇滚音乐榜"><h3
+												class="f-fs1 f-thide">摇滚音乐榜</h3></a>
+									</div>
+								</dt>
+								<dd>
+									<ol>
+										<li onmouseover="this.className='z-hvr'"
+											onmouseout="this.className=''"><span class="no no-top">1</span>
+											<a href="/song?id=38679966" class="nm s-fc0 f-thide"
+											title="花房姑娘">花房姑娘</a>
+											<div class="oper">
+												<a href="#" class="s-bg s-bg-11" title="播放" hidefocus="true"
+													data-res-type="18" data-res-id="38679966"
+													data-res-action="play" data-res-from="31"
+													data-res-data="19723756"></a> 
+													
+												<a class=" like zan u-icn2 u-icn2-12 " style="margin-top: 3px;margin-right: 0px;"></a>
+												<a href="" class="like" style="line-height: 23px;">(15)</a>
+													
+											</div></li>
+									</ol>
+									<div class="more">
+										<a href="/discover/toplist?id=19723756" class="s-fc0">查看全部&gt;</a>
+									</div>
+								</dd>
+							</dl>
+							<dl class="blk">
+								<dt class="top">
+									<div class="cver u-cover u-cover-4">
+										<img class="j-img"
+											data-src="http://p4.music.126.net/LRtxrRfP3g6Gn3vyvWEXOw==/7808731581312441.jpg?param=100y100"
+											src="http://p4.music.126.net/LRtxrRfP3g6Gn3vyvWEXOw==/7808731581312441.jpg?param=100y100">
+										<a href="/discover/toplist?id=3779629" class="msk"
+											title="流行音乐榜"></a>
+									</div>
+									<div class="tit">
+										<a href="/discover/toplist?id=3779629" title="流行音乐榜"><h3
+												class="f-fs1 f-thide">流行音乐榜</h3></a>
+									</div>
+								</dt>
+								<dd>
+									<ol>
+										<li onmouseover="this.className='z-hvr'"
+											onmouseout="this.className=''" class=""><span
+											class="no no-top">1</span> <a href="/song?id=38679966"
+											class="nm s-fc0 f-thide" title="花房姑娘">花房姑娘</a>
+											<div class="oper">
+												<a href="#" class="s-bg s-bg-11" title="播放" hidefocus="true"
+													data-res-type="18" data-res-id="38679966"
+													data-res-action="play" data-res-from="31"
+													data-res-data="3779629"></a>
+													
+												<a class=" like zan u-icn2 u-icn2-12 " style="margin-top: 3px;margin-right: 0px;"></a>
+												<a href="" class="like" style="line-height: 23px;">(15)</a>
+											</div>
+										</li>
+									</ol>
+									<div class="more">
+										<a href="/discover/toplist?id=3779629" class="s-fc0">查看全部&gt;</a>
+									</div>
+								</dd>
+							</dl>
+							<dl class="blk blk-1">
+								<dt class="top">
+									<div class="cver u-cover u-cover-4">
+										<img class="j-img"
+											data-src="http://p4.music.126.net/LgoU8FreFrdLvSY3ZTFu5g==/2902710698975677.jpg?param=100y100"
+											src="http://p4.music.126.net/LgoU8FreFrdLvSY3ZTFu5g==/2902710698975677.jpg?param=100y100">
+										<a href="/discover/toplist?id=2884035" class="msk"
+											title="大学生音乐节"></a>
+									</div>
+									<div class="tit">
+										<a href="/discover/toplist?id=2884035" title="大学生音乐节"><h3
+												class="f-fs1 f-thide">大学生音乐节</h3></a>
+									</div>
+								</dt>
+								<dd>
+									<ol>
+										<li onmouseover="this.className='z-hvr'"
+											onmouseout="this.className=''"><span class="no">1</span>
+											<a href="/song?id=36894550" class="nm s-fc0 f-thide"
+											title="马戏团里的疯女人">马戏团里的疯女人</a>
+											<div class="oper">
+												<a href="#" class="s-bg s-bg-11" title="播放" hidefocus="true"
+													data-res-type="18" data-res-id="36894550"
+													data-res-action="play" data-res-from="31"
+													data-res-data="2884035"></a> 
+												<a class=" like zan u-icn2 u-icn2-12 " style="margin-top: 3px;margin-right: 0px;"></a>
+												<a href="" class="like" style="line-height: 23px;">(15)</a>													
+											</div>
+										</li>
+											
+									</ol>
+									<div class="more">
+										<a href="/discover/toplist?id=2884035" class="s-fc0">查看全部&gt;</a>
+									</div>
+								</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/index.js" ></script>
+    <script type="text/javascript" src="js/paybutton.js" ></script>
+    <script type="text/javascript">
+       $(function(){
+           $.ajax( {  
+                url:'titlebars',// 跳转到 action  
+                type:'post',  
+                cache:false,  
+                dataType:'json',  
+                success:function(data) {  
+                    if(data.msg =="true"){  
+                        var d = data.data;
+                        var len = d.length;
+                        if (d.length == 0) {
+                        } else {
+                        	for (var i=0;i<(len+2);i++) {
+                        		if (i==0) {
+	                        		$("#bannerButUL").append('<li style="display: none"></li>');
+                        		} else if (i == 1) {
+                        			$("#bannerButUL").append('<li class="hover"></li>');
+                        		} else if (i == (len+1)) {
+                        			$("#bannerButUL").append('<li style="display: none"></li>');
+                        		} else {
+                        			$("#bannerButUL").append('<li></li>');
+                        		}
+                        	}
+                            var first = d[len-1];
+                            var img = "<a href='#'><img src='"+first.picture+"' width='980' height='500' alt='' /></a> ";
+                            $("#scroll").append(img);
+                            $.each(d,function(n,value) { 
+                                img = "<a href='#'><img src='"+value.picture+"' width='980' height='500' alt='' /> </a>";
+                                $("#scroll").append(img);
+                            });
+                            var end = d[0];
+                            img = "<a href='#'><img src='"+end.picture+"' width='980' height='500' alt='' /> </a>";
+                            $("#scroll").append(img);
+                            end = d[1];
+                            img = "<a href='#'><img src='"+end.picture+"' width='980' height='500' alt='' /> </a>";
+                            $("#scroll").append(img);
+                            $("#banner").css("display","block");
+                            $("#bannerButUL").css("display","block");
+                            $('.bannerBut ul li').mouseover(function(){
+                                $(this).addClass('hover').siblings('li').removeClass('hover');
+                                var _index1=$(this).index();
+                                $('.bannerCon .scroll').stop().animate({left:-_index1*750},500);
+                            });
+                        }
+                    }  
+                 }
+            });
+           $.ajax( {  
+               url:'hotlist',// 跳转到 action  
+               type:'post',  
+               cache:false,  
+               dataType:'json',  
+               success:function(data) {  
+                   if(data.msg =="true"){  
+                       var d = data.data;
+                       var len = d.length;
+                       if (d.length == 0) {
+                       } else {
+                           $.each(d,function(n,value) {
+                        	   var html = '<li>';
+                        	   html+='<div class="u-cover u-cover-1">';
+                        	   html+='<img class="j-flag" width=140 height=140 src="'+value.picture+'">';
+                        	   html+='<a title="'+value.name+'" href="playmusic.html?id=139784927" class="msk"></a>';
+                        	   html+='<div class="bottom">';
+                        	   html+='<a class="icon-play f-fr" title="播放" href="javascript:play(\''+value.songPath+'\',\''+value.name+'\');"></a>';
+                        	   html+='<span class="icon-headset"></span>';
+                        	   html+='<span class="icon-headset"></span>';
+                        	   html+='</div></div>';
+                        	   html+='<p class="dec">';
+                        	   html+='<a title="'+value.name+'" href="/playlist?id=139784927" class="tit f-thide s-fc0">'+value.name+'</a>';
+                        	   html+='</p>';
+                        	   html+='<p>';
+                        	   html+='<span class="s-fc4">by</span>';
+                        	   html+='<a title="'+value.singer+'" href="/user/home?id=39002" class="nm nm-icn f-thide s-fc3">'+value.singer+'</a>';
+                        	   html+='<sup class="u-icn u-icn-1"></sup>';
+                        	   html+='<p></li>';
+                               $("#hotul").append(html);
+                           });
+                       }
+                   }  
+                }
+           });
+           
+           $.ajax( {  
+               url:'albumlist',// 跳转到 action  
+               type:'post',  
+               cache:false,  
+               dataType:'json',  
+               success:function(data) {  
+                   if(data.msg =="true"){ 
+                       var d = data.data;
+                       var len = d.length;
+                       if (len == 0) {
+                       } else {
+                    	   var i = 1;
+                    	   var ul = '<ul class="f-cb roller-flag" style="left:-645px;">';
+                    	   var html = "";
+                    	   for (i=1;i<=len;i++) {
+                    		   var value = d[i-1];
+                    		   html+='<li>';
+                               html+='<div class="u-cover u-cover-alb1">';
+                               html+='<img class="j-img" width=100 height=100 src="'+value.picture+'"/>';
+                               html+='<a title="'+value.name+'" href="playmusic.html?id=139784927" class="msk"></a>';
+                               html+='<a class="icon-play f-alpha f-fr" title="播放" href="javascript:;"></a>';
+                               html+='</div>';
+                               html+='<p class="f-thide">';
+                               html+='<a title="'+value.name+'" href="/playlist?id=139784927" class="s-fc0 tit">'+value.name+'</a>';
+                               html+='</p>';
+                               html+='<p class="f-thide">';
+                               html+='<a title="'+value.singer+'" href="/user/home?id=39002" class="tit s-fc3">'+value.singer+'</a>';
+                               html+='<p></li>';
+                               if (i % 5 == 0) {
+                            	   $("#newAlbum").append(ul);
+                            	   $("#newAlbum").append(html);
+                            	   $("#newAlbum").append("</ul>");
+                            	   html = "";
+                               }
+                    	   }
+                    	   if (html != "") {
+                    		   $("#newAlbum").append(ul);
+                               $("#newAlbum").append(html);
+                               $("#newAlbum").append("</ul>");
+                               html = "";
+                    	   }
+                       }
+                   }  
+                }
+           });
+           
+           var uls = $("#album-roller").find("ul");
+            var transflag = false;
+            $("#roller-right").click(function() {
+                if( transflag ) {
+                    return ;
+                }
+                transflag = true;
+                for( var i=0; i<uls.length; i++ ) {
+                    var ul = $(uls[i]);
+                    var left = parseInt( ul.css("left").replace("px","") );
+                    left = left + 645;
+                    if( left > 1290 ) {
+                        left = -645;
+                        ul.css({
+                            "left":left + "px",
+                            "z-index" : "-1"
+                        }); 
+                    } else {
+                        ul.css({
+                            "-webkit-transition": "left 1s ease-out 0s",
+                            "transition": "left 1s ease-out 0s",
+                            "z-index" : "2",
+                        }); 
+                        ul.css({
+                            "left":left + "px"
+                        });
+                    }
+                }       
+                
+                setTimeout(function() {
+                    $("#roller-right ul").css({
+                        "-webkit-transition": "none",
+                        "transition": "none",
+                        "display" : "block"
+                    });  
+                    
+                    transflag = false;
+                }, 1100);
+                
+                
+            });
+            
+            $("#roller-left").click(function() {
+                if( transflag ) {
+                    return ;
+                }
+                transflag = true;
+                for( var i=0; i<uls.length; i++ ) {
+                    var ul = $(uls[i]);
+                    var left = parseInt( ul.css("left").replace("px","") );
+                    left = left - 645;
+                    if( left < -645 ) {
+                        left = 1290;
+                        ul.css({
+                            "left":left + "px",
+                            "z-index" : "-1"
+                        }); 
+                    } else {
+                        ul.css({
+                            "-webkit-transition": "left 1s ease-out 0s",
+                            "transition": "left 1s ease-out 0s",
+                            "z-index" : "2",
+                        }); 
+                        ul.css({
+                            "left":left + "px"
+                        });
+                    }
+                }       
+                
+                setTimeout(function() {
+                    $("#roller-right ul").css({
+                        "-webkit-transition": "none",
+                        "transition": "none",
+                        "display" : "block"
+                    });  
+                    
+                    transflag = false;
+                }, 1100);
+                
+            });
+       });
+       function play(url,name) {
+    	   parent.play(url,name);
+       }
+    </script>
+</body>
+</html>

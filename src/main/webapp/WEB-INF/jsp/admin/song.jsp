@@ -44,7 +44,7 @@
                   {field:'singerName',title:'歌手',width:50},
                   {field:'albumName',title:'专辑',width:50},
                   {field:'voteNum',title:'投票数',width:50},
-                  {field:'newSong',title:'是否新歌推荐',width:50,formatter:function(val,row){
+                  {field:'newSong',title:'是否热门推荐',width:50,formatter:function(val,row){
                       if (val == undefined) {
                           return "";
                       }
@@ -466,7 +466,7 @@
                     <td><input name="briefIntroduction" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
                 </tr>
                 <tr>
-                    <td>设置为新歌推荐:</td>
+                    <td>设置为热门推荐:</td>
                     <td>
                         <input type="radio" value="true" name="newSong" checked="checked"/>是
                         <input type="radio" value="false" name="newSong"/>否
@@ -567,7 +567,7 @@
                     <td><input name="briefIntroduction" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
                 </tr>
                 <tr>
-                    <td>设置为新歌推荐:</td>
+                    <td>设置为热门推荐:</td>
                     <td>
                         <input type="radio" value="true" name="newSong"/>是
                         <input type="radio" value="false" name="newSong"/>否

@@ -22,7 +22,9 @@
 					       http://www.springframework.org/schema/util/spring-util.xsd">
    
     <context:annotation-config />  
-    <context:component-scan base-package="com.musiclist.controller"/>
+    <context:component-scan base-package="com.musiclist.controller,com.musiclist.foreground">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
     
     <mvc:annotation-driven /> 
     <mvc:resources location="/html/" mapping="/html/**"/>

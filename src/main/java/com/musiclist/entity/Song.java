@@ -66,7 +66,7 @@ public class Song implements Serializable{
     @Column(name = "song_flag")
     private boolean songFlag;
     
-    /** 是否设置为新歌推荐 */
+    /** 是否设置为热门推荐 */
     @Column(name = "new_song")
     private boolean newSong;
     

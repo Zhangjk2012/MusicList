@@ -19,7 +19,9 @@
   <context:annotation-config/>
   <!-- 加载数据库属性配置文件 -->
   <context:property-placeholder location="classpath:db.properties" />
-  <context:component-scan base-package="com.musiclist.service,com.musiclist.dao"></context:component-scan>
+  <context:component-scan base-package="com.musiclist.service,com.musiclist.dao,com.musiclist.foreground">
+     <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+  </context:component-scan>
   
     <!-- 数据库连接池c3p0配置 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
@@ -91,11 +93,17 @@
         </tx:attributes>
     </tx:advice>
     
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    
     <!-- 配置事务切面 -->
     <aop:config>
         <aop:pointcut id="serviceOperation" expression="execution(* com.musiclist.service..*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
     </aop:config>
+    <!-- <aop:config>
+        <aop:pointcut id="foregroundOperation" expression="execution(* com.musiclist.foreground.ForegroundService.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="foregroundOperation"/>
+    </aop:config> -->
   
   
   <import resource="spring-mongodb-context.xml"/>

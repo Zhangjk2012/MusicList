@@ -42,10 +42,8 @@
 		createPlayer(playerGUI, playerID, settings.size, settings.media, extras);
 
 	}
-
-
+	
 	function createPlayer(playerGUI, mainPlayer, size, media, extras) {
-
 		// Get supplied media from MEDIA array
 		var supplied = new Array;
 		$.each(media, function(key, value) { if (key != 'poster') {supplied.push(key);}});
