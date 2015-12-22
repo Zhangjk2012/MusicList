@@ -37,14 +37,14 @@
 				<div class="g-wrap3">
 					<div class="n-rcmd">
 						<div class="v-hd2">
-							<a href="hotlist" class="tit f-ff2 f-tdn">热门推荐</a>
-							<div class="tab">
+							<a href="hotmore" class="tit f-ff2 f-tdn">热门推荐</a>
+							<!-- <div class="tab">
 								 <a href="/discover/playlist/?cat=%E6%B5%81%E8%A1%8C" class="s-fc3">流行</a>
 								<span class="line">|</span> <a
 									href="rack.html" class="s-fc3">摇滚</a>
-							</div>
+							</div> -->
 							
-							<span class="more"><a href="/discover/playlist/"
+							<span class="more"><a href="hotmore"
 								class="s-fc3">更多</a><i class="cor s-bg s-bg-6">&nbsp;</i></span>
 						</div>
 						
@@ -258,18 +258,17 @@
                         	   var html = '<li>';
                         	   html+='<div class="u-cover u-cover-1">';
                         	   html+='<img class="j-flag" width=140 height=140 src="'+value.picture+'">';
-                        	   html+='<a title="'+value.name+'" href="playmusic.html?id=139784927" class="msk"></a>';
+                        	   html+='<a title="'+value.name+'" href=\'playmusic?id='+value.id+'\' class="msk"></a>';
                         	   html+='<div class="bottom">';
                         	   html+='<a class="icon-play f-fr" title="播放" href="javascript:play(\''+value.songPath+'\',\''+value.name+'\');"></a>';
                         	   html+='<span class="icon-headset"></span>';
                         	   html+='<span class="icon-headset"></span>';
                         	   html+='</div></div>';
                         	   html+='<p class="dec">';
-                        	   html+='<a title="'+value.name+'" href="/playlist?id=139784927" class="tit f-thide s-fc0">'+value.name+'</a>';
+                        	   html+='<a title="'+value.name+'" href=\'playmusic?id='+value.id+'\' class="tit f-thide s-fc0">'+value.name+'</a>';
                         	   html+='</p>';
                         	   html+='<p>';
-                        	   html+='<span class="s-fc4">by</span>';
-                        	   html+='<a title="'+value.singer+'" href="/user/home?id=39002" class="nm nm-icn f-thide s-fc3">'+value.singer+'</a>';
+                        	   html+='<a title="'+value.singer+'" href="javascript:;" class="nm nm-icn f-thide s-fc3">'+value.singer+'</a>';
                         	   html+='<sup class="u-icn u-icn-1"></sup>';
                         	   html+='<p></li>';
                                $("#hotul").append(html);
@@ -298,14 +297,14 @@
                     		   html+='<li>';
                                html+='<div class="u-cover u-cover-alb1">';
                                html+='<img class="j-img" width=100 height=100 src="'+value.picture+'"/>';
-                               html+='<a title="'+value.name+'" href="playmusic.html?id=139784927" class="msk"></a>';
-                               html+='<a class="icon-play f-alpha f-fr" title="播放" href="javascript:;"></a>';
+                               html+='<a title="'+value.name+'" href="album?id='+value.id+'" class="msk"></a>';
+                               html+='<a class="" title="播放" href="javascript:;"></a>';
                                html+='</div>';
                                html+='<p class="f-thide">';
                                html+='<a title="'+value.name+'" href="/playlist?id=139784927" class="s-fc0 tit">'+value.name+'</a>';
                                html+='</p>';
                                html+='<p class="f-thide">';
-                               html+='<a title="'+value.singer+'" href="/user/home?id=39002" class="tit s-fc3">'+value.singer+'</a>';
+                               html+='<a title="'+value.singerName+'" href="javascript:;" class="tit s-fc3">'+value.singerName+'</a>';
                                html+='<p></li>';
                                if (i % 5 == 0) {
                             	   $("#newAlbum").append(ul);

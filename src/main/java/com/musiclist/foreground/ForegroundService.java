@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.musiclist.entity.Album;
+import com.musiclist.entity.Comment;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongCategory;
 import com.musiclist.entity.TitleBar;
+import com.sun.org.apache.regexp.internal.recompile;
 
 /**  
  * @author ZJK
@@ -30,13 +32,17 @@ public class ForegroundService {
     }
     
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<Song> getHotSong(int page,int rows) {
+    public List<Object[]> getHotSong(int page,int rows) {
         return foregroundDao.getHotSong(page, rows);
     }
     
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<Album> getNewAlbum(int page,int rows) {
+    public List<Object[]> getNewAlbum(int page,int rows) {
         return foregroundDao.getNewAlbum(page, rows);
+    }
+    
+    public Album getAlbum(int id) {
+        return (Album) foregroundDao.load(Album.class, id);
     }
     
     @Transactional(propagation = Propagation.REQUIRED)
@@ -44,8 +50,38 @@ public class ForegroundService {
         return foregroundDao.getSongCategory();
     }
     
+    public Object[] getSongInfo(int id) {
+    	return foregroundDao.getSongInfo(id);
+    }
+    
     public List<Song> getSongList(int categoryId) {
         return foregroundDao.getSongByCategory(categoryId);
+    }
+    
+    public Long getSongCount(Integer category) {
+        return foregroundDao.getSongCount(category);
+    }
+    
+    public Long getCommentCountById(Integer id) {
+        return foregroundDao.getCommentCountById(id);
+    }
+    
+    @Transactional(propagation=Propagation.REQUIRED)
+    public Integer saveComment(Comment comment) {
+        return (Integer) foregroundDao.save(comment);
+    }
+    
+    public List<Comment> getCommentsById(int id,int rows,int page) {
+        return foregroundDao.getCommentsById(id, rows, page);
+    }
+    
+    @Transactional(propagation=Propagation.REQUIRED)
+    public int updateCommentSupportNumById(int id) {
+        return foregroundDao.addSupportNum(id);
+    }
+    
+    public String getSingerNameById(int id) {
+        return foregroundDao.getSingerName(id);
     }
     
     public void setForegroundDao(ForegroundDao foregroundDao) {

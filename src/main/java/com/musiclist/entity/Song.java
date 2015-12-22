@@ -51,7 +51,7 @@ public class Song implements Serializable{
     private String briefIntroduction;
     
     /** 歌词 */
-    @Column(name = "lyric", length = 500)
+    @Column(name = "lyric", length = 1000)
     private String lyric;
     
     /** 文件路径 */

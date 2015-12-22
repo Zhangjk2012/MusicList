@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**  
  * @author ZJK
  * @date 2015年12月19日 上午10:23:07
@@ -35,6 +37,7 @@ public class Comment implements Serializable {
     private String content;
     
     @Temporal(TemporalType.TIMESTAMP)
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")
     @Column(name = "time", length = 19)
     private Date time = new Date();
     
@@ -43,6 +46,9 @@ public class Comment implements Serializable {
     
     @Column(name = "reply_content")
     private String replyContent;
+    
+    @Column(name="song_id")
+    private Integer song;
 
     public Integer getId() {
         return id;
@@ -90,6 +96,14 @@ public class Comment implements Serializable {
 
     public void setReplyContent(String replyContent) {
         this.replyContent = replyContent;
+    }
+
+    public Integer getSong() {
+        return song;
+    }
+
+    public void setSong(Integer song) {
+        this.song = song;
     }
 
 }

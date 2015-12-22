@@ -45,11 +45,12 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	var player;
 	$(function(){
-		$('#uniquePlayer-1').videoPlayer({
-             name : '献给爱丽丝',
+		player = $('#uniquePlayer-1').videoPlayer({
+             name : '',
              media : {
-                 mp3 : 'mp3/1450577114679BCD2F87A68D3DE298862FD4BA9F4BC77.mp3'
+                 mp3 : ''
              },
              size : {
                  width : '980px'
@@ -57,11 +58,13 @@
              loadstart : function() {
                  
              }
-         })
+         });
 	});
 	function play(url,name) {
-		var media = {mp3 : url}
-		//$("#uniquePlayer-1").jPlayer("setMedia", media).jPlayer("play");
+		var media = {"mp3" : url}
+		$("#musicName").html(name);
+		player.jPlayer("setMedia",media);
+		player.jPlayer("play");
 	}
 	</script>
 </body>

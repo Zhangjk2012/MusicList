@@ -16,7 +16,7 @@
 			<a tabindex="1" href="#" class="pause smooth noload"></a>\
 			</div>\
 			<div class="progress">\
-			<span>' + settings.name + '</span>\
+			<span id="musicName">' + settings.name + '</span>\
 			<div class="progressbar">\
 			<div class="seekBar">\
 			<div class="playBar"></div>\
@@ -39,7 +39,7 @@
 			$(this).find('.fullScreenOFF').remove();
 		}
 
-		createPlayer(playerGUI, playerID, settings.size, settings.media, extras);
+		return createPlayer(playerGUI, playerID, settings.size, settings.media, extras);
 
 	}
 	
@@ -150,8 +150,7 @@
 
 		// Initialize Player
 		$.extend(options, extras);
-		$(mainPlayer).jPlayer(options);
-
+		return $(mainPlayer).jPlayer(options);
 	}
 
 

@@ -59,15 +59,13 @@ $(function() {
 	
 	
 	$("#flag_ctrl").click(function() {
-		
 		if( $("#flag_more").hasClass("f-hide") ) {
 			 $("#flag_more").removeClass("f-hide");
-			 $(this).text("收起");
+			 $(this).text("收起...");
 		} else {
 			$("#flag_more").addClass("f-hide");
-			$(this).text("展开");
+			$(this).text("展开...");
 		}
-		
 	});
 	
 });

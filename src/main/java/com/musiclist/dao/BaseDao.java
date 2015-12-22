@@ -31,7 +31,7 @@ public class BaseDao {
      * @param id
      * @return
      */
-    public Object load(Class<?> c, String id) {
+    public Object load(Class<?> c, int id) {
         Session session = getSession();
         return session.get(c, id);
     }
