@@ -26,7 +26,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         // 判断如果没有取到用户信息，就跳转到登陆页面，提示用户进行登陆 
         if (obj == null || "".equals(obj.toString())) {  
             logger.warn("没有登录,跳转到登录界面");
-            response.sendRedirect(context+"/admin/preLogin");  
+            String url = context+"/admin/preLogin";
+//            response.sendRedirect(context+"/admin/preLogin");
+//            "if(window!=top){top.location.href='"+url+"';} else {window.location.href='"+url+"'}
+            response.getWriter().write("<script>"+"if(window!=top){top.location.href='"+url+"';} else {window.location.href='"+url+"'}"+"</script>");
             return false;
         } 
         return true;
