@@ -18,7 +18,7 @@ public class SongService {
     @Autowired
     private SongDao songDao;
     
-    public Integer saveSong(Song song) {
+    public Integer saveSong(Song song,String singerName,String albumName) {
         return songDao.save(song);
     }
     

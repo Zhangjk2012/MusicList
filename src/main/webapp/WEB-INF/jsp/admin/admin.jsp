@@ -58,6 +58,19 @@
 </style>
 
 <script type="text/javascript">
+
+var _menus = {"menus":[
+        {"menuid":"1","icon":"icon-sys","menuname":"系统管理",
+            "menus":[{"menuname":"菜单管理","icon":"icon-nav","url":"http://www.16sucai.com"},
+                    {"menuname":"添加用户","icon":"icon-add","url":"demo.html"},
+                    {"menuname":"用户管理","icon":"icon-users","url":"demo2.html"},
+                    {"menuname":"角色管理","icon":"icon-role","url":"demo2.html"},
+                    {"menuname":"权限设置","icon":"icon-set","url":"demo.html"},
+                    {"menuname":"系统日志","icon":"icon-log","url":"demo.html"}
+                ]
+        }
+]};
+
 $(function () {
     InitLeftMenu();
     $('body').layout();
@@ -99,7 +112,7 @@ function createFrame(url) {
 </script>
 
 </head>
-<body class="easyui-layout">
+<body class="easyui-layout" style="overflow-y: hidden" scroll="no">
 	<div region="north" style="height: 120px;">
 		<header style="height:100px;">
 			<h1>音乐榜管理系统</h1>
@@ -111,8 +124,8 @@ function createFrame(url) {
 	</div>
 
 	<div region="west" title="导航菜单" split="true" style="width: 220px">
-	       <div class="easyui-accordion" style="width:210px;height:400px">
-		        <div title="系统管理" style="overflow:auto;padding:10px;">
+       <div class="easyui-accordion" fit="true" border="false">
+	        <div title="系统管理" style="overflow:auto;padding:10px;">
 				<ul>
 					<li><div>
 							<a target="mainFrame" href="admin/singer">歌手管理</a>
@@ -130,7 +143,7 @@ function createFrame(url) {
 						</div></li>
 				</ul>
 			</div>
-		    </div>
+	    </div>
 	</div>
 
 	<div region="center" id="mainPanle">

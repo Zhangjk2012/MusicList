@@ -169,7 +169,7 @@
 			'auto' : false, //选择文件后是否自动上传，默认为true
 			'method' : "post",
 			'multi' : false, //是否为多选，默认为true
-			'removeCompleted' : false, //是否完成后移除序列，默认为true
+			'removeCompleted' : true, //是否完成后移除序列，默认为true
 			'fileSizeLimit' : '10MB', //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
 			fileObjName : 'file',
 			'fileTypeDesc' : 'Image Files', //文件描述
@@ -224,8 +224,26 @@
                 if (obj.result === "true") {
 	                $('#songFlag').val(obj.flag);
 	                $('#songPath').val(obj.path);
-	                $('#songName').val(file.name);
-	                $('#trackLength').val(obj.trackLength);
+	                if (obj.songName != "" && obj.songName != undefined) {
+	                	$('#songName').textbox("setValue",obj.songName);
+	                	$('#songName').textbox("readonly",true);
+	                }
+	                if (obj.trackLength != "" && obj.trackLength != undefined) {
+                        $('#trackLength').textbox("setValue",obj.trackLength);
+                        $('#trackLength').textbox("readonly",true);
+                    }
+	                if (obj.album != "" && obj.album != undefined) {
+                        $('#album').textbox("setValue",obj.album);
+                        $('#album').textbox("readonly",true);
+                    }
+	                if (obj.lyric != "" && obj.lyric != undefined) {
+                        $('#lyric').textbox("setValue",obj.lyric);
+                        $('#lyric').textbox("readonly",true);
+                    }
+	                if (obj.singerName != "" && obj.singerName != undefined) {
+                        $('#singerName').textbox("setValue",obj.singerName);
+                        $('#singerName').textbox("readonly",true);
+                    }
                 } else {
                 	$.messager.alert("失败", obj.info); 
                 }
@@ -266,8 +284,8 @@
         });
         
         $('#win').window({
-            width : 500,
-            height : 650,
+            width : 650,
+            height : 600,
             modal : true,
             closed : true,
             resizable:false,
@@ -278,7 +296,6 @@
                 clearForm();
             },
             onOpen:function() {
-            	singer.combobox("reload","admin/singercombolist");
             	songCategory.combobox("reload","admin/songcategorycombolist");
             }
         });
@@ -300,7 +317,7 @@
             }
 	    });
 		
-		var singer = $('#singer').combobox({   
+		/* var singer = $('#singer').combobox({   
 		    valueField:'id',   
 		    textField:'name',
 		    editable:false,
@@ -309,18 +326,18 @@
 	            	album.combobox("clear").combobox('loadData',data);
 	            },'json');
 	        }
-		});
+		}); */
 		
 		var songCategory = $('#songCategory').combobox({   
             valueField:'id',   
             textField:'name',
             editable:false
         });
-		var album = $('#album').combobox({   
+		/* var album = $('#album').combobox({   
             valueField:'id',   
             textField:'name',
             editable:false
-        });
+        }); */
 		
 		var updateSinger = $('#updateSinger').combobox({   
             valueField:'id',   
@@ -384,8 +401,16 @@
         $('#song_upload').uploadify('cancel', '*');
         $('#songPath').val("");
         $('#songFlag').val("");
-        $('#songName').val("");
-        $('#trackLength').val("");
+        $('#songName').textbox("clear");
+        $('#songName').textbox("readonly",false);
+        $('#trackLength').textbox("clear");
+        $('#trackLength').textbox("readonly",false);
+        $('#album').textbox("clear");
+        $('#album').textbox("readonly",false);
+        $('#lyric').textbox("clear");
+        $('#lyric').textbox("readonly");
+        $('#singerName').textbox("clear");
+        $('#singerName').textbox("readonly",false);
     }
 	
 	function clearUpdateSongUploader() {
@@ -435,35 +460,67 @@
         <form id="songform" action="admin/addSong" data-options="novalidate:true" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
-                    <td>名称:</td>
-                    <td><input name="name" data-options="required:true" class="f1 easyui-textbox"></input></td>
+                    <td colspan="4">
+                        <div id="songQueue"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>歌曲文件:</td>
+                    <td>
+                        <div>
+                            <input type="hidden" id="songPath" name="songPath" />
+                            <input type="hidden" id="songFlag" name="songFlag" />
+                            <input id="song_upload" name="song_upload" type="file" multiple="multiple">
+                        </div>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" id="btnUpload"
+                                onclick="javascript: $('#song_upload').uploadify('upload', '*')">上传</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" id="btnCancelUpload"
+                            onclick="javascript:clearSongUplaoder()">取消</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>文件名称:</td>
+                    <td>
+                        <input id="songName" class="f1 easyui-textbox" data-options="required:true" name="songName"></input>
+                    </td>
+                    <td>时长:</td>
+                    <td>
+                        <input id="trackLength" name="trackLength" class="f1 easyui-textbox"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>歌手:</td>
+                    <td>
+                        <input class="f1 easyui-textbox" data-options="required:true" id="singerName" name="singerName">
+                    </td>
+                    <td>专辑:</td>
+                    <td>
+                        <input class="f1 easyui-textbox" data-options="required:true" id="album" name="albumName">
+                    </td>
                 </tr>
                 <tr>
                     <td>类型:</td>
                     <td>
                         <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="songCategory" name="songCategory">
                     </td>
-                </tr>
-                <tr>
-                    <td>歌手:</td>
+                    <td>初始投票数:</td>
                     <td>
-                        <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="singer" name="singer">
+                        <input class="f1 easyui-numberbox" name="voteNum" value="0"></input>
                     </td>
                 </tr>
                 <tr>
-                    <td>专辑:</td>
-                    <td>
-                        <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="album" name="album">
+                    <td>简介:</td>
+                    <td colspan="3">
+                        <input name="briefIntroduction" data-options="multiline:true" style="height:60px;width:490px;" class="easyui-textbox"></input>
                     </td>
                 </tr>
                 <tr>
                     <td>歌词:</td>
-                    <td>
-                    <input name="lyric" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
-                </tr>
-                <tr>
-                    <td>简介:</td>
-                    <td><input name="briefIntroduction" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
+                    <td colspan="3">
+                        <input name="lyric" id="lyric" data-options="multiline:true" style="height:120px;width:490px;" class="easyui-textbox"></input>
+                    </td>
                 </tr>
                 <tr>
                     <td>设置为热门推荐:</td>
@@ -473,46 +530,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>初始投票数:</td>
-                    <td>
-                        <input class="easyui-numberbox" name="voteNum" value="0"></input>
+                    <td colspan="4">
+                       <div id="fileQueue"></div> 
                     </td>
-                </tr>
-                <tr>
-                    <td>文件名称:</td>
-                    <td><input id="songName" class="easyui-validatebox" data-options="required:true" readonly="readonly" name="songName" class="f1"></input></td>
-                </tr>
-                <tr>
-                    <td>时长:</td>
-                    <td><input id="trackLength" readonly="readonly" name="trackLength" class="f1"></input></td>
-                </tr>
-                <tr>
-                    <td>歌曲文件:</td>
-                    <td>
-						<div>
-                            <input type="hidden" id="songPath" name="songPath" />
-                            <input type="hidden" id="songFlag" name="songFlag" />
-                            <div id="songQueue"></div>
-                            <input id="song_upload" name="song_upload" type="file" multiple="multiple">
-                        </div>
-					</td>
-					<td>
-						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnUpload"
-                                onclick="javascript: $('#song_upload').uploadify('upload', '*')">上传</a>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" id="btnCancelUpload"
-                            onclick="javascript:clearSongUplaoder()">取消</a>
-					</td>
-                </tr>
-                <tr>
-                    <td>歌曲图片:</td>
-                    <td><img id="img" class="f1" height="100" src=""/></td>
                 </tr>
                 <tr>
                     <td>上传图片:</td>
                     <td>
 						<div>
                             <input type="hidden" id="picture" name="picture" />
-                            <div id="fileQueue"></div>
                             <input id="file_upload" name="file_upload" type="file" multiple="multiple">
                         </div>
 					</td>
@@ -522,6 +548,10 @@
                         <a href="javascript:void(0)" class="easyui-linkbutton" id="btnCancelUpload"
                             onclick="javascript:clearUplaoder()">取消</a>
 					</td>
+                </tr>
+                <tr>
+                    <td>歌曲图片:</td>
+                    <td><img id="img" class="f1" height="100" src=""/></td>
                 </tr>
             </table>
         </form>

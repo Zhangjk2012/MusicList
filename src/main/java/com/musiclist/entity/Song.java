@@ -26,10 +26,6 @@ public class Song implements Serializable{
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
     
-    /** 名称 */
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
-    
     /** 歌手 */
     @Column(name = "singer")
     private Integer singer;
@@ -77,6 +73,10 @@ public class Song implements Serializable{
     /** 时长 */
     @Column(name="track_length")
     private String trackLength;
+    
+    /** 是否上架 */
+    @Column(name="up_flag")
+    private Boolean upFlag;
 
     public Integer getId() {
         return id;
@@ -84,14 +84,6 @@ public class Song implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Integer getSinger() {
@@ -188,6 +180,14 @@ public class Song implements Serializable{
 
     public void setTrackLength(String trackLength) {
         this.trackLength = trackLength;
+    }
+
+    public Boolean getUpFlag() {
+        return upFlag;
+    }
+
+    public void setUpFlag(Boolean upFlag) {
+        this.upFlag = upFlag;
     }
     
     

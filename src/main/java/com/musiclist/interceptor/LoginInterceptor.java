@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.musiclist.config.Config;
+import com.musiclist.entity.SysUser;
 
 /**  
  * @author ZJK
@@ -32,6 +33,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             response.getWriter().write("<script>"+"if(window!=top){top.location.href='"+url+"';} else {window.location.href='"+url+"'}"+"</script>");
             return false;
         } 
+        SysUser u = (SysUser) obj;
+        request.setAttribute("username", u.getName());
         return true;
     }
 }

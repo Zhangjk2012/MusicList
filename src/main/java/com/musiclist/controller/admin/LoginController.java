@@ -66,7 +66,6 @@ public class LoginController {
     
     @RequestMapping("index")
     public String postLogin(String username,ModelMap model) {
-        System.out.println("index");
         model.addAttribute("username", username);
         return "admin/admin";
     }

@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.jaudiotagger.audio.mp3.MP3AudioHeader;
 import org.jaudiotagger.audio.mp3.MP3File;
-import org.jaudiotagger.audio.mp4.Mp4FileReader;
-import org.jaudiotagger.audio.mp4.Mp4TagReader;
-import org.jaudiotagger.tag.mp4.Mp4Tag;
+import org.jaudiotagger.tag.id3.AbstractID3v2Frame;
+import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
+import org.jaudiotagger.tag.id3.ID3v1Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,7 +27,7 @@ import com.musiclist.utils.MD5Util;
 @RequestMapping("admin/file")
 public class SongUploadController { 
 	
-	@RequestMapping("/uploadSong"	)
+	@RequestMapping(value = "/uploadSong",produces="text/html;charset=UTF-8")
 	public  @ResponseBody String uploadSong(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
 	    
 	    String path = request.getSession().getServletContext().getRealPath("/");
@@ -35,6 +35,10 @@ public class SongUploadController {
 	    String trackLength = "";
 	    String result = "";
 	    String info = "";
+	    String fileName = "";
+        String lyric = "";
+        String singerName = "";
+        String album = "";
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		String extRt = "";
 		if(multipartResolver.isMultipart(request)){
@@ -65,6 +69,31 @@ public class SongUploadController {
 						        mp3File = new MP3File(localFile);
 						        MP3AudioHeader audioHeader = (MP3AudioHeader) mp3File.getAudioHeader();
 						        trackLength = audioHeader.getTrackLengthAsString();
+						        
+						        if (mp3File.hasID3v2Tag()) {
+						        	AbstractID3v2Tag tag = mp3File.getID3v2Tag();
+						        	AbstractID3v2Frame frame = (AbstractID3v2Frame) tag.getFrame("TALB");
+						        	if (frame != null) {
+						        		album = frame.getContent();
+						        	}
+						        	AbstractID3v2Frame frame1 = (AbstractID3v2Frame) tag.getFrame("TIT2");
+						        	if (frame1 != null) {
+						        		fileName = frame1.getContent();
+						        	}
+						        	AbstractID3v2Frame frame3 = (AbstractID3v2Frame) tag.getFrame("TPE1");
+						        	if (frame3 != null) {
+						        		singerName = frame3.getContent();
+						        	}
+						        	AbstractID3v2Frame frame2 = (AbstractID3v2Frame) tag.getFrame("TEXT");
+						        	if (frame2 != null) {
+						        		lyric = frame2.getContent();
+						        	}
+						        } else if (mp3File.hasID3v1Tag()) {
+						        	ID3v1Tag tag = mp3File.getID3v1Tag();
+						        	album = tag.getFirst("ALBUM");
+						        	fileName = tag.getFirst("TITLE");
+						        	singerName = tag.getFirst("ARTIST");
+						        }
 						        result = "true";
 						    } catch (Exception e) {
 						        localFile.delete();
@@ -85,6 +114,10 @@ public class SongUploadController {
 		o.put("trackLength", trackLength);
 		o.put("result", result);
 		o.put("info", info);
+		o.put("songName", fileName);
+		o.put("album", album);
+		o.put("lyric", lyric);
+		o.put("singerName", singerName);
 		return o.toJSONString();
 	}
 	

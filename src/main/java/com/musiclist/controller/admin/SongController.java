@@ -30,7 +30,7 @@ public class SongController {
 	}
 	
 	@RequestMapping("addSong")
-    public @ResponseBody String addSinger(Song song,HttpServletRequest request, HttpSession session, HttpServletResponse response, ModelMap model) {
+    public @ResponseBody String addSinger(Song song,String singerName,String albumName,HttpServletRequest request, HttpSession session, HttpServletResponse response, ModelMap model) {
         try {
             System.out.println("The id is:"+songService.saveSong(song));
         } catch (Exception e) {
