@@ -39,7 +39,7 @@
                 {field:'ck',checkbox:true} 
             ]], 
 			columns:[[      //每个列具体内容
-	              {field:'name',title:'歌曲名称',width:50},
+	              {field:'songName',title:'歌曲名称',width:50},
 	              {field:'songCategoryName',title:'歌曲类型',width:50},
                   {field:'singerName',title:'歌手',width:50},
                   {field:'albumName',title:'专辑',width:50},
@@ -232,17 +232,9 @@
                         $('#trackLength').textbox("setValue",obj.trackLength);
                         $('#trackLength').textbox("readonly",true);
                     }
-	                if (obj.album != "" && obj.album != undefined) {
-                        $('#album').textbox("setValue",obj.album);
-                        $('#album').textbox("readonly",true);
-                    }
 	                if (obj.lyric != "" && obj.lyric != undefined) {
                         $('#lyric').textbox("setValue",obj.lyric);
                         $('#lyric').textbox("readonly",true);
-                    }
-	                if (obj.singerName != "" && obj.singerName != undefined) {
-                        $('#singerName').textbox("setValue",obj.singerName);
-                        $('#singerName').textbox("readonly",true);
                     }
                 } else {
                 	$.messager.alert("失败", obj.info); 
@@ -296,6 +288,7 @@
                 clearForm();
             },
             onOpen:function() {
+            	singer.combobox("reload","admin/singercombolist");
             	songCategory.combobox("reload","admin/songcategorycombolist");
             }
         });
@@ -317,7 +310,7 @@
             }
 	    });
 		
-		/* var singer = $('#singer').combobox({   
+		var singer = $('#singer').combobox({   
 		    valueField:'id',   
 		    textField:'name',
 		    editable:false,
@@ -326,18 +319,18 @@
 	            	album.combobox("clear").combobox('loadData',data);
 	            },'json');
 	        }
-		}); */
+		});
 		
 		var songCategory = $('#songCategory').combobox({   
             valueField:'id',   
             textField:'name',
             editable:false
         });
-		/* var album = $('#album').combobox({   
+		var album = $('#album').combobox({   
             valueField:'id',   
             textField:'name',
             editable:false
-        }); */
+        });
 		
 		var updateSinger = $('#updateSinger').combobox({   
             valueField:'id',   
@@ -405,12 +398,8 @@
         $('#songName').textbox("readonly",false);
         $('#trackLength').textbox("clear");
         $('#trackLength').textbox("readonly",false);
-        $('#album').textbox("clear");
-        $('#album').textbox("readonly",false);
         $('#lyric').textbox("clear");
         $('#lyric').textbox("readonly");
-        $('#singerName').textbox("clear");
-        $('#singerName').textbox("readonly",false);
     }
 	
 	function clearUpdateSongUploader() {
@@ -493,11 +482,11 @@
                 <tr>
                     <td>歌手:</td>
                     <td>
-                        <input class="f1 easyui-textbox" data-options="required:true" id="singerName" name="singerName">
+                        <input class="f1 easyui-combobox" data-options="required:true" id="singer" name="singer">
                     </td>
                     <td>专辑:</td>
                     <td>
-                        <input class="f1 easyui-textbox" data-options="required:true" id="album" name="albumName">
+                        <input class="f1 easyui-combobox" data-options="required:true" id="album" name="album">
                     </td>
                 </tr>
                 <tr>

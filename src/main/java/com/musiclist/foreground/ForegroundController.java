@@ -149,7 +149,7 @@ public class ForegroundController {
     		model.put("lyric", obj[4]);
     		if (obj[4] != null) {
     		    String lyric = (String) obj[4];
-    		    if (lyric.length() > 40) {
+    		    if (lyric.length() > 50) {
     		        model.put("lyricFirst", lyric.subSequence(0, 40));
     		        model.put("lyricSecond", lyric.subSequence(40, lyric.length()));
     		    } else {

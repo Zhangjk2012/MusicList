@@ -30,7 +30,7 @@ public class SongController {
 	}
 	
 	@RequestMapping("addSong")
-    public @ResponseBody String addSinger(Song song,String singerName,String albumName,HttpServletRequest request, HttpSession session, HttpServletResponse response, ModelMap model) {
+    public @ResponseBody String addSinger(Song song,HttpServletRequest request, HttpSession session, HttpServletResponse response, ModelMap model) {
         try {
             System.out.println("The id is:"+songService.saveSong(song));
         } catch (Exception e) {
@@ -77,21 +77,20 @@ public class SongController {
                     JSONObject jo = new JSONObject();
                     jo.put("id",  a[0]);
                     jo.put("briefIntroduction", a[1]);
-                    jo.put("name",  a[2]);
-                    jo.put("picture",  a[3]);
-                    jo.put("songFlag",  a[4]);
-                    jo.put("album",  a[5]);
-                    jo.put("singer",  a[6]);
-                    jo.put("songCategory",  a[7]);
-                    jo.put("lyric",  a[8]);
-                    jo.put("songCategoryName",  a[9]);
-                    jo.put("singerName",  a[10]);
-                    jo.put("albumName",  a[11]);
-                    jo.put("songName",  a[12]);
-                    jo.put("songPath",  a[13]);
-                    jo.put("newSong",  a[14]);
-                    jo.put("voteNum",  a[15]);
-                    jo.put("trackLength",  a[16]);
+                    jo.put("picture",  a[2]);
+                    jo.put("songFlag",  a[3]);
+                    jo.put("album",  a[4]);
+                    jo.put("singer",  a[5]);
+                    jo.put("songCategory",  a[6]);
+                    jo.put("lyric",  a[7]);
+                    jo.put("songCategoryName",  a[8]);
+                    jo.put("singerName",  a[9]);
+                    jo.put("albumName",  a[10]);
+                    jo.put("songName",  a[11]);
+                    jo.put("songPath",  a[12]);
+                    jo.put("newSong",  a[13]);
+                    jo.put("voteNum",  a[14]);
+                    jo.put("trackLength",  a[15]);
                     newArray.add(jo);
                 }
                 o.put("rows", newArray);
