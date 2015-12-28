@@ -192,7 +192,7 @@
             'auto' : false, //选择文件后是否自动上传，默认为true
             'method' : "post",
             'multi' : false, //是否为多选，默认为true
-            'removeCompleted' : false, //是否完成后移除序列，默认为true
+            'removeCompleted' : true, //是否完成后移除序列，默认为true
             'fileSizeLimit' : '10MB', //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
             fileObjName : 'file',
             'fileTypeDesc' : 'Image Files', //文件描述
@@ -227,6 +227,8 @@
 	                if (obj.songName != "" && obj.songName != undefined) {
 	                	$('#songName').textbox("setValue",obj.songName);
 	                	$('#songName').textbox("readonly",true);
+	                } else {
+	                	$('#songName').textbox("setValue",file.name);
 	                }
 	                if (obj.trackLength != "" && obj.trackLength != undefined) {
                         $('#trackLength').textbox("setValue",obj.trackLength);
@@ -238,36 +240,6 @@
                     }
                 } else {
                 	$.messager.alert("失败", obj.info); 
-                }
-            },
-            onUploadStart : function(file) {
-                //$("#file_upload").uploadify("settings", "formData", { "imgType": "other","imgMode":"big") });
-            }
-        });
-        
-        $('#update_song_upload').uploadify({
-            'swf' : 'static/uploadify/uploadify.swf', //FLash文件路径
-            'buttonText' : '浏  览', //按钮文本
-            'uploader' : 'file/uploadSong', //处理文件上传Action
-            'queueID' : 'updateSongQueue', //队列的ID
-            folder : 'uploader',
-            'queueSizeLimit' : 1, //队列最多可上传文件数量，默认为999
-            'auto' : false, //选择文件后是否自动上传，默认为true
-            'method' : "post",
-            'multi' : false, //是否为多选，默认为true
-            'removeCompleted' : true, //是否完成后移除序列，默认为true
-            'fileSizeLimit' : '20MB', //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
-            'fileTypeDesc' : 'Image Files', //文件描述
-            'fileTypeExts' : '*.mp3; *.mp4', //上传的文件后缀过滤器
-            onUploadSuccess : function(file, data, response) { //一个文件上传成功后的响应事件处理
-                var obj = eval ("(" + data + ")");;
-                if (obj.result === "true") {
-	                $('#updateFlag').val(obj.flag);
-	                $('#updatePath').val(obj.path);
-	                $('#updateName').val(file.name);
-                    $('#updateTrackLength').val(obj.trackLength);
-                } else {
-                    $.messager.alert("失败", obj.info); 
                 }
             },
             onUploadStart : function(file) {
@@ -294,8 +266,8 @@
         });
         
 		$('#updateWin').window({
-	        width : 500,
-	        height : 650,
+	        width : 650,
+	        height : 600,
 	        modal : true,
 	        closed : true,
 	        minimizable : false,
@@ -402,12 +374,6 @@
         $('#lyric').textbox("readonly");
     }
 	
-	function clearUpdateSongUploader() {
-		$('#update_song_upload').uploadify('cancel', '*');
-		$('#updatePath').val("");
-		$('#updateFlag').val("");
-	}
-	
 	function submitUpdateForm() {
         $('#updateform').form('submit', {
             onSubmit : function() {
@@ -424,7 +390,6 @@
         $('#updateform').form('clear');
         $('#update_upload').uploadify('cancel', '*');
         $('#updateImg').attr("src","");
-        $('#update_song_upload').uploadify('cancel', '*');
     }
     function closeUpdateWin() {
         $('#updateWin').window('close');
@@ -553,15 +518,16 @@
         <form id="updateform" action="admin/updateSong" data-options="novalidate:true" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
-                    <td>名称:</td>
+                    <td>文件名称:</td>
                     <td>
-                    <input name="id" type="hidden"></input>
-                    <input name="name" data-options="required:true" class="f1 easyui-textbox"></input></td>
-                </tr>
-                <tr>
-                    <td>类型:</td>
+                        <input type="hidden" name="id">
+                        <input type="hidden" id="songPath" name="songPath" />
+                        <input type="hidden" id="songFlag" name="songFlag" />
+                        <input id="updateName" class="f1 easyui-textbox" data-options="required:true,editable:false" name="songName"></input>
+                    </td>
+                    <td>时长:</td>
                     <td>
-                        <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="updateSongCategory" name="songCategory">
+                        <input id="updateTrackLength" data-options="editable:false" name="trackLength" class="f1 easyui-textbox"></input>
                     </td>
                 </tr>
                 <tr>
@@ -569,21 +535,32 @@
                     <td>
                         <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="updateSinger" name="singer">
                     </td>
-                </tr>
-                <tr>
                     <td>专辑:</td>
                     <td>
                         <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="updateAlbum" name="album">
                     </td>
                 </tr>
                 <tr>
-                    <td>歌词:</td>
+                    <td>类型:</td>
                     <td>
-                    <input name="lyric" data-options="multiline:true" style="height:100px" class="f1 easyui-textbox"></input></td>
+                        <input class="f1 easyui-combobox" data-options="required:true,editable:false" id="updateSongCategory" name="songCategory">
+                    </td>
+                    <td>初始投票数:</td>
+                    <td>
+                        <input class="easyui-numberbox" name="voteNum" value="0"></input>
+                    </td>
                 </tr>
                 <tr>
                     <td>简介:</td>
-                    <td><input name="briefIntroduction" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
+                    <td colspan="3">
+                        <input name="briefIntroduction" data-options="multiline:true" style="height:60px;width:490px;" class="easyui-textbox"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>歌词:</td>
+                    <td colspan="3">
+                        <input name="lyric" id="lyric" data-options="multiline:true" style="height:120px;width:490px;" class="easyui-textbox"></input>
+                    </td>
                 </tr>
                 <tr>
                     <td>设置为热门推荐:</td>
@@ -593,46 +570,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>初始投票数:</td>
-                    <td>
-                        <input class="easyui-numberbox" name="voteNum" value="0"></input>
+                    <td colspan="4">
+                       <div id="updateQueue"></div> 
                     </td>
-                </tr>
-                <tr>
-                    <td>文件名称:</td>
-                    <td><input id="updateName" data-options="required:true" readonly="readonly" name="songName" class="f1"></input></td>
-                </tr>
-                <tr>
-                    <td>时长:</td>
-                    <td><input id="updateTrackLength" readonly="readonly" name="trackLength" class="f1"></input></td>
-                </tr>
-                <tr>
-                    <td>歌曲文件:</td>
-                    <td>
-                        <div>
-                            <input type="hidden" id="updatePath" name="songPath" />
-                            <input type="hidden" id="updateFlag" name="songFlag" />
-                            <div id="updateSongQueue"></div>
-                            <input id="update_song_upload" name="update_song_upload" type="file" multiple="multiple">
-                        </div>
-                    </td>
-                    <td>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" id="btnUpload"
-                                onclick="javascript: $('#update_song_upload').uploadify('upload', '*')">上传</a>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" id="btnCancelUpload"
-                            onclick="javascript:clearUpdateSongUploader()">取消</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>歌曲图片:</td>
-                    <td><img id="updateImg" class="f1" height="100" src=""/></td>
                 </tr>
                 <tr>
                     <td>上传图片:</td>
                     <td>
 						<div>
                             <input type="hidden" id="updatePicture" name="picture" />
-                            <div id="updateQueue"></div>
                             <input id="update_upload" name="update_upload" type="file" multiple="multiple">
                         </div>
 					</td>
@@ -642,6 +588,10 @@
                         <a href="javascript:void(0)" class="easyui-linkbutton" id="btnCancelUpload"
                             onclick="javascript:clearUpdateUplaoder()">取消</a>
 					</td>
+                </tr>
+                <tr>
+                    <td>歌曲图片:</td>
+                    <td><img id="updateImg" class="f1" height="100" src=""/></td>
                 </tr>
             </table>
         </form>

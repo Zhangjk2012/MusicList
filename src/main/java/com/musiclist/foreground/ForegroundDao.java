@@ -26,7 +26,7 @@ public class ForegroundDao extends BaseDao {
     @SuppressWarnings("unchecked")
     public List<Object[]> getHotSong(int page,int rows) {
         StringBuilder sb = new StringBuilder();
-		sb.append("SELECT song.id,song.picture,song.song_flag,s.`name` singerName, song.name,song.song_path");
+		sb.append("SELECT song.id,song.picture,song.song_flag,s.`name` singerName, song.song_name,song.song_path");
 		sb.append(" FROM music_song song");
 		sb.append(" LEFT JOIN music_singer s ON s.id = song.singer ");
 		sb.append(" WHERE song.new_song = TRUE");
@@ -59,7 +59,7 @@ public class ForegroundDao extends BaseDao {
     
     public Object[] getSongInfo(int id) {
     	StringBuilder sb = new StringBuilder();
-		sb.append("SELECT song.song_path,song.picture,song.id,song.name,song.lyric,song.song_flag,s.name singerName,a.name albumName");
+		sb.append("SELECT song.song_path,song.picture,song.id,song.song_name,song.lyric,song.song_flag,s.name singerName,a.name albumName");
 		sb.append(",song.album");		
 		sb.append(" from music_song song");
 		sb.append(" LEFT JOIN music_singer s ON song.singer = s.id");

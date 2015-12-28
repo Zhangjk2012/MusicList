@@ -45,7 +45,7 @@ public class SongDao extends BaseDao {
 
     @SuppressWarnings("unchecked")
     public List<Object[]> getSongIdAndName() {
-        String hql = "select s.id,s.song_name From Song s order by s.id desc";
+        String hql = "select s.id,s.songName From Song s order by s.id desc";
         return getSession().createQuery(hql).list();
     }
     
