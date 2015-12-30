@@ -123,7 +123,6 @@ public class ForegroundController {
                     JSONObject j = new JSONObject();
                     //TODO:需要添加json字符串。
                     j.put("category", sc);
-                    
                 }
                 ja.addAll(category);
                 
@@ -166,7 +165,6 @@ public class ForegroundController {
     			if (b) {
     				retPage = "playmusic";
     			} else {
-    			    //TODO:播放MP4
     				retPage = "playmp4";
     			}
     		}
@@ -197,8 +195,8 @@ public class ForegroundController {
         return jo.toJSONString();
     }
     
-    @RequestMapping("addSupportNum")
-    public @ResponseBody String addSupportNum(int id) {
+    @RequestMapping("addCommentSupportNum")
+    public @ResponseBody String addCommentSupportNum(int id) {
         JSONObject jo = new JSONObject();
         try {
             int result = foregroundService.updateCommentSupportNumById(id);
@@ -212,18 +210,39 @@ public class ForegroundController {
         return jo.toJSONString();
     }
     
+    /**
+     * 歌曲投票
+     * @param id
+     * @return
+     * @Date 2015年12月29日 下午5:36:00
+     */
+    @RequestMapping("addSongSupportNum")
+    public @ResponseBody String addSongSupportNum(int id) {
+        JSONObject jo = new JSONObject();
+        try {
+            int result = foregroundService.updateSongSupportNumById(id);
+            if (result > 0) {
+                jo.put("success", "true");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            jo.put("success", "false");
+        }
+        return jo.toJSONString();
+    }
+    
     @RequestMapping(value="addComment")
-    public @ResponseBody String addComment(String content,int songId,HttpServletRequest request) {
+    public @ResponseBody String addComment(String content,int id,HttpServletRequest request) {
         JSONObject jo = new JSONObject();
         try {
             Comment c = new Comment();
             c.setContent(content);
             String ip = request.getRemoteAddr();
             c.setIp(ip);
-            c.setSong(songId);
+            c.setSong(id);
             c.setSupportNum(0);
             foregroundService.saveComment(c);
-            Long commentCount = foregroundService.getCommentCountById(songId);
+            Long commentCount = foregroundService.getCommentCountById(id);
             jo.put("commentCount", commentCount);
             jo.put("success", "true");
         } catch (Exception e) {
@@ -270,10 +289,41 @@ public class ForegroundController {
             model.put("briefIntroduction", a.getBriefIntroduction());
             String singerName = foregroundService.getSingerNameById(a.getSinger());
             model.put("singerName", singerName);
+            Long commentCount = foregroundService.getCommentCountById(id);
+            model.put("commentcount", commentCount);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "album";
+    }
+    
+    @RequestMapping(value="getSongListByAlbumId",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getSongsByAlbumId(int id) {
+        JSONObject jo = new JSONObject();
+        try {
+            List<Object[]> songs = foregroundService.getSongsByAlbumId(id);
+            JSONArray ja = new JSONArray();
+            if (songs != null) {
+                for (Object[] obj : songs) {
+                    JSONObject j = new JSONObject();
+                    j.put("id", obj[0]);
+                    j.put("songFlag", obj[1]);
+                    j.put("singerName", obj[2]);
+                    j.put("songName", obj[3]);
+                    j.put("songPath", obj[4]);
+                    j.put("voteNum", obj[5]);
+                    j.put("trackLength", obj[6]);
+                    ja.add(j);
+                }
+            }
+            jo.put("total", songs.size());
+            jo.put("data", ja);
+            jo.put("msg", "true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            jo.put("msg", "false");
+        }
+        return jo.toJSONString();
     }
     
     public void replyComment(Comment comment,HttpServletRequest request) {

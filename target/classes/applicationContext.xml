@@ -104,7 +104,4 @@
         <aop:pointcut id="foregroundOperation" expression="execution(* com.musiclist.foreground.ForegroundService.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="foregroundOperation"/>
     </aop:config> -->
-  
-  
-  <import resource="spring-mongodb-context.xml"/>
 </beans>

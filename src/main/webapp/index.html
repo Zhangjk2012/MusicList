@@ -3,7 +3,7 @@
 <head>
 <title>音乐榜</title>
 
-<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="keywords" content="音乐榜">
 <meta name="description" content="this is my page">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -24,9 +24,7 @@
 <body>
     <iframe name="contentFrame" id="contentFrame" class="g-iframe" scrolling="auto" frameborder="0" src="main.html"></iframe>
 	<div class="g-btmbar">
-		<div class="m-playbar m-playbar-unlock"
-			style="top: -7px; visibility: visible;"
-			id="auto-id-KJiuXsacyFLXqdgC">
+		<div class="m-playbar m-playbar-unlock" style="top: -7px; visibility: visible;" id="playBar">
 			<div class="updn">
 				<div class="left f-fl">
 					<a href="javascript:;" class="btn" id="locktbn" hidefocus="true"
@@ -55,8 +53,9 @@
              size : {
                  width : '980px'
              },
-             loadstart : function() {
-                 
+             ended: function() {
+                 //自动播放轮播。
+                 $(this).jPlayer("play");
              }
          });
 	});
@@ -66,6 +65,24 @@
 		player.jPlayer("setMedia",media);
 		player.jPlayer("play");
 	}
+	
+	function stop() {
+		var jpData = player.data('jPlayer');
+		var src = jpData.status.src;
+		if (src == "") {
+			return ;
+		}
+        player.jPlayer("pause");
+    }
+	
+	function showPlayBar() {
+		$("#playBar").css("display","block");
+	}
+	
+	function hidePlayBar() {
+		$("#playBar").css("display","none");
+	}
+	
 	</script>
 </body>
 </html>

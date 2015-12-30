@@ -31,7 +31,7 @@
 	    </div>
 	</div>
 	<!-- 轮播图END -->
-	<div id="discover-module" class="g-bd1 f-cb">
+	<div class="g-bd1 f-cb">
 		<div class="g-mn1">
 			<div class="g-mn1c">
 				<div class="g-wrap3">
@@ -197,6 +197,7 @@
     <script type="text/javascript" src="js/paybutton.js" ></script>
     <script type="text/javascript">
        $(function(){
+    	   parent.showPlayBar();
            $.ajax( {  
                 url:'titlebars',// 跳转到 action  
                 type:'post',  
@@ -219,19 +220,18 @@
                         			$("#bannerButUL").append('<li></li>');
                         		}
                         	}
-                        	//TODO:判断是mp4或者mp3播放。
                             var first = d[len-1];
-                            var img = "<a href='#'><img src='"+first.picture+"' width='980' height='500' alt='' /></a> ";
+                            var img = "<a href='playmusic?id="+first.song+"'><img src='"+first.picture+"' width='980' height='500' alt='' /></a> ";
                             $("#scroll").append(img);
                             $.each(d,function(n,value) { 
-                                img = "<a href='#'><img src='"+value.picture+"' width='980' height='500' alt='' /> </a>";
+                                img = "<a href='playmusic?id="+value.song+"'><img src='"+value.picture+"' width='980' height='500' alt='' /> </a>";
                                 $("#scroll").append(img);
                             });
                             var end = d[0];
-                            img = "<a href='#'><img src='"+end.picture+"' width='980' height='500' alt='' /> </a>";
+                            img = "<a href='playmusic?id="+end.song+"'><img src='"+end.picture+"' width='980' height='500' alt='' /> </a>";
                             $("#scroll").append(img);
                             end = d[1];
-                            img = "<a href='#'><img src='"+end.picture+"' width='980' height='500' alt='' /> </a>";
+                            img = "<a href='playmusic?id="+end.song+"'><img src='"+end.picture+"' width='980' height='500' alt='' /> </a>";
                             $("#scroll").append(img);
                             $("#banner").css("display","block");
                             $("#bannerButUL").css("display","block");
@@ -302,7 +302,7 @@
                                html+='<a class="" title="播放" href="javascript:;"></a>';
                                html+='</div>';
                                html+='<p class="f-thide">';
-                               html+='<a title="'+value.name+'" href="/playlist?id=139784927" class="s-fc0 tit">'+value.name+'</a>';
+                               html+='<a title="'+value.name+'" href="album?id='+value.id+'" class="s-fc0 tit">'+value.name+'</a>';
                                html+='</p>';
                                html+='<p class="f-thide">';
                                html+='<a title="'+value.singerName+'" href="javascript:;" class="tit s-fc3">'+value.singerName+'</a>';

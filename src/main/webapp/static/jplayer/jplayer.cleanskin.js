@@ -50,15 +50,13 @@
 		formats = supplied.join(', ');
 
 		var options = {
-
 			ready: function () {
 				$(this).jPlayer("setMedia", media);
 			},
 
-			// Extra Settings
-			swfPath: "/projects/clean-jplayer-skin/Jplayer.swf",
+			swfPath: "static/jplayer/jquery.jplayer.swf",
 			supplied: formats,
-			solution: 'html, flash',
+			solution: 'html,flash',
 			volume: 0.5,
 			size: size,
 			smoothPlayBar: false,
@@ -119,11 +117,8 @@
 			ended: function() {
 				$(this).jPlayer("setMedia", media);
 			}
-
-
 		};
 
-		// Create the volume slider control
 		$(playerGUI + ' .currentVolume').slider({
 			range: [0, 1],
 			step: 0.01,
@@ -148,7 +143,6 @@
 			}
 		});
 
-		// Initialize Player
 		$.extend(options, extras);
 		return $(mainPlayer).jPlayer(options);
 	}

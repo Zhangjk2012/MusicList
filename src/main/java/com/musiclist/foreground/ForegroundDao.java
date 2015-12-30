@@ -34,6 +34,17 @@ public class ForegroundDao extends BaseDao {
         int skip = rows*(page-1);
         return getSession().createSQLQuery(sb.toString()).setMaxResults(rows).setFirstResult(skip).list();
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<Object[]> getSongsByAlbumId(int albumId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT song.id,song.song_flag,s.`name` singerName, song.song_name,song.song_path,song.vote_num,song.track_length");
+        sb.append(" FROM music_song song");
+        sb.append(" LEFT JOIN music_singer s ON s.id = song.singer ");
+        sb.append(" WHERE song.album = :id");
+        sb.append(" ORDER BY song.vote_num DESC, song.id DESC");
+        return getSession().createSQLQuery(sb.toString()).setInteger("id", albumId).list();
+    }
 
     @SuppressWarnings("unchecked")
     public List<Object[]> getNewAlbum(int page, int rows) {
@@ -112,6 +123,11 @@ public class ForegroundDao extends BaseDao {
     public String getSingerName(int id) {
         String hql = "select name from Singer where id=:id";
         return (String) getSession().createQuery(hql).setInteger("id", id).uniqueResult();
+    }
+
+    public int addSongSupportNum(int id) {
+        String hql = "update music_song set vote_num = vote_num +1 where id=:id";
+        return getSession().createSQLQuery(hql).setInteger("id", id).executeUpdate();
     }
     
 }

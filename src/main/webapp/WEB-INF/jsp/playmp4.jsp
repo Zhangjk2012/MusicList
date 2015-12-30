@@ -12,64 +12,48 @@
 <link rel="stylesheet" href="styles/divers.css">
 <link rel="stylesheet" href="styles/core.css">
 <link href="styles/pagination.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="static/jplayer/css/player.css" type="text/css" media="all" />
+
+
 
 <style type="text/css">
     #wrapper{
 	    width: 900px;
 	    margin: 20px auto;
 	}
+	.webPlayer .controls {
+	    display: block;
+	    position: relative;
+	    height: 40px;
+	    background: #0b0b0b;
+	    color: #969696;
+	    padding: 5px 10px;
+	    z-index: 996;
+	}
 </style>
-<title>播放音乐</title>
+<title>播放MP4</title>
 </head>
 <body>
-<div id="nav"></div>
     <div class="g-bd4 f-cb">
         <div class="g-mn4">
             <div class="g-mn4c">
                 <div class="g-wrap6">
-                    <div class="m-lycifo">
-                        <div class="f-cb">
-                            <div class="cvrwrap f-cb f-pr">
-                                <div class="u-cover u-cover-6 f-fl">
-                                    <img alt="歌曲图片" width=130 height=130 src="${picture }" class="j-img">
-                                </div>
-                            </div>
-                            <div class="cnt" style="width: 614px;">
-                                <div class="hd">
-                                    <div class="tit">
-                                        <em>${name }</em>
-                                    </div>
-                                </div>
-                                <p class="des s-fc4">
-                                                                            歌手：<span title="${singerName }">
-                                        <a class="s-fc7" href="javascript:;">${singerName }</a>
-                                     </span>
-                                </p>
-                                <p class="des s-fc4">
-                                                                            所属专辑：<a href="album?id=${album }" class="s-fc7">${albumName }</a>
-                                </p>
-                                <div class="m-info">
-                                    <div id="content-operation" class="btns f-cb">
-                                        <a href="javascript:play('${songPath }','${name }');" class="u-btn2 u-btn2-2 u-btni-addply f-fl" hidefocus="true" title="播放">
-                                            <i><em class="ply"></em>播放</i>
-                                        </a> 
-                                    </div>
-                                </div>
-                                <div id="lyric-content" class="bd bd-open f-brk f-ib">
-                                        ${lyricFirst }
-                                    <div id="flag_more" class="f-hide">
-                                        ${lyricSecond }
-                                    </div>
-                                    <div class="crl">
-                                        <a id="flag_ctrl" href="javascript:void(0)" class="s-fc7 ">展开...</a>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="n-mv">
+                        <div class="title">
+                            <h2 class="f-ff2" id="flag_title1">${name }</h2>
+                            <a href="javascript:;" class="name s-fc7">${singerName }</a>
+                        </div>
+                        <div class="mv" id="flash_box">
+                            <div id="uniquePlayer-1" class="webPlayer light">
+					            <div id="uniqueContainer-1" class="videoPlayer"></div>
+					        </div>
                         </div>
                     </div>
                     <div class="n-cmt">
                         <input type="hidden" id="commentCount" value="${commentcount}"/>
                         <input type="hidden" id="songId" value="${id}"/>
+                        <input type="hidden" id="songPath" value="${songPath}"/>
+                        <input type="hidden" id="picturePath" value="${picture}"/>
                         <div>
                             <div class="u-title u-title-1">
                                 <h3>
@@ -115,14 +99,36 @@
     <script src="static/js/jquery-1.8.2.min.js"></script>
     <script src="static/js/pagination.min.js"></script>
     <script type="text/javascript" src="js/paybutton.js" ></script>
+    <script type="text/javascript" src="static/jplayer/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="static/jplayer/jplayer.cleanskin.js"></script>
     
     <script type="text/javascript">
     function play(url,name) {
     	parent.play(url,name);
     }
+    
   	var pageIndex = 1;
     var pageSize = 15;
     $(function(){
+    	parent.stop();
+    	parent.hidePlayBar();
+    	$('#uniquePlayer-1').videoPlayer({
+            name : '',
+            media : {
+                m4v: $("#songPath").val(),  
+                poster: $("#picturePath").val()
+            },
+            size : {
+                width : '911px',
+                height: '450px'
+            },
+            loadstart: function() {
+            	$(this).jPlayer("play");
+            },
+            ended: function() {
+                //$(this).jPlayer("play");
+            }
+        });
     	$("#Pagination").pagination({
             dataSource: function(done){
                 var result = [];

@@ -13,7 +13,6 @@ import com.musiclist.entity.Comment;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongCategory;
 import com.musiclist.entity.TitleBar;
-import com.sun.org.apache.regexp.internal.recompile;
 
 /**  
  * @author ZJK
@@ -78,6 +77,15 @@ public class ForegroundService {
     @Transactional(propagation=Propagation.REQUIRED)
     public int updateCommentSupportNumById(int id) {
         return foregroundDao.addSupportNum(id);
+    }
+    
+    @Transactional(propagation=Propagation.REQUIRED)
+    public int updateSongSupportNumById(int id) {
+        return foregroundDao.addSongSupportNum(id);
+    }
+    
+    public List<Object[]> getSongsByAlbumId(int id) {
+        return foregroundDao.getSongsByAlbumId(id);
     }
     
     public String getSingerNameById(int id) {
