@@ -58,7 +58,7 @@ public class ForegroundDao extends BaseDao {
     
     @SuppressWarnings("unchecked")
     public List<SongCategory> getSongCategory() {
-        String hql = "From SongCategory s where s.enable true order by s.id desc";
+        String hql = "From SongCategory s where s.enable = true order by s.id desc";
         return getSession().createQuery(hql).setMaxResults(3).setFirstResult(0).list();
     }
     
@@ -66,6 +66,17 @@ public class ForegroundDao extends BaseDao {
     public List<Song> getSongByCategory(int categoryId) {
         String hql = "From Song s where s.songCategory = :id order by s.voteNum desc";
         return getSession().createQuery(hql).setInteger("id", categoryId).setMaxResults(10).setFirstResult(0).list();
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<Object[]> getAllSongByCategory(int categoryId) {
+    	StringBuilder sb = new StringBuilder();
+        sb.append("SELECT song.id,song.song_flag,s.`name` singerName, song.song_name,song.song_path,song.vote_num,song.track_length");
+        sb.append(" FROM music_song song");
+        sb.append(" LEFT JOIN music_singer s ON s.id = song.singer ");
+        sb.append(" WHERE song.song_category = :id");
+        sb.append(" ORDER BY song.vote_num DESC, song.id DESC");
+        return getSession().createSQLQuery(sb.toString()).setInteger("id", categoryId).list();
     }
     
     public Object[] getSongInfo(int id) {
@@ -103,16 +114,16 @@ public class ForegroundDao extends BaseDao {
      * @return
      * @Date 2015年12月22日 下午2:05:17
      */
-    public Long getCommentCountById(int id) {
-        String hql = "select count(*) from Comment c where c.song = :id";
-        return (Long) getSession().createQuery(hql).setInteger("id", id).uniqueResult();
+    public Long getCommentCountById(int id, int type) {
+        String hql = "select count(*) from Comment c where c.song = :id and c.type = :type";
+        return (Long) getSession().createQuery(hql).setInteger("id", id).setInteger("type", type).uniqueResult();
     }
     
     @SuppressWarnings("unchecked")
-    public List<Comment> getCommentsById(int id,int rows,int page) {
-        String hql = "from Comment c where c.song = :id order by c.id desc";
+    public List<Comment> getCommentsById(int id,int type, int rows,int page) {
+        String hql = "from Comment c where c.song = :id and c.type = :type order by c.id desc";
         int skip = rows*(page-1);
-        return getSession().createQuery(hql).setInteger("id", id).setFirstResult(skip).setMaxResults(rows).list();
+        return getSession().createQuery(hql).setInteger("id", id).setInteger("type", type).setFirstResult(skip).setMaxResults(rows).list();
     }
     
     public int addSupportNum(int id) {

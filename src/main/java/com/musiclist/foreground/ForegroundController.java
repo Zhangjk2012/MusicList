@@ -107,6 +107,10 @@ public class ForegroundController {
         return jo.toJSONString();
     }
     
+    /**
+     * 获取榜单歌曲类别
+     * @return
+     */
     @RequestMapping(value="songcategory",produces="text/html;charset=UTF-8")
     public @ResponseBody String getSongCategory() {
         JSONObject jo = new JSONObject();
@@ -115,17 +119,25 @@ public class ForegroundController {
             JSONArray ja = new JSONArray();
             if (category != null && category.size() > 0) {
                 for (SongCategory sc : category) {
+                	JSONObject categoryJo = new JSONObject();
+                	categoryJo.put("name", sc.getName());
+                	categoryJo.put("picture", sc.getPicture());
+                	categoryJo.put("id", sc.getId());
                     JSONArray array = new JSONArray();
                     List<Song> songs= foregroundService.getSongList(sc.getId());
                     if (songs != null) {
-                        array.addAll(songs);
+                    	for (Song song : songs) {
+                    		JSONObject songJo = new JSONObject();
+                    		songJo.put("id", song.getId());
+                    		songJo.put("songName", song.getSongName());
+                    		songJo.put("songPath", song.getSongPath());
+                    		songJo.put("voteNum", song.getVoteNum());
+                    		array.add(songJo);
+						}
+                    	categoryJo.put("songs", array);
                     }
-                    JSONObject j = new JSONObject();
-                    //TODO:需要添加json字符串。
-                    j.put("category", sc);
+                    ja.add(categoryJo);
                 }
-                ja.addAll(category);
-                
             }
             jo.put("data", ja);
             jo.put("msg", "true");
@@ -158,7 +170,7 @@ public class ForegroundController {
     		model.put("singerName", obj[6]);
     		model.put("albumName", obj[7]);
     		model.put("album", obj[8]);
-    		Long commentCount = foregroundService.getCommentCountById(id);
+    		Long commentCount = foregroundService.getCommentCountById(id,1);
     		model.put("commentcount", commentCount);
     		if (obj[5] != null) {
     			Boolean b = (Boolean) obj[5]; 
@@ -180,11 +192,11 @@ public class ForegroundController {
      * @Date 2015年12月19日 下午3:17:53
      */
     @RequestMapping(value="commentlist",produces="text/html;charset=UTF-8")
-    public @ResponseBody String getCommentsById(int songId,int rows,int page) {
+    public @ResponseBody String getCommentsById(int songId,int type,int rows,int page) {
         JSONArray ja = new JSONArray();
         JSONObject jo = new JSONObject();
         try {
-            List<Comment> comments = foregroundService.getCommentsById(songId,rows, page);
+            List<Comment> comments = foregroundService.getCommentsById(songId,type,rows, page);
             ja.addAll(comments);
             jo.put("data", ja);
             jo.put("msg", "true");
@@ -232,7 +244,7 @@ public class ForegroundController {
     }
     
     @RequestMapping(value="addComment")
-    public @ResponseBody String addComment(String content,int id,HttpServletRequest request) {
+    public @ResponseBody String addComment(String content,int id,int type, HttpServletRequest request) {
         JSONObject jo = new JSONObject();
         try {
             Comment c = new Comment();
@@ -241,8 +253,9 @@ public class ForegroundController {
             c.setIp(ip);
             c.setSong(id);
             c.setSupportNum(0);
+            c.setType(type);
             foregroundService.saveComment(c);
-            Long commentCount = foregroundService.getCommentCountById(id);
+            Long commentCount = foregroundService.getCommentCountById(id, type);
             jo.put("commentCount", commentCount);
             jo.put("success", "true");
         } catch (Exception e) {
@@ -289,7 +302,7 @@ public class ForegroundController {
             model.put("briefIntroduction", a.getBriefIntroduction());
             String singerName = foregroundService.getSingerNameById(a.getSinger());
             model.put("singerName", singerName);
-            Long commentCount = foregroundService.getCommentCountById(id);
+            Long commentCount = foregroundService.getCommentCountById(id,2);
             model.put("commentcount", commentCount);
         } catch (Exception e) {
             e.printStackTrace();
@@ -323,6 +336,79 @@ public class ForegroundController {
             e.printStackTrace();
             jo.put("msg", "false");
         }
+        return jo.toJSONString();
+    }
+    
+    @RequestMapping("toplist")
+    public String topList(String id, ModelMap model) {
+    	model.put("categoryId", id);
+        return "toplist";
+    }
+    
+    @RequestMapping(value="getCategory",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getCategory() {
+		JSONObject jo = new JSONObject();
+		try {
+			List<SongCategory> category = foregroundService.getSongCategory();
+			JSONArray ja = new JSONArray();
+			if (category != null && category.size() > 0) {
+				for (SongCategory sc : category) {
+					JSONObject categoryJo = new JSONObject();
+					categoryJo.put("name", sc.getName());
+					categoryJo.put("picture", sc.getPicture());
+					categoryJo.put("id", sc.getId());
+					ja.add(categoryJo);
+				}
+			}
+			jo.put("data", ja);
+			jo.put("msg", "true");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.put("msg", "false");
+		}
+		return jo.toJSONString();
+    }
+    
+    @RequestMapping(value="getSongsByCategoryId",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getSongsByCategoryId(int id) {
+    	JSONObject jo = new JSONObject();
+    	try {
+    		JSONArray ja = new JSONArray();
+    		List<Object[]> songs = foregroundService.getAllSongByCategory(id);
+            if (songs != null) {
+                for (Object[] obj : songs) {
+                    JSONObject j = new JSONObject();
+                    j.put("id", obj[0]);
+                    j.put("songFlag", obj[1]);
+                    j.put("singerName", obj[2]);
+                    j.put("songName", obj[3]);
+                    j.put("songPath", obj[4]);
+                    j.put("voteNum", obj[5]);
+                    j.put("trackLength", obj[6]);
+                    ja.add(j);
+                }
+            }
+			jo.put("data", ja);
+			jo.put("total", songs.size());
+			jo.put("msg", "true");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.put("msg", "false");
+		}
+    	return jo.toJSONString();
+    }
+    
+    /**
+     * 获取歌曲榜单评论
+     * @param id
+     * @return
+     */
+    @RequestMapping("getCategorySongCommentsCount")
+    public @ResponseBody String getCategorySongComments(int id) {
+    	Long commentCount = foregroundService.getCommentCountById(id,3);
+    	JSONObject jo = new JSONObject();
+    	jo.put("commentCount", commentCount);
+    	jo.put("msg", "true");
         return jo.toJSONString();
     }
     

@@ -57,12 +57,16 @@ public class ForegroundService {
         return foregroundDao.getSongByCategory(categoryId);
     }
     
+    public List<Object[]> getAllSongByCategory(int categoryId) {
+        return foregroundDao.getAllSongByCategory(categoryId);
+    }
+    
     public Long getSongCount(Integer category) {
         return foregroundDao.getSongCount(category);
     }
     
-    public Long getCommentCountById(Integer id) {
-        return foregroundDao.getCommentCountById(id);
+    public Long getCommentCountById(Integer id, int type) {
+        return foregroundDao.getCommentCountById(id,type);
     }
     
     @Transactional(propagation=Propagation.REQUIRED)
@@ -70,8 +74,8 @@ public class ForegroundService {
         return (Integer) foregroundDao.save(comment);
     }
     
-    public List<Comment> getCommentsById(int id,int rows,int page) {
-        return foregroundDao.getCommentsById(id, rows, page);
+    public List<Comment> getCommentsById(int id,int type,int rows,int page) {
+        return foregroundDao.getCommentsById(id,type, rows, page);
     }
     
     @Transactional(propagation=Propagation.REQUIRED)

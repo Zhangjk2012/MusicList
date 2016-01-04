@@ -151,7 +151,7 @@
     	var songId = $("#songId").val();
     	$.ajax( {  
             url:'commentlist',// 跳转到 action  
-            data:{rows:pageSize,songId:songId,page:index[0]},
+            data:{rows:pageSize,songId:songId,page:index[0],type:1},
             type:'post',  
             cache:false,
             dataType:'json',  
@@ -212,7 +212,7 @@
             url:'addComment',
             type:'post',  
             cache:false,
-            data:{"content":content,"id":songId},
+            data:{"content":content,"id":songId,type:1},
             dataType:'json',  
             success:function(data) {  
                 if(data.success =="true"){  

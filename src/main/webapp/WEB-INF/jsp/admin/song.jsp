@@ -344,7 +344,7 @@
 		});
 	}
 	function clearForm() {
-		$('#songform').form('clear');
+		$('#songform').form('reset');
 		$('#file_upload').uploadify('cancel', '*');
 		$('#song_upload').uploadify('cancel', '*');
 		$('#img').attr("src","");
@@ -387,7 +387,7 @@
         });
     }
     function clearUpdateForm() {
-        $('#updateform').form('clear');
+        $('#updateform').form('reset');
         $('#update_upload').uploadify('cancel', '*');
         $('#updateImg').attr("src","");
     }

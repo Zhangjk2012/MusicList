@@ -49,6 +49,10 @@ public class Comment implements Serializable {
     
     @Column(name="song_id")
     private Integer song;
+    
+    /** 类型评论：歌曲评论:1、专辑评论:2、榜单评论:3 */
+    @Column(name="comment_type")
+    private int type;
 
     public Integer getId() {
         return id;
@@ -105,5 +109,13 @@ public class Comment implements Serializable {
     public void setSong(Integer song) {
         this.song = song;
     }
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 }

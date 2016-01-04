@@ -22,7 +22,14 @@
 <title>播放音乐</title>
 </head>
 <body>
-<div id="nav"></div>
+    <div id="nav" class="m-subnav j-tflag">
+        <div class="wrap f-pr">
+            <ul class="nav">
+                <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
+                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
+            </ul>
+        </div>
+    </div>
     <div class="g-bd4 f-cb">
         <div class="g-mn4">
             <div class="g-mn4c">
@@ -145,7 +152,7 @@
     	var songId = $("#songId").val();
     	$.ajax( {  
             url:'commentlist',// 跳转到 action  
-            data:{rows:pageSize,songId:songId,page:index[0]},
+            data:{rows:pageSize,songId:songId,page:index[0],type:1},
             type:'post',  
             cache:false,
             dataType:'json',  
@@ -206,7 +213,7 @@
             url:'addComment',
             type:'post',  
             cache:false,
-            data:{"content":content,"id":songId},
+            data:{"content":content,"id":songId,type:1},
             dataType:'json',  
             success:function(data) {  
                 if(data.success =="true"){  

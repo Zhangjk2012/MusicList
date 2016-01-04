@@ -83,10 +83,10 @@ public class TitleBarController {
                     jo.put("id",  a[0]);
                     jo.put("enable", a[1]);
                     jo.put("name",  a[2]);
-                    jo.put("song",  a[3]);
-                    jo.put("subtitle",  a[4]);
-                    jo.put("title",  a[5]);
-                    jo.put("picture",  a[6]);
+                    jo.put("picture",  a[3]);
+                    jo.put("song",  a[4]);
+                    jo.put("subtitle",  a[5]);
+                    jo.put("title",  a[6]);
                     jo.put("songName",  a[7]);
                     newArray.add(jo);
                 }

@@ -29,7 +29,14 @@
 </style>
 </head>
 <body>
-<div id="nav"></div>
+     <div id="nav" class="m-subnav j-tflag">
+      <div class="wrap f-pr">
+          <ul class="nav">
+              <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
+              <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
+          </ul>
+      </div>
+     </div>
     <input type="hidden" id="songcount" value="${songcount}"/>
     <div class="g-bd" id="m-disc-pl-c">
         <div class="g-wrap p-pl f-pr">
