@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="styles/divers.css">
 <link rel="stylesheet" href="styles/core.css">
 <link href="styles/pagination.css" rel="stylesheet" type="text/css">
-<title>热门推荐</title>
+<title>新碟上架</title>
 
 <style type="text/css">
 #s-list .m-cvrlst li {
@@ -37,15 +37,15 @@
  -->          </ul>
       </div>
      </div>
-    <input type="hidden" id="songcount" value="${songcount}"/>
+    <input type="hidden" id="albumcount" value="${albumcount}"/>
     <div class="g-bd" id="m-disc-pl-c">
         <div class="g-wrap p-pl f-pr">
             <div class="u-title f-cb">
                 <h3>
-                    <span class="f-ff2 d-flag">热门推荐</span>
+                    <span class="f-ff2 d-flag">新碟上架</span>
                 </h3>
             </div>
-            <ul class="m-cvrlst f-cb" id="musicList">
+            <ul class="m-cvrlst m-cvrlst-alb2 f-cb" id="albumList">
             </ul>
         </div>
 	</div>
@@ -63,7 +63,7 @@
     	$("#Pagination").pagination({
     		dataSource: function(done){
                 var result = [];
-                var len = $("#songcount").val();
+                var len = $("#albumcount").val();
                 var pages = len / pageSize+1;
                 for(var i = 1; i < pages; i++){
                     result.push(i);
@@ -78,12 +78,12 @@
    		}); 
     });
     function pageCallback(index, jq) {
-    	initSong(index);
+    	initAlbum(index);
     } 
-    function initSong(pageIndex) {
-    	$("#musicList").html("");
+    function initAlbum(pageIndex) {
+    	$("#albumList").html("");
     	$.ajax( {  
-            url:'hotmorelist?rows='+pageSize+'&page='+pageIndex,// 跳转到 action  
+            url:'albumlistmore?rows='+pageSize+'&page='+pageIndex,// 跳转到 action  
             type:'post',  
             cache:false,
             dataType:'json',  
@@ -95,22 +95,16 @@
                     } else {
                         $.each(d,function(n,value) {
                             var html = '<li>';
-                            html+='<div class="u-cover u-cover-1">';
-                            html+='<img class="j-flag" width=140 height=140 src="'+value.picture+'">';
-                            html+='<a title="'+value.name+'" href=\'playmusic?id='+value.id+'\' class="msk"></a>';
-                            html+='<div class="bottom">';
-                            html+='<a class="icon-play f-fr" title="播放" href="javascript:play(\''+value.songPath+'\',\''+value.name+'\');"></a>';
-                            html+='<span class="icon-headset"></span>';
-                            html+='<span class="icon-headset"></span>';
-                            html+='</div></div>';
+                            html+='<div class="u-cover u-cover-alb2">';
+                            html+='<img width=130 height=130 src="'+value.picture+'">';
+                            html+='<a title="'+value.name+'" href="album?id='+value.id+'" class="msk"></a>';
+                            html+='</div>';
                             html+='<p class="dec">';
-                            html+='<a title="'+value.name+'" href=\'playmusic?id='+value.id+'\' class="tit f-thide s-fc0">'+value.name+'</a>';
+                            html+='<a title="'+value.name+'" href="album?id='+value.id+'" class="tit f-thide s-fc0">'+value.name+'</a>';
                             html+='</p>';
-                            html+='<p>';
-                            html+='<a title="'+value.singer+'" href="javascript:;" class="nm nm-icn f-thide s-fc3">'+value.singer+'</a>';
-                            html+='<sup class="u-icn u-icn-1"></sup>';
-                            html+='<p></li>';
-                            $("#musicList").append(html);
+                            html+='<p><a title="'+value.singerName+'" href="javascript:;" class="nm nm-icn f-thide s-fc3">'+value.singerName+'</a></p>';
+                            html+='</li>';
+                            $("#albumList").append(html);
                         });
                     }
                 }  

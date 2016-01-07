@@ -290,6 +290,38 @@ public class ForegroundController {
         return jo.toJSONString();
     }
     
+    @RequestMapping(value="albumlistmore",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getNewAlbumMore(int rows, int page) {
+        JSONObject jo = new JSONObject();
+        try {
+            List<Object[]> albums = foregroundService.getNewAlbum(page, rows);
+            JSONArray ja = new JSONArray();
+            if (albums != null) {
+                for (Object[] obj : albums) {
+                    JSONObject j = new JSONObject();
+                    j.put("id", obj[0]);
+                    j.put("name", obj[1]);
+                    j.put("picture", obj[2]);
+                    j.put("singerName", obj[3]);
+                    ja.add(j);
+                }
+            }
+            jo.put("data", ja);
+            jo.put("msg", "true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            jo.put("msg", "false");
+        }
+        return jo.toJSONString();
+    }
+    
+    @RequestMapping(value="getmorenewdisc",produces="text/html;charset=UTF-8")
+    public String getNewDiscList(ModelMap model) {
+        Long count = foregroundService.getAlbumCount();
+        model.put("albumcount",count);
+        return "newdisc";
+    }
+    
     @RequestMapping(value="album",produces="text/html;charset=UTF-8")
     public String turnAlbumPage(int id, ModelMap model) {
         try {

@@ -44,6 +44,10 @@ public class ForegroundService {
         return (Album) foregroundDao.load(Album.class, id);
     }
     
+    public Long getAlbumCount() {
+        return foregroundDao.getAlbumCount();
+    }
+    
     @Transactional(propagation = Propagation.REQUIRED)
     public List<SongCategory> getSongCategory() {
         return foregroundDao.getSongCategory();

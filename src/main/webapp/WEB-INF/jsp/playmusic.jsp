@@ -26,8 +26,8 @@
         <div class="wrap f-pr">
             <ul class="nav">
                 <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
-            </ul>
+<!--                 <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
+ -->            </ul>
         </div>
     </div>
     <div class="g-bd4 f-cb">

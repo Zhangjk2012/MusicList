@@ -18,8 +18,8 @@
         <div class="wrap f-pr">
             <ul class="nav">
                 <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
-            </ul>
+<!--                 <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
+ -->            </ul>
         </div>
     </div>
     <!-- 轮播图START -->
@@ -61,8 +61,8 @@
 					<div class="n-rcmd" id="personalRec"></div>
 					<div class="n-new">
 						<div class="v-hd2">
-							<a href="newdisc.html" class="tit f-ff2 f-tdn">新碟上架</a> <span
-								class="more"><a href="/discover/album/" class="s-fc3">更多</a><i
+							<a href="getmorenewdisc" class="tit f-ff2 f-tdn">新碟上架</a> <span
+								class="more"><a href="getmorenewdisc" class="s-fc3">更多</a><i
 								class="cor s-bg s-bg-6">&nbsp;</i></span>
 						</div>
 						<div class="n-disk">
@@ -189,9 +189,13 @@
                        if (len == 0) {
                        } else {
                     	   var i = 1;
-                    	   var ul = '<ul class="f-cb roller-flag" style="left:-645px;">';
+                    	   var k = 0;
                     	   var html = "";
+                    	   var ul = '<ul class="f-cb roller-flag" style="left:-645px;">';
                     	   for (i=1;i<=len;i++) {
+                    		   if (k != "0") {
+                    			   ul = '<ul class="f-cb roller-flag" style="left: 0px; transition: none;">';
+                    		   }
                     		   var value = d[i-1];
                     		   html+='<li>';
                                html+='<div class="u-cover u-cover-alb1">';
@@ -210,6 +214,7 @@
                             	   $("#newAlbum").append(html);
                             	   $("#newAlbum").append("</ul>");
                             	   html = "";
+                            	   k = 1;
                                }
                     	   }
                     	   if (html != "") {
@@ -247,19 +252,19 @@
 	                           html += '<dt class="top"><div class="cver u-cover u-cover-4">';
                                html += '<img class="j-img" alert="picture" src="'+value.picture+'" width="100" height="100">';
                                html += '<a href="toplist?id='+value.id+'" class="msk" title="'+value.name+'"></a>';
-                               html += '</div><div class="tit"><a href="toplist?id='+value.id+'" title="'+value.name+'"><h3 class="f-fs1 f-thide">'+value.name+'</h3></a></div></dt>';
+                               html += '</div><div class="tit"><a href="toplist?id='+value.id+'" title="'+value.name+'"><h3 class="f-fs1 f-thide">'+value.name+'</h3></a></div></dt><dd><ol>';
                                if (value.songs.length != 0) {
                             	   var songs = value.songs;
                             	   $.each(songs, function(i,val){    
-                            		   html += '<dd><ol><li onmouseover="this.className=\'z-hvr\'" onmouseout="this.className=\'\'">';
+                            		   html += '<li onmouseover="this.className=\'z-hvr\'" onmouseout="this.className=\'\'">';
                             		   html += '<span class="no no-top">'+(i+1)+'</span>';
                             		   html += '<a href="playmusic?id='+val.id+'" class="nm s-fc0 f-thide" title="'+val.songName+'">'+val.songName+'</a>';
                             		   html += '<div class="oper"><a href="javascript:play(\''+val.songPath+'\',\''+val.songName+'\');" class="s-bg s-bg-11" title="播放" hidefocus="true"></a>';
                             		   html += '<a class=" like zan u-icn2 u-icn2-12 " style="margin-top: 3px;margin-right: 0px;"></a> <a href="javascript:;" onclick="songVoteNum(\''+val.id+'\',this)" class="like" style="line-height: 23px;">(<span>'+val.voteNum+'</span>)</a>';
-                            		   html += '</div></li></ol>';
+                            		   html += '</div></li>';
                            		   });
                                }
-                           	   html += '<div class="more"><a href="toplist?id='+value.id+'" class="s-fc0">查看全部&gt;</a></div></dd></dl>';
+                           	   html += '</ol><div class="more"><a href="toplist?id='+value.id+'" class="s-fc0">查看全部&gt;</a></div></dd></dl>';
                                $("#toplist").append(html);
                            }
                        }
@@ -297,14 +302,13 @@
                 }       
                 
                 setTimeout(function() {
-                	alert("dddd")
                     $("#roller-right ul").css({
                         "-webkit-transition": "none",
                         "transition": "none",
                         "display" : "block"
                     });  
                     transflag = false;
-                }, 100);
+                }, 1100);
             });
             
             $("#roller-left").click(function() {

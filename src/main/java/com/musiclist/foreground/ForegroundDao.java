@@ -108,6 +108,11 @@ public class ForegroundDao extends BaseDao {
         return result;
     }
     
+    public Long getAlbumCount() {
+        String hql = "select count(*) from Album a";
+        return (Long) getSession().createQuery(hql).uniqueResult();
+    }
+    
     /**
      * 获取歌曲的评论
      * @param id
