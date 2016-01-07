@@ -269,7 +269,7 @@ public class ForegroundController {
     public @ResponseBody String getNewAlbum() {
         JSONObject jo = new JSONObject();
         try {
-            List<Object[]> albums = foregroundService.getNewAlbum(1, 15);
+            List<Object[]> albums = foregroundService.getNewAlbum(1, 20);
             JSONArray ja = new JSONArray();
             if (albums != null) {
                 for (Object[] obj : albums) {

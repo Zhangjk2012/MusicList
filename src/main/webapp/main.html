@@ -190,12 +190,8 @@
                        } else {
                     	   var i = 1;
                     	   var k = 0;
-                    	   var html = "";
-                    	   var ul = '<ul class="f-cb roller-flag" style="left:-645px;">';
+                    	   var html = '<ul class="f-cb roller-flag" style="left:-0px;">';
                     	   for (i=1;i<=len;i++) {
-                    		   if (k != "0") {
-                    			   ul = '<ul class="f-cb roller-flag" style="left: 0px; transition: none;">';
-                    		   }
                     		   var value = d[i-1];
                     		   html+='<li>';
                                html+='<div class="u-cover u-cover-alb1">';
@@ -210,19 +206,23 @@
                                html+='<a title="'+value.singerName+'" href="javascript:;" class="tit s-fc3">'+value.singerName+'</a>';
                                html+='<p></li>';
                                if (i % 5 == 0) {
-                            	   $("#newAlbum").append(ul);
+                            	   html += "</ul>";
                             	   $("#newAlbum").append(html);
-                            	   $("#newAlbum").append("</ul>");
+                            	   k+= 645;
                             	   html = "";
-                            	   k = 1;
+                            	   if (i == len) {
+                            		   break;
+                            	   }
+                            	   html = '<ul class="f-cb roller-flag" style="left: '+k+'px;">';;
+                            	   
                                }
                     	   }
                     	   if (html != "") {
-                    		   $("#newAlbum").append(ul);
+                    		   html += "</ul>";
                                $("#newAlbum").append(html);
-                               $("#newAlbum").append("</ul>");
                                html = "";
                     	   }
+                    	   initClick();
                        }
                    }  
                 }
@@ -271,83 +271,86 @@
                    }  
                 }
            });
-           
-           var uls = $("#album-roller").find("ul");
-            var transflag = false;
-            $("#roller-right").click(function() {
-                if( transflag ) {
-                    return ;
-                }
-                transflag = true;
-                for( var i=0; i<uls.length; i++ ) {
-                    var ul = $(uls[i]);
-                    var left = parseInt( ul.css("left").replace("px","") );
-                    left = left + 645;
-                    if( left > 1290 ) {
-                        left = -645;
-                        ul.css({
-                            "left":left + "px",
-                            "z-index" : "-1"
-                        }); 
-                    } else {
-                        ul.css({
-                            "-webkit-transition": "left 1s ease-out 0s",
-                            "transition": "left 1s ease-out 0s",
-                            "z-index" : "2",
-                        }); 
-                        ul.css({
-                            "left":left + "px"
-                        });
-                    }
-                }       
-                
-                setTimeout(function() {
-                    $("#roller-right ul").css({
-                        "-webkit-transition": "none",
-                        "transition": "none",
-                        "display" : "block"
-                    });  
-                    transflag = false;
-                }, 1100);
-            });
-            
-            $("#roller-left").click(function() {
-                if( transflag ) {
-                    return ;
-                }
-                transflag = true;
-                for( var i=0; i<uls.length; i++ ) {
-                    var ul = $(uls[i]);
-                    var left = parseInt( ul.css("left").replace("px","") );
-                    left = left - 645;
-                    if( left < -645 ) {
-                        left = 1290;
-                        ul.css({
-                            "left":left + "px",
-                            "z-index" : "-1"
-                        }); 
-                    } else {
-                        ul.css({
-                            "-webkit-transition": "left 1s ease-out 0s",
-                            "transition": "left 1s ease-out 0s",
-                            "z-index" : "2",
-                        }); 
-                        ul.css({
-                            "left":left + "px"
-                        });
-                    }
-                }       
-                setTimeout(function() {
-                    $("#roller-right ul").css({
-                        "-webkit-transition": "none",
-                        "transition": "none",
-                        "display" : "block"
-                    });  
-                    transflag = false;
-                }, 1100);
-            });
             autoTurn();
        });
+       
+       function initClick() {
+    	   var uls = $("#album-roller").find("ul");
+           var transflag = false;
+           $("#roller-right").click(function() {
+               if( transflag ) {
+                   return ;
+               }
+               transflag = true;
+               for( var i=0; i<uls.length; i++ ) {
+                   var ul = $(uls[i]);
+                   var left = parseInt( ul.css("left").replace("px","") );
+                   left = left + 645;
+                   if( left > 1290 ) {
+                       left = -645;
+                       ul.css({
+                           "left":left + "px",
+                           "z-index" : "-1"
+                       }); 
+                   } else {
+                       ul.css({
+                           "-webkit-transition": "left 1s ease-out 0s",
+                           "transition": "left 1s ease-out 0s",
+                           "z-index" : "2",
+                       }); 
+                       ul.css({
+                           "left":left + "px"
+                       });
+                   }
+               }       
+               
+               setTimeout(function() {
+                   $("#roller-right ul").css({
+                       "-webkit-transition": "none",
+                       "transition": "none",
+                       "display" : "block"
+                   });  
+                   transflag = false;
+               }, 1100);
+           });
+           
+           $("#roller-left").click(function() {
+               if( transflag ) {
+                   return ;
+               }
+               transflag = true;
+               for( var i=0; i<uls.length; i++ ) {
+                   var ul = $(uls[i]);
+                   var left = parseInt( ul.css("left").replace("px","") );
+                   left = left - 645;
+                   if( left < -645 ) {
+                       left = 1290;
+                       ul.css({
+                           "left":left + "px",
+                           "z-index" : "-1"
+                       }); 
+                   } else {
+                       ul.css({
+                           "-webkit-transition": "left 1s ease-out 0s",
+                           "transition": "left 1s ease-out 0s",
+                           "z-index" : "2",
+                       }); 
+                       ul.css({
+                           "left":left + "px"
+                       });
+                   }
+               }       
+               setTimeout(function() {
+                   $("#roller-right ul").css({
+                       "-webkit-transition": "none",
+                       "transition": "none",
+                       "display" : "block"
+                   });  
+                   transflag = false;
+               }, 1100);
+           });
+       }
+       
        function play(url,name) {
     	   parent.play(url,name);
        }

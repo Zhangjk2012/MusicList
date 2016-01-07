@@ -85,7 +85,7 @@ public class ForegroundDao extends BaseDao {
 		sb.append(",song.album");		
 		sb.append(" from music_song song");
 		sb.append(" LEFT JOIN music_singer s ON song.singer = s.id");
-		sb.append(" LEFT JOIN music_albums a ON a.singer = s.id");
+		sb.append(" LEFT JOIN music_albums a ON a.id = song.album");
 		sb.append(" where song.id=:id");
 		return (Object[]) getSession().createSQLQuery(sb.toString()).setInteger("id", id).uniqueResult();
     }

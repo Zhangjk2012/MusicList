@@ -198,7 +198,7 @@
         });
 		$('#updateWin').window({
 	        width : 500,
-	        height : 400,
+	        height : 500,
 	        modal : true,
 	        closed : true,
 	        minimizable : false,
