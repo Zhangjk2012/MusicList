@@ -128,8 +128,10 @@
                             var end = d[0];
                             img = "<a href='playmusic?id="+end.song+"'><img src='"+end.picture+"' width='980' height='500' alt='' /> </a>";
                             $("#scroll").append(img);
-                            end = d[1];
-                            img = "<a href='playmusic?id="+end.song+"'><img src='"+end.picture+"' width='980' height='500' alt='' /> </a>";
+                            if (len > 1) {
+	                            end = d[1];
+	                            img = "<a href='playmusic?id="+end.song+"'><img src='"+end.picture+"' width='980' height='500' alt='' /> </a>";
+                            }
                             $("#scroll").append(img);
                             $("#banner").css("display","block");
                             $("#bannerButUL").css("display","block");

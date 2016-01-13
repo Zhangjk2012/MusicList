@@ -1,10 +1,5 @@
 package com.musiclist.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 
 /**  
@@ -74,4 +69,9 @@ public class MD5Util {
     public static String byteToHex(byte bt) {
         return HEX_DIGITS[(bt & 0xf0) >> 4] + "" + HEX_DIGITS[bt & 0xf];
     }
+    
+    public static void main(String[] args) {
+        System.out.println(MD5Util.string2MD5("beidamusictop"));
+    }
+    
 }

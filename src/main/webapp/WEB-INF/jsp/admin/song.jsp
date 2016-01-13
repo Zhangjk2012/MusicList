@@ -371,7 +371,7 @@
         $('#trackLength').textbox("clear");
         $('#trackLength').textbox("readonly",false);
         $('#lyric').textbox("clear");
-        $('#lyric').textbox("readonly");
+        $('#lyric').textbox("readonly",false);
     }
 	
 	function submitUpdateForm() {
@@ -521,8 +521,8 @@
                     <td>文件名称:</td>
                     <td>
                         <input type="hidden" name="id">
-                        <input type="hidden" id="songPath" name="songPath" />
-                        <input type="hidden" id="songFlag" name="songFlag" />
+                        <input type="hidden" name="songPath" />
+                        <input type="hidden" name="songFlag" />
                         <input id="updateName" class="f1 easyui-textbox" data-options="required:true,editable:false" name="songName"></input>
                     </td>
                     <td>时长:</td>
@@ -559,7 +559,7 @@
                 <tr>
                     <td>歌词:</td>
                     <td colspan="3">
-                        <input name="lyric" id="lyric" data-options="multiline:true" style="height:120px;width:490px;" class="easyui-textbox"></input>
+                        <input name="lyric" id="updateLyric" data-options="multiline:true" style="height:120px;width:490px;" class="easyui-textbox"></input>
                     </td>
                 </tr>
                 <tr>
