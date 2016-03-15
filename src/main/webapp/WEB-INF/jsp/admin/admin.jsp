@@ -117,7 +117,7 @@ function createFrame(url) {
 		<header style="height:100px;">
 			<h1>音乐榜管理系统</h1>
 			<div style="float: right">
-				<span >欢迎登录：${username}.</span> 
+				<span >欢迎登录：${sessionScope.musiclist.name}.</span> 
 				<a href="admin/logout">退出</a>
 			</div>
 		</header>
@@ -151,7 +151,8 @@ function createFrame(url) {
 	   <div id="tabs" class="easyui-tabs" fit="true" border="false">
             <div title="主页" style="padding: 20px;" id="home">
                 <h1>
-                    Welcome...</h1>
+                    Welcome...
+                </h1>
             </div>
         </div>
 	   

@@ -41,7 +41,6 @@ public class LoginController {
             return "admin/login"; 
         } else {
             session.setAttribute(Config.SESSIONCONTEXT, u);
-            model.addAttribute("username", username);
             return "redirect:index";
         }
     }
