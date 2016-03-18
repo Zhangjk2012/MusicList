@@ -21,7 +21,7 @@ import com.musiclist.utils.MD5Util;
 @RequestMapping("admin/file")
 public class UploadController { 
 	
-	@RequestMapping("/uploadImg"	)
+	@RequestMapping("/uploadImg")
 	public  @ResponseBody String uploadImg(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
 	    
 	    String path = request.getSession().getServletContext().getRealPath("/");

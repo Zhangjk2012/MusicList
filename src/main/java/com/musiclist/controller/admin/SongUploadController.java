@@ -28,7 +28,7 @@ import com.musiclist.utils.MD5Util;
 public class SongUploadController { 
 	
 	@RequestMapping(value = "/uploadSong",produces="text/html;charset=UTF-8")
-	public  @ResponseBody String uploadSong(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
+	public @ResponseBody String uploadSong(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
 	    
 	    String path = request.getSession().getServletContext().getRealPath("/");
 	    String absolutPath = "";
