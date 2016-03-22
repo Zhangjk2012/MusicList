@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>文件过滤功能——plupload演示demo</title>
+    <link rel="stylesheet" type="text/css" href="kindeditor/themes/simple/simple.css" />
     <script src="static/js/jquery.min.js"></script>
     <script src="plupload-2.1.8/js/plupload.full.min.js"></script>
+    <script type="text/javascript" src="kindeditor/kindeditor-min.js"></script>
+    <script type="text/javascript" src="kindeditor/lang/zh_CN.js"></script>
     <style>
+    textarea {
+        display: block;
+    }
     body{ font-size: 12px;}
     body,p,div{ padding: 0; margin: 0;}
     .wraper{ padding: 30px 0;}
@@ -23,6 +29,7 @@
     </style>
 </head>
 <body>
+    <textarea name="content" style="width:700px;height:200px;visibility:hidden;">KindEditor</textarea>
     <p class="tip1">该demo只允许选取jpg,gif,png,bmp格式的图片文件和rar格式的压缩文件，且文件体积不能超过100Kb，而且不允许选择重复的文件</p>
     <p class="tip2">注意：该demo把上传的地址设为了一个静态的html页面，所以文件并不会真正的上传到服务器，但这不会影响上传功能的演示！</p>
     <div class="wraper">
@@ -35,7 +42,18 @@
         </ul>
     </div>
     <script>
-
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[name="content"]', {
+            resizeType : 0,
+            allowPreviewEmoticons : false,
+            allowImageUpload : false,
+            items : [
+                'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+        });
+    });
     var uploader = new plupload.Uploader({ //实例化一个plupload上传对象
         browse_button : 'browse',
         url : 'admin/file/uploadSong',

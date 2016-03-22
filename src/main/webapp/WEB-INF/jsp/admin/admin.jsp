@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css"/>
 <script type="text/javascript" src="static/js/jquery.min.js"></script>
 <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="static/easyui/locale/easyui-lang-zh_CN.js"></script>
 <style type="text/css">
         .easyui-accordion ul
         {
@@ -157,7 +158,6 @@ function createFrame(url) {
         </div>
 	   
 	</div>
-
 	<!-- <div region="south" style="height: 50px;">
 		<center>
 			<h3>页面底部</h3>
