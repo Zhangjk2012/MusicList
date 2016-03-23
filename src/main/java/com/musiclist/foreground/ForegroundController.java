@@ -131,7 +131,7 @@ public class ForegroundController {
                     		songJo.put("id", song.getId());
                     		songJo.put("songName", song.getSongName());
                     		songJo.put("songPath", song.getSongPath());
-                    		songJo.put("voteNum", song.getVoteNum());
+//                    		songJo.put("voteNum", song.getVoteNum());
                     		array.add(songJo);
 						}
                     	categoryJo.put("songs", array);

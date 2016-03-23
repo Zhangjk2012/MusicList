@@ -70,29 +70,10 @@ public class SongController {
         JSONArray newArray = new JSONArray();  
         JSONObject o = new JSONObject();
         try {
-            List<Object[]> list = songService.getSongs(rows, page);
+            List<Song> list = songService.getSongs(rows, page);
             if (list != null) {
                 Long count  = songService.getCount();
-                for (Object[] a : list) {
-                    JSONObject jo = new JSONObject();
-                    jo.put("id",  a[0]);
-                    jo.put("briefIntroduction", a[1]);
-                    jo.put("picture",  a[2]);
-                    jo.put("songFlag",  a[3]);
-                    jo.put("album",  a[4]);
-                    jo.put("singer",  a[5]);
-                    jo.put("songCategory",  a[6]);
-                    jo.put("lyric",  a[7]);
-                    jo.put("songCategoryName",  a[8]);
-                    jo.put("singerName",  a[9]);
-                    jo.put("albumName",  a[10]);
-                    jo.put("songName",  a[11]);
-                    jo.put("songPath",  a[12]);
-                    jo.put("newSong",  a[13]);
-                    jo.put("voteNum",  a[14]);
-                    jo.put("trackLength",  a[15]);
-                    newArray.add(jo);
-                }
+                newArray.addAll(list);
                 o.put("rows", newArray);
                 o.put("total", count);
             }

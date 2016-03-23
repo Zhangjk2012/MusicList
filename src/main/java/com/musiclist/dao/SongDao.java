@@ -25,7 +25,7 @@ public class SongDao extends BaseDao {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Object[]> getSongs(int page, int rows) {
+    public List<Song> getSongs(int page, int rows) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT song.id,song.brief_introduction,song.picture,song.song_flag,song.album,song.singer,song.song_category,song.lyric,");
         sb.append("category.name categoryName,s.`name` singerName ,a.`name` albumName, song.song_name,song.song_path,song.new_song,song.vote_num,song.track_length ");
@@ -34,8 +34,12 @@ public class SongDao extends BaseDao {
         sb.append(" LEFT JOIN music_singer s ON s.id = song.singer");
         sb.append(" LEFT JOIN music_albums a ON a.id = song.album");
         sb.append(" ORDER BY song.new_song DESC,song.vote_num DESC, song.id DESC");
+        
+        String hql = "from Song s order by s.id desc";
+        
+        
         int skip = rows*(page-1);
-        return getSession().createSQLQuery(sb.toString()).setMaxResults(rows).setFirstResult(skip).list();
+        return getSession().createQuery(hql).setMaxResults(rows).setFirstResult(skip).list();
     }
     
     public int remove(int id) {

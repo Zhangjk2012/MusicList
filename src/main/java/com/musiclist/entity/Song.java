@@ -28,15 +28,11 @@ public class Song implements Serializable{
     
     /** 歌手 */
     @Column(name = "singer")
-    private Integer singer;
+    private String singerName;
     
-    /** 歌曲类型 */
-    @Column(name = "song_category")
-    private Integer songCategory;
-    
-    /** 所属专辑 */
+    /** 专辑名称 */
     @Column(name = "album")
-    private Integer album;
+    private String albumName;
     
     /** 图片路径 */
     @Column(name = "picture", length = 100)
@@ -62,14 +58,6 @@ public class Song implements Serializable{
     @Column(name = "song_flag")
     private boolean songFlag;
     
-    /** 是否设置为热门推荐 */
-    @Column(name = "new_song")
-    private boolean newSong;
-    
-    /** 投票数 */
-    @Column(name = "vote_num")
-    private Long voteNum;
-    
     /** 时长 */
     @Column(name="track_length")
     private String trackLength;
@@ -84,14 +72,6 @@ public class Song implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getSinger() {
-        return singer;
-    }
-
-    public void setSinger(Integer singer) {
-        this.singer = singer;
     }
 
     public String getPicture() {
@@ -134,44 +114,12 @@ public class Song implements Serializable{
         this.songFlag = songFlag;
     }
 
-	public Integer getAlbum() {
-		return album;
-	}
-
-	public void setAlbum(Integer album) {
-		this.album = album;
-	}
-
-    public Integer getSongCategory() {
-        return songCategory;
-    }
-
-    public void setSongCategory(Integer songCategory) {
-        this.songCategory = songCategory;
-    }
-
     public String getSongName() {
         return songName;
     }
 
     public void setSongName(String songName) {
         this.songName = songName;
-    }
-
-    public boolean isNewSong() {
-        return newSong;
-    }
-
-    public void setNewSong(boolean newSong) {
-        this.newSong = newSong;
-    }
-
-    public Long getVoteNum() {
-        return voteNum;
-    }
-
-    public void setVoteNum(Long voteNum) {
-        this.voteNum = voteNum;
     }
 
     public String getTrackLength() {
@@ -189,7 +137,20 @@ public class Song implements Serializable{
     public void setUpFlag(Boolean upFlag) {
         this.upFlag = upFlag;
     }
-    
-    
-    
+
+    public String getSingerName() {
+        return singerName;
+    }
+
+    public void setSingerName(String singerName) {
+        this.singerName = singerName;
+    }
+
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
+    }
 }

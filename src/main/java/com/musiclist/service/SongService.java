@@ -22,7 +22,7 @@ public class SongService {
         return songDao.save(song);
     }
     
-    public List<Object[]> getSongs(int rows,int page) {
+    public List<Song> getSongs(int rows,int page) {
         try {
             return songDao.getSongs(page, rows);
         } catch (Exception e) {

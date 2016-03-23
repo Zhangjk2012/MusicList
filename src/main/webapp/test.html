@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>文件过滤功能——plupload演示demo</title>
     <link rel="stylesheet" type="text/css" href="kindeditor/themes/simple/simple.css" />
+    <link rel="stylesheet" href="plupload-2.1.8/js/jquery.plupload.queue/css/jquery.plupload.queue.css" type="text/css" media="screen" />
     <script src="static/js/jquery.min.js"></script>
     <script src="plupload-2.1.8/js/plupload.full.min.js"></script>
+    <script type="text/javascript" src="plupload-2.1.8/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
     <script type="text/javascript" src="kindeditor/kindeditor-min.js"></script>
     <script type="text/javascript" src="kindeditor/lang/zh_CN.js"></script>
     <style>
@@ -29,6 +31,16 @@
     </style>
 </head>
 <body>
+
+    <form method="post" action="dump.php">  
+	    <div id="uploader">
+	        <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
+	    </div>
+	    <input type="submit" value="Send" />
+	</form>
+	    
+
+    
     <textarea name="content" style="width:700px;height:200px;visibility:hidden;">KindEditor</textarea>
     <p class="tip1">该demo只允许选取jpg,gif,png,bmp格式的图片文件和rar格式的压缩文件，且文件体积不能超过100Kb，而且不允许选择重复的文件</p>
     <p class="tip2">注意：该demo把上传的地址设为了一个静态的html页面，所以文件并不会真正的上传到服务器，但这不会影响上传功能的演示！</p>
@@ -42,6 +54,33 @@
         </ul>
     </div>
     <script>
+    
+    $("#uploader").pluploadQueue($.extend({
+        runtimes : 'flash,html4,html5',
+        url : 'localUpLoadProgram',
+        max_file_size : '10mb',
+        file_data_name:'file',
+        unique_names:true,
+        filters : [{title : "Image files", extensions : "jpg,gif,png"}],
+        init:{
+            FileUploaded:function(uploader,file,response){
+                if(response.response){
+                    var rs = $.parseJSON(response.response);
+                    if(rs.status){
+                        files.push(file.name);
+                    }else{
+                        errors.push(file.name);
+                    }
+                }
+            },
+            UploadComplete:function(uploader,fs){
+                //var e= errors.length ? ",失败"+errors.length+"个("+errors.join("、")+")。" : "。";
+               // alert("上传完成！共"+fs.length+"个。成功"+files.length+e);
+                //target.window("close");
+            }
+        }
+    },(false ? {chunk_size:'1mb'} : {})));
+    
     var editor;
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {

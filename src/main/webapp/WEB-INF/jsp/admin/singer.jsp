@@ -13,7 +13,6 @@
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/bootstrap/easyui.css" />
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="static/uploadify/uploadify.css" />
-<link rel="stylesheet" type="text/css" href="kindeditor/themes/simple/simple.css" />
 <style type="text/css">
 	.f1{
         width:200px;
@@ -26,7 +25,6 @@
 <body>
 	<table id="singerlist"></table>
 	<div id="win" iconCls="icon-save" title="歌手信息">
-	   <textarea name="content" style="width:200px;height:100px;visibility:hidden;">KindEditor</textarea>
         <form id="singerform" action="admin/addSinger" data-options="novalidate:true" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
@@ -35,7 +33,9 @@
                 </tr>
                 <tr>
                     <td>简介:</td>
-                    <td><input name="briefIntroduction" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input></td>
+                    <td>
+                    <input name="briefIntroduction" data-options="multiline:true" style="height:60px" class="f1 easyui-textbox"></input>
+                    </td>
                 </tr>
                 <tr>
                     <td>歌手图片:</td>
@@ -109,22 +109,9 @@
 <script type="text/javascript" src="static/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="static/uploadify/swfobject.js"></script>
 <script type="text/javascript" src="static/uploadify/jquery.uploadify.min.js"></script>
-<script type="text/javascript" src="kindeditor/kindeditor-min.js"></script>
-<script type="text/javascript" src="kindeditor/lang/zh_CN.js"></script>
+
 <script>
     var datagrid;
-    var editor;
-    KindEditor.ready(function(K) {
-        editor = K.create('textarea[name="content"]', {
-            resizeType : 0,
-            allowPreviewEmoticons : false,
-            allowImageUpload : false,
-            items : [
-                'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                'insertunorderedlist', '|', 'emoticons', 'image', 'link']
-        });
-    });
     $(function(){
         datagrid=$("#singerlist").datagrid({
             url:"admin/singerlist",//加载的URL
