@@ -22,7 +22,7 @@ import com.musiclist.utils.MD5Util;
 public class UploadController { 
 	
 	@RequestMapping("/uploadImg")
-	public  @ResponseBody String uploadImg(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
+	public @ResponseBody String uploadImg(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
 	    
 	    String path = request.getSession().getServletContext().getRealPath("/");
 	    String absolutPath = "";

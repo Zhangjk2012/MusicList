@@ -22,7 +22,7 @@ function createImgUpload(obj,showObj,callback) {
 	});
 }
 
-function createMp3Upload(obj,showObj,callback) {
+function createMp34Upload(obj,showObj,callback) {
 	$('#'+obj).uploadify({
 		'swf' : 'static/uploadify/uploadify.swf', //FLash文件路径
 		'buttonText' : '浏  览', //按钮文本
@@ -36,8 +36,8 @@ function createMp3Upload(obj,showObj,callback) {
 		'removeCompleted' : true, //是否完成后移除序列，默认为true
 		'fileSizeLimit' : '20MB', //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
 		fileObjName : 'file',
-		'fileTypeDesc' : 'Mp3 Files', //文件描述
-		'fileTypeExts' : '*.mp3', //上传的文件后缀过滤器
+		'fileTypeDesc' : 'Mp3/MP4 Files', //文件描述
+		'fileTypeExts' : '*.mp3;*.mp4', //上传的文件后缀过滤器
 		onUploadSuccess : function(file, data, response) { //一个文件上传成功后的响应事件处理
 			callback(file, data);
 		},

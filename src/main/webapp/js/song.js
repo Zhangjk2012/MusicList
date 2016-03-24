@@ -7,6 +7,7 @@ $(function(){
 		rownumbers:true,
 		fit:true,//自动补全
 		fitColumns:true,
+		loadMsg:'loading...',
 		singleSelect:true,
 		frozenColumns:[[ 
             {field:'ck',checkbox:true} 
@@ -118,7 +119,7 @@ $(function(){
         displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
     });
 	
-	createMp3Upload("song_upload","songQueue",function(file,data){
+	createMp34Upload("song_upload","songQueue",function(file,data){
 		var obj = eval ("(" + data + ")");
         if (obj.result === "true") {
             $('#songFlag').val(obj.flag);
@@ -134,10 +135,6 @@ $(function(){
             if (obj.trackLength != "" && obj.trackLength != undefined) {
                 $('#trackLength').textbox("setValue",obj.trackLength);
                 $('#trackLength').textbox("readonly",true);
-            }
-            if (obj.lyric != "" && obj.lyric != undefined) {
-                $('#lyric').textbox("setValue",obj.lyric);
-                $('#lyric').textbox("readonly",true);
             }
         } else {
             $.messager.alert("失败", obj.info); 
@@ -160,6 +157,7 @@ $(function(){
         minimizable : false,
         maximizable : false,
         collapsible : false,
+        footer:'#addFooter',
         onBeforeClose : function() {
             clearForm();
         },
@@ -174,6 +172,7 @@ $(function(){
         minimizable : false,
         maximizable : false,
         collapsible : false,
+        footer:'#updateFooter',
         onBeforeClose : function() {
             clearUpdateForm();
         },
@@ -200,8 +199,8 @@ function submitForm() {
 
 function clearForm() {
 	$('#songform').form('reset');
-	$('#file_upload').uploadify('cancel', '*');
-	$('#song_upload').uploadify('cancel', '*');
+	clearUploadFile("file_upload");
+	clearUploadFile("song_upload");
 	$('#img').attr("src","");
 	// 清空富文本里面的内容
 	KindEditor.instances[0].html("");
@@ -213,21 +212,19 @@ function closeWin() {
 }
 
 function clearUplaoder() {
-	$('#file_upload').uploadify('cancel', '*');
+	clearUploadFile("file_upload");
 	$('#picture').val("");
 	$('#img').attr("src","");
 }
 
 function clearSongUplaoder() {
-    $('#song_upload').uploadify('cancel', '*');
+	clearUploadFile("song_upload");
     $('#songPath').val("");
     $('#songFlag').val("");
     $('#songName').textbox("clear");
     $('#songName').textbox("readonly",false);
     $('#trackLength').textbox("clear");
     $('#trackLength').textbox("readonly",false);
-    $('#lyric').textbox("clear");
-    $('#lyric').textbox("readonly",false);
     $('#singer').textbox("clear");
     $('#album').textbox("clear");
 }
@@ -247,7 +244,7 @@ function submitUpdateForm() {
 
 function clearUpdateForm() {
     $('#updateform').form('reset');
-    $('#update_upload').uploadify('cancel', '*');
+    clearUploadFile("update_upload");
     $('#updateImg').attr("src","");
     KindEditor.instances[1].html("");
 }
@@ -265,7 +262,7 @@ function winUpdateOpen(row) {
 }
 
 function clearUpdateUplaoder() {
-    $('#update_upload').uploadify('cancel', '*');
+	clearUploadFile("update_upload");
     $('#updatePicture').val("");
     $('#updateImg').attr("src","");
 }

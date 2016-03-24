@@ -106,7 +106,7 @@
                 </tr>
             </table>
         </form>
-	    <div style="text-align:center;padding:5px;">
+	    <div id="addFooter" style="text-align:center;padding:5px;">
 	    	<a href="javascript:void(0)" icon="icon-ok" class="easyui-linkbutton" onclick="submitForm()">保存</a>
 	    	<a href="javascript:void(0)" icon="icon-cancel" class="easyui-linkbutton" onclick="closeWin()">取消</a>
 	    </div>
@@ -177,7 +177,7 @@
                 </tr>
             </table>
         </form>
-        <div style="text-align:center;padding:5px">
+        <div id="updateFooter" style="text-align:center;padding:5px">
             <a href="javascript:void(0)" icon="icon-ok" class="easyui-linkbutton" onclick="submitUpdateForm()">保存</a>
             <a href="javascript:void(0)" icon="icon-cancel" class="easyui-linkbutton" onclick="closeUpdateWin()">取消</a>
         </div>
