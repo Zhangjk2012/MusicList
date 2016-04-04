@@ -40,6 +40,8 @@ public class SongService {
     }
     
     public int removeSong(int id) {
+    	songDao.removeAlbumSong(id);
+    	songDao.removeSongListSong(id);
         return songDao.remove(id);
     }
     
@@ -47,8 +49,38 @@ public class SongService {
         return songDao.getCount();
     }
 
+    public List<Song> getHotSongs(int rows,int page) {
+    	return songDao.getHotSongs(page, rows);
+    }
+    
+    public Long getHotSongCount() {
+        return songDao.getHotSongCount();
+    }
+    
+    public Long getSelectHotSongCount(String songName) {
+        return songDao.getSelectHotSongCount(songName);
+    }
+    
+    public List<Song> getSelectHotSongs(String songName, int rows,int page) {
+    	return songDao.getSelectHotSongs(songName, page, rows);
+    }
+    
+    public void setHotSong(String[] songIds) {
+    	StringBuffer sb = new StringBuffer();
+    	sb.append("update music_song set hot_song = true where");
+		for (String id : songIds) {
+			sb.append(" id=").append(id).append(" or");
+		}
+		sb.replace(sb.length()-2, sb.length(), "");
+		songDao.setHotSong(sb.toString());
+	}
+    
+    public void removeHotSong(String songId) {
+    	songDao.removeHotSong(songId);
+	}
+    
     public void setSongDao(SongDao songDao) {
         this.songDao = songDao;
     }
-    
+
 }

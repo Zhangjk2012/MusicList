@@ -116,19 +116,35 @@ function createFrame(url) {
 	        <div title="系统管理" style="overflow:auto;padding:10px;">
 				<ul>
 					<li><div>
-							<a target="mainFrame" href="admin/singer">歌手管理</a>
-						</div></li>
+						<a target="mainFrame" href="admin/singer">歌手管理</a></div></li>
 					<li><div>
-							<a target="mainFrame" href="admin/album">专辑管理</a>
-						</div></li>
+                        <a target="mainFrame" href="admin/song">歌曲管理</a></div></li>
 					<li><div>
-                        <a target="mainFrame" href="admin/songcategory">歌曲类型管理</a></div></li>
+						<a target="mainFrame" href="admin/album">专辑管理</a>	</div></li>
 					<li><div>
-							<a target="mainFrame" href="admin/song">歌曲管理</a>
-						</div></li>
-					<li><div>
-							<a target="mainFrame" href="admin/titlebar">标题栏管理</a>
-						</div></li>
+                        <a target="mainFrame" href="admin/songlistmanager">榜单管理</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/hotsong/tolist">热门推荐</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/newalbum/topopular">流行新碟上架</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/newalbum/torock">摇滚新碟上架</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/tonews">新闻推送管理</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/topartner">合作伙伴管理</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/newalbum/torock">电台列表</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/newalbum/torock">评委阵容</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/newalbum/torock">榜单介绍</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/newalbum/torock">日常节目</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/newalbum/torock">摇滚节目</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/newalbum/torock">流行节目</a></div></li>
 				</ul>
 			</div>
 	    </div>

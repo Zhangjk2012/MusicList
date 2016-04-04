@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.musiclist.dao.AlbumDao;
 import com.musiclist.dao.SingerDao;
 import com.musiclist.entity.Album;
+import com.musiclist.entity.Song;
 
 /**  
  * @author ZJK
@@ -39,6 +40,34 @@ public class AlbumService {
         }
     }
     
+    public List<Song> getSelectSongs(String songName, int rows, int page) {
+    	return albumDao.getSelectSongs(songName,rows,page);
+    }
+    
+    public Long getSelectSongsCount(String songName) {
+		return albumDao.getSelectSongsCount(songName);
+	}
+    
+    public int addSongs2Album(String albumId, String[] songsId) {
+    	
+    	StringBuffer hql = new StringBuffer("insert into music_album_song (album_id,song_id) values ");
+    	
+    	for (String id : songsId) {
+    		hql.append("(").append(albumId).append(",").append(id).append("),");
+		}
+    	hql.replace(hql.length()-1, hql.length(), ";");
+    	return albumDao.addSongs2Album(hql.toString());
+    }
+    
+    public List<Song> getSelectSongsByAlbumId(String albumId) {
+    	return albumDao.getSelectSongsByAlbumId(albumId);
+    }
+    
+    public void deleteSelectSong(int songId){
+    	albumDao.deleteSelectSong(songId);
+    }
+    
+    
     public String getSingerName(int id) {
         return singerDao.getSingerName(id);
     }
@@ -48,6 +77,8 @@ public class AlbumService {
     }
     
     public int removeAlbum(int id) {
+    	albumDao.removeAlbumSongs(id);
+    	albumDao.removeNewAlbum(id);
         return albumDao.remove(id);
     }
     
@@ -62,5 +93,5 @@ public class AlbumService {
     public void setSingerDao(SingerDao singerDao) {
         this.singerDao = singerDao;
     }
-    
+
 }

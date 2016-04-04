@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.musiclist.entity.TitleBar;
-import com.musiclist.service.TitleBarService;
+import com.musiclist.entity.News;
+import com.musiclist.service.NewsService;
 
 /**  
  * @author ZJK
@@ -23,31 +23,31 @@ import com.musiclist.service.TitleBarService;
  */
 @Controller
 @RequestMapping("admin")
-public class TitleBarController {
+public class NewsController {
     
     @Resource
-    private TitleBarService titleBarService;
+    private NewsService newsService;
     
-    @RequestMapping("titlebar")
-    public String toTitleBar(){
-        return "admin/titlebar";
+    @RequestMapping("tonews")
+    public String toNews(){
+        return "admin/news";
     }
     
     
-    @RequestMapping("addTitleBar")
-    public @ResponseBody String addSinger(TitleBar titleBar,HttpServletRequest request, HttpSession session, HttpServletResponse response, ModelMap model) {
+    @RequestMapping("addnews")
+    public @ResponseBody String addNews(News news,HttpServletRequest request, HttpSession session, HttpServletResponse response, ModelMap model) {
         try {
-            System.out.println("The id is:"+titleBarService.saveTitleBar(titleBar));
+            System.out.println("The id is:"+newsService.saveNews(news));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "success";
     }
     
-    @RequestMapping("deleteTitleBar")
+    @RequestMapping("deletenews")
     public @ResponseBody String deleteTitleBar(int id) {
         JSONObject o = new JSONObject();
-        int count = titleBarService.removeTitleBar(id);
+        int count = newsService.removeTitleBar(id);
         if (count > 0) {
             o.put("success", true);
             return o.toJSONString();
@@ -57,11 +57,11 @@ public class TitleBarController {
         }
     }
     
-    @RequestMapping("updateTitleBar")
-    public @ResponseBody String updateTitleBar(TitleBar song) {
+    @RequestMapping("updatenews")
+    public @ResponseBody String updateTitleBar(News song) {
         JSONObject o = new JSONObject();
         try {
-            titleBarService.updateTitleBar(song);
+            newsService.updateTitleBar(song);
             o.put("success", true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,24 +70,23 @@ public class TitleBarController {
         return o.toJSONString();
     }
     
-    @RequestMapping(value="titlebarlist",produces="text/html;charset=UTF-8")
+    @RequestMapping(value="newslist",produces="text/html;charset=UTF-8")
     public @ResponseBody String getSongList(int rows,int page,HttpServletRequest request) {
         JSONArray newArray = new JSONArray();  
         JSONObject o = new JSONObject();
         try {
-            List<Object[]> list = titleBarService.getTitleBars(rows, page);
+            List<News> list = newsService.getNewsList(rows, page);
             if (list != null) {
-                Long count  = titleBarService.getCount();
-                for (Object[] a : list) {
+                Long count  = newsService.getCount();
+                for (News n : list) {
                     JSONObject jo = new JSONObject();
-                    jo.put("id",  a[0]);
-                    jo.put("enable", a[1]);
-                    jo.put("name",  a[2]);
-                    jo.put("picture",  a[3]);
-                    jo.put("song",  a[4]);
-                    jo.put("subtitle",  a[5]);
-                    jo.put("title",  a[6]);
-                    jo.put("songName",  a[7]);
+                    jo.put("id",  n.getId());
+                    jo.put("enable", n.isEnable());
+                    jo.put("name",  n.getName());
+                    jo.put("picture",  n.getPicture());
+                    jo.put("subtitle",  n.getSubtitle());
+                    jo.put("title",  n.getTitle());
+                    jo.put("content", n.getContent());
                     newArray.add(jo);
                 }
                 o.put("rows", newArray);
@@ -98,5 +97,10 @@ public class TitleBarController {
         }
         return o.toJSONString();
     }
+
+
+	public void setNewsService(NewsService newsService) {
+		this.newsService = newsService;
+	}
     
 }

@@ -15,8 +15,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.musiclist.entity.Album;
 import com.musiclist.entity.Comment;
 import com.musiclist.entity.Song;
-import com.musiclist.entity.SongCategory;
-import com.musiclist.entity.TitleBar;
+import com.musiclist.entity.SongList;
+import com.musiclist.entity.News;
 
 /**  
  * @author ZJK
@@ -93,7 +93,7 @@ public class ForegroundController {
     public @ResponseBody String getTitleBar() {
         JSONObject jo = new JSONObject();
         try {
-            List<TitleBar> bars = foregroundService.getTitleBars();
+            List<News> bars = foregroundService.getTitleBars();
             JSONArray ja = new JSONArray();
             if (bars != null) {
                 ja.addAll(bars);
@@ -115,10 +115,10 @@ public class ForegroundController {
     public @ResponseBody String getSongCategory() {
         JSONObject jo = new JSONObject();
         try {
-            List<SongCategory> category = foregroundService.getSongCategory();
+            List<SongList> category = foregroundService.getSongCategory();
             JSONArray ja = new JSONArray();
             if (category != null && category.size() > 0) {
-                for (SongCategory sc : category) {
+                for (SongList sc : category) {
                 	JSONObject categoryJo = new JSONObject();
                 	categoryJo.put("name", sc.getName());
                 	categoryJo.put("picture", sc.getPicture());
@@ -381,10 +381,10 @@ public class ForegroundController {
     public @ResponseBody String getCategory() {
 		JSONObject jo = new JSONObject();
 		try {
-			List<SongCategory> category = foregroundService.getSongCategory();
+			List<SongList> category = foregroundService.getSongCategory();
 			JSONArray ja = new JSONArray();
 			if (category != null && category.size() > 0) {
-				for (SongCategory sc : category) {
+				for (SongList sc : category) {
 					JSONObject categoryJo = new JSONObject();
 					categoryJo.put("name", sc.getName());
 					categoryJo.put("picture", sc.getPicture());

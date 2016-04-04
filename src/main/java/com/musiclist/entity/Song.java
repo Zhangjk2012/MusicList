@@ -65,7 +65,11 @@ public class Song implements Serializable{
     /** 是否上架 */
     @Column(name="up_flag")
     private Boolean upFlag;
-
+    
+    /** 热门推荐 */
+    @Column(name="hot_song")
+    private Boolean hotSong = false;
+    
     public Integer getId() {
         return id;
     }
@@ -153,4 +157,12 @@ public class Song implements Serializable{
     public void setAlbumName(String albumName) {
         this.albumName = albumName;
     }
+
+	public Boolean getHotSong() {
+		return hotSong;
+	}
+
+	public void setHotSong(Boolean hotSong) {
+		this.hotSong = hotSong;
+	}
 }

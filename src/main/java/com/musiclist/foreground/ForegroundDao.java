@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import com.musiclist.dao.BaseDao;
 import com.musiclist.entity.Comment;
 import com.musiclist.entity.Song;
-import com.musiclist.entity.SongCategory;
-import com.musiclist.entity.TitleBar;
+import com.musiclist.entity.SongList;
+import com.musiclist.entity.News;
 
 /**  
  * @author ZJK
@@ -18,7 +18,7 @@ import com.musiclist.entity.TitleBar;
 public class ForegroundDao extends BaseDao {
     
     @SuppressWarnings("unchecked")
-    public List<TitleBar> getTitleBars() {
+    public List<News> getTitleBars() {
         String hql = "From TitleBar t where t.enable=true order by t.id desc";
         return getSession().createQuery(hql).setMaxResults(8).setFirstResult(0).list();
     }
@@ -57,7 +57,7 @@ public class ForegroundDao extends BaseDao {
     }
     
     @SuppressWarnings("unchecked")
-    public List<SongCategory> getSongCategory() {
+    public List<SongList> getSongCategory() {
         String hql = "From SongCategory s where s.enable = true order by s.id desc";
         return getSession().createQuery(hql).setMaxResults(3).setFirstResult(0).list();
     }

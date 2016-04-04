@@ -11,13 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**  
- * 音乐类别
+ * 音乐榜单
  * @author ZJK
  * @date 2015年12月17日 上午10:17:03
  */
 @Entity
-@Table(name="music_song_category")
-public class SongCategory implements Serializable{
+@Table(name="music_song_list")
+public class SongList implements Serializable{
     
     private static final long serialVersionUID = 3095225689278140874L;
     

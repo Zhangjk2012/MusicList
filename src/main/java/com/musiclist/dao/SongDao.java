@@ -47,10 +47,65 @@ public class SongDao extends BaseDao {
         return getSession().createQuery(hql).setInteger("id", id).executeUpdate();
     }
 
+    public int removeAlbumSong(int id) {
+    	String hql = "delete AlbumSongs a where a.songId=:id";
+        return getSession().createQuery(hql).setInteger("id", id).executeUpdate();
+    }
+    
+    /**
+     * 移出榜单对应的歌曲
+     * @param id
+     * @return
+     */
+    public int removeSongListSong(int id) {
+    	String hql = "delete SongListSongs s where s.songId=:id";
+        return getSession().createQuery(hql).setInteger("id", id).executeUpdate();
+    }
+    
     @SuppressWarnings("unchecked")
     public List<Object[]> getSongIdAndName() {
         String hql = "select s.id,s.songName From Song s order by s.id desc";
         return getSession().createQuery(hql).list();
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<Song> getHotSongs(int page, int rows) {
+        String hql = "from Song s where s.hotSong = true order by s.id desc";
+        int skip = rows*(page-1);
+        return getSession().createQuery(hql).setMaxResults(rows).setFirstResult(skip).list();
+    }
+    
+    public Long getHotSongCount() {
+        String hql = "select count(*) from Song s where s.hotSong = true";
+        Query query = getSession().createQuery(hql);  
+        return (Long)query.uniqueResult();
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<Song> getSelectHotSongs(String songName, int page, int rows) {
+        String hql = "from Song s where s.hotSong = false order by s.id desc";
+        if (songName != null && !songName.equals("")) {
+        	hql += " and s.songName like '%"+songName+"%'";
+        }
+        int skip = rows*(page-1);
+        return getSession().createQuery(hql).setMaxResults(rows).setFirstResult(skip).list();
+    }
+    
+    public Long getSelectHotSongCount(String songName) {
+        String hql = "select count(*) from Song s where s.hotSong = false";
+        if (songName != null && !songName.equals("")) {
+        	hql += " and s.songName like '%"+songName+"%'";
+        }
+        Query query = getSession().createQuery(hql);  
+        return (Long)query.uniqueResult();
+    }
+
+	public void setHotSong(String sql) {
+		getSession().createSQLQuery(sql).executeUpdate();
+	}
+
+	public void removeHotSong(String songId) {
+		getSession().createSQLQuery("update music_song set hot_song = false where id=:id").setString("id", songId).executeUpdate();
+	}
     
 }

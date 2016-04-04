@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.musiclist.entity.Album;
+import com.musiclist.entity.Song;
 import com.musiclist.service.AlbumService;
 
 /**  
@@ -117,7 +119,80 @@ public class AlbumController {
         }
         return o.toJSONString();
     }
-
+    
+    /**
+     * 获取要添加的歌曲。
+     * @return
+     */
+    @RequestMapping(value="getselectsonglist",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getSelectSongList(String songName,int rows, int page) {
+    	JSONArray newArray = new JSONArray();  
+        JSONObject o = new JSONObject();
+        try {
+            List<Song> list = albumService.getSelectSongs(songName,rows,page);
+            if (list != null) {
+                Long count  = albumService.getSelectSongsCount(songName);
+                for (Song s : list) {
+                    JSONObject jo = new JSONObject();
+                    jo.put("id", s.getId());
+                    jo.put("songName", s.getSongName());
+                    jo.put("albumName", s.getAlbumName());
+                    jo.put("singerName", s.getSingerName());
+                    jo.put("songFlag", s.isSongFlag());
+                    newArray.add(jo);
+                }
+                o.put("rows", newArray);
+                o.put("total", count);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return o.toJSONString();
+    }
+    
+    @RequestMapping("addSongs2Album")
+    public @ResponseBody String addSongs2Album(String albumId,@RequestParam(value = "songsId[]")String[] songsId) {
+    	int ret = albumService.addSongs2Album(albumId, songsId);
+    	if (ret > 0) {
+    		return "true";
+    	}
+    	return "false";
+    }
+    
+    @RequestMapping(value="selectSongs",produces="text/html;charset=UTF-8")
+    public @ResponseBody String selectSongs(String albumId) {
+    	JSONArray newArray = new JSONArray();  
+        JSONObject o = new JSONObject();
+        try {
+            List<Song> list = albumService.getSelectSongsByAlbumId(albumId);
+            if (list != null) {
+                for (Song s : list) {
+                    JSONObject jo = new JSONObject();
+                    jo.put("id", s.getId());
+                    jo.put("songName", s.getSongName());
+                    jo.put("albumName", s.getAlbumName());
+                    jo.put("singerName", s.getSingerName());
+                    jo.put("songFlag", s.isSongFlag());
+                    jo.put("briefIntroduction", s.getBriefIntroduction());
+                    jo.put("picture", s.getPicture());
+                    newArray.add(jo);
+                }
+                o.put("rows", newArray);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return o.toJSONString();
+    }
+    
+    @RequestMapping("deleteSelectSongs")
+    public @ResponseBody String deleteSelectSongs(int songId) {
+    	albumService.deleteSelectSong(songId);
+    	JSONObject o = new JSONObject();
+    	o.put("success", true);
+    	return o.toJSONString();
+    }
+    
     public void setAlbumService(AlbumService albumService) {
         this.albumService = albumService;
     }

@@ -11,12 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**  
+ * 新闻
  * @author ZJK
  * @date 2015年12月17日 下午5:07:10
  */
 @Entity
-@Table(name="music_title_bar")
-public class TitleBar implements Serializable{
+@Table(name="music_news")
+public class News implements Serializable{
 
     private static final long serialVersionUID = 5403727984484073637L;
     
@@ -37,10 +38,6 @@ public class TitleBar implements Serializable{
     @Column(name = "subtitle", length = 50)
     private String subtitle;
     
-    /** 歌曲 */
-    @Column(name = "song", nullable = false)
-    private Integer song;
-    
     /** 是否启用 */
     @Column(name = "enable")
     private boolean enable;
@@ -48,6 +45,9 @@ public class TitleBar implements Serializable{
     /** 图片路径 */
     @Column(name = "picture")
     private String picture;
+    
+    @Column(name="content",length=2000,columnDefinition="text")
+    private String content;
 
     public Integer getId() {
         return id;
@@ -81,14 +81,6 @@ public class TitleBar implements Serializable{
         this.subtitle = subtitle;
     }
 
-    public Integer getSong() {
-        return song;
-    }
-
-    public void setSong(Integer song) {
-        this.song = song;
-    }
-
     public boolean isEnable() {
         return enable;
     }
@@ -104,5 +96,13 @@ public class TitleBar implements Serializable{
     public void setPicture(String picture) {
         this.picture = picture;
     }
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 
 }

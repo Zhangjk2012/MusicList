@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.musiclist.entity.Album;
 import com.musiclist.entity.Comment;
 import com.musiclist.entity.Song;
-import com.musiclist.entity.SongCategory;
-import com.musiclist.entity.TitleBar;
+import com.musiclist.entity.SongList;
+import com.musiclist.entity.News;
 
 /**  
  * @author ZJK
@@ -26,7 +26,7 @@ public class ForegroundService {
     private ForegroundDao foregroundDao;
     
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<TitleBar> getTitleBars() {
+    public List<News> getTitleBars() {
         return foregroundDao.getTitleBars();
     }
     
@@ -49,7 +49,7 @@ public class ForegroundService {
     }
     
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<SongCategory> getSongCategory() {
+    public List<SongList> getSongCategory() {
         return foregroundDao.getSongCategory();
     }
     
