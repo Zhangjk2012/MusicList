@@ -27,11 +27,11 @@ public class NewsService {
         this.newsDao = titleBarDao;
     }
 
-    public void updateTitleBar(News song) {
+    public void updateNews(News song) {
         newsDao.update(song);
     }
 
-    public int removeTitleBar(int id) {
+    public int removeNews(int id) {
         return newsDao.remove(id);
     }
 

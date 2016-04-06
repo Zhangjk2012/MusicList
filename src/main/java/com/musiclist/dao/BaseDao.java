@@ -64,13 +64,8 @@ public class BaseDao {
      * @param bean 
      */
     public Serializable save(Object bean) {
-        try {
-            Session session = getSession();
-            return session.save(bean);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        Session session = getSession();
+        return session.save(bean);
     }
 
     /**

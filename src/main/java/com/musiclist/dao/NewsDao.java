@@ -20,7 +20,7 @@ public class NewsDao extends BaseDao{
 
     @SuppressWarnings("unchecked")
     public List<News> getNewsList(int rows, int page) {
-        String hql = "From News";
+        String hql = "From News order by enable desc, id desc";
         int skip = rows*(page-1);
         return getSession().createQuery(hql).setMaxResults(rows).setFirstResult(skip).list();
     }

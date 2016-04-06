@@ -24,11 +24,23 @@ public class Partner {
 	@Column(name = "name", nullable = false, length = 50)
 	private String name;
 	
-	@Column(name = "logo_path", nullable = false, length = 50)
+	@Column(name = "logo_path", nullable = false, length = 250)
 	private String logoPath;
 	
 	@Column(name = "url")
 	private String url;
+
+	//默认启用
+	@Column(name="enable")
+	private Boolean enable = true;
+	
+	public Boolean getEnable() {
+		return enable;
+	}
+
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
+	}
 
 	public Integer getId() {
 		return id;

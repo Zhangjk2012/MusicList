@@ -45,9 +45,9 @@ public class NewsController {
     }
     
     @RequestMapping("deletenews")
-    public @ResponseBody String deleteTitleBar(int id) {
+    public @ResponseBody String deleteNews(int id) {
         JSONObject o = new JSONObject();
-        int count = newsService.removeTitleBar(id);
+        int count = newsService.removeNews(id);
         if (count > 0) {
             o.put("success", true);
             return o.toJSONString();
@@ -58,10 +58,10 @@ public class NewsController {
     }
     
     @RequestMapping("updatenews")
-    public @ResponseBody String updateTitleBar(News song) {
+    public @ResponseBody String updateNews(News news) {
         JSONObject o = new JSONObject();
         try {
-            newsService.updateTitleBar(song);
+            newsService.updateNews(news);
             o.put("success", true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,7 +71,7 @@ public class NewsController {
     }
     
     @RequestMapping(value="newslist",produces="text/html;charset=UTF-8")
-    public @ResponseBody String getSongList(int rows,int page,HttpServletRequest request) {
+    public @ResponseBody String getNewsList(int rows,int page,HttpServletRequest request) {
         JSONArray newArray = new JSONArray();  
         JSONObject o = new JSONObject();
         try {
