@@ -134,9 +134,9 @@ function createFrame(url) {
                     <li><div>
                         <a target="mainFrame" href="admin/topartner">合作伙伴管理</a></div></li>
                     <li><div>
-                        <a target="mainFrame" href="admin/newalbum/torock">电台列表</a></div></li>
+                        <a target="mainFrame" href="admin/toradiostation">电台列表</a></div></li>
                     <li><div>
-                        <a target="mainFrame" href="admin/newalbum/torock">评委阵容</a></div></li>
+                        <a target="mainFrame" href="admin/torater">评委阵容</a></div></li>
                     <li><div>
                         <a target="mainFrame" href="admin/newalbum/torock">榜单介绍</a></div></li>
                     <li><div>

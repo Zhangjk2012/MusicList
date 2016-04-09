@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.alibaba.fastjson.JSONObject;
 import com.musiclist.utils.MD5Util;
 
 
@@ -23,7 +24,6 @@ public class UploadController {
 	
 	@RequestMapping("/uploadImg")
 	public @ResponseBody String uploadImg(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
-	    
 	    String path = request.getSession().getServletContext().getRealPath("/");
 	    String absolutPath = "";
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
@@ -51,6 +51,46 @@ public class UploadController {
 			}
 		}
 		return absolutPath;
+	}
+	
+	/**
+	 * 上传KindEditor图片
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/uploadKEImg",produces="text/html;charset=UTF-8")
+	public @ResponseBody String uploadKindEditorImg(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
+	    String path = request.getSession().getServletContext().getRealPath("/");
+	    String absolutPath = "";
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		if(multipartResolver.isMultipart(request)){
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
+			Iterator<String> iter = multiRequest.getFileNames();
+			while(iter.hasNext()){
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if(file != null){
+					String myFileName = file.getOriginalFilename();
+					String ext = myFileName.substring(myFileName.lastIndexOf("."));
+					String md5 = MD5Util.getFileMD5String(file.getBytes());
+					String newFile = System.currentTimeMillis()+md5+ext;
+				    path += "img/"+newFile;
+				    absolutPath = "/img/"+newFile;
+					if(myFileName.trim() !=""){
+						File localFile = new File(path);
+						file.transferTo(localFile);
+					}
+				}
+			}
+		}
+		String contextPath = request.getSession().getServletContext().getContextPath();
+		JSONObject jo = new JSONObject();
+		jo.put("error", 0);
+		jo.put("message", "上传成功");
+		jo.put("url", contextPath+absolutPath);
+		return jo.toJSONString();
 	}
 	
 	@RequestMapping("deleteImg")
