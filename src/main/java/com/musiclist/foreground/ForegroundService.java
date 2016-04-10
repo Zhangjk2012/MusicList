@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.musiclist.entity.Album;
 import com.musiclist.entity.Comment;
+import com.musiclist.entity.Partner;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongList;
 import com.musiclist.entity.News;
@@ -26,9 +27,19 @@ public class ForegroundService {
     private ForegroundDao foregroundDao;
     
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<News> getTitleBars() {
-        return foregroundDao.getTitleBars();
+    public List<News> getNews() {
+        return foregroundDao.getNews();
     }
+    
+    @Transactional(propagation = Propagation.REQUIRED)
+    public News showNews(int id) {
+    	return foregroundDao.showNews(id);
+	}
+    
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Partner> getPartners() {
+    	return foregroundDao.getPartners();
+	}
     
     @Transactional(propagation = Propagation.REQUIRED)
     public List<Object[]> getHotSong(int page,int rows) {
@@ -103,5 +114,5 @@ public class ForegroundService {
     public void setForegroundDao(ForegroundDao foregroundDao) {
         this.foregroundDao = foregroundDao;
     }
-    
+
 }

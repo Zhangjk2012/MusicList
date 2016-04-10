@@ -24,7 +24,7 @@
 </head>
 <body>
 	<table id="raterlist"></table>
-	<div id="win" iconCls="icon-save" title="电台列表信息">
+	<div id="win" iconCls="icon-save" title="评委信息">
         <form id="raterform" action="admin/addrater" data-options="novalidate:true" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
@@ -46,26 +46,21 @@
 	    	<a href="javascript:void(0)" icon="icon-cancel" class="easyui-linkbutton" onclick="closeWin()">取消</a>
 	    </div>
 	</div>
-	<div id="updateWin" iconCls="icon-edit" title="修改电台列表信息">
+	<div id="updateWin" iconCls="icon-edit" title="修改评委信息">
         <form id="updateform" action="admin/updaterater" data-options="novalidate:true" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
-                    <td>电台名称:</td>
+                    <td>评委姓名:</td>
                     <td colspan="2">
                     <input type="hidden" name="id"/>
                     <input name="name" data-options="required:true" class="f1 easyui-textbox"></input></td>
                 </tr>
                 <tr>
-                    <td>电台网站地址:</td>
-                    <td colspan="2">
-                    <input name="url" width="50px;" data-options="required:true,prompt:'http://...'" class="f1 easyui-textbox"></input>
-                    </td>
+                    <td>评委简介:</td>
                 </tr>
                 <tr>
-                    <td>是否启用:</td>
-                    <td colspan="2">
-                    	<input type="radio" value="true" name="enable" checked="checked"/>启用
-                        <input type="radio" value="false" name="enable"/>禁用
+                    <td colspan="4">
+                        <textarea name="content" id="updateRaterContent" style="width:750px;height:500px;visibility:hidden;"></textarea>
                     </td>
                 </tr>
             </table>
@@ -78,10 +73,7 @@
 <script type="text/javascript" src="static/js/jquery.min.js"></script>
 <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="static/easyui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="static/uploadify/swfobject.js"></script>
-<script type="text/javascript" src="static/uploadify/jquery.uploadify.min.js"></script>
 <script type="text/javascript" src="kindeditor/kindeditor-min.js"></script>
-<script type="text/javascript" src="kindeditor/plugins/image/image.js"></script>
 <script type="text/javascript" src="kindeditor/lang/zh_CN.js"></script>
 <script type="text/javascript" src="js/rater.js"></script>
 </body>

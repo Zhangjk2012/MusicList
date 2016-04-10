@@ -46,7 +46,7 @@ public class RadioStationController {
         JSONObject o = new JSONObject();
         try {
             List<RadioStation> list = radioStationService.getRadioStationList(rows, page);
-            if (list != null && list.size()>0 ) {
+            if (list != null) {
                 Long count  = radioStationService.getCount();
                 newArray.addAll(list);
                 o.put("rows", newArray);

@@ -90,6 +90,10 @@ public class UploadController {
 		jo.put("error", 0);
 		jo.put("message", "上传成功");
 		jo.put("url", contextPath+absolutPath);
+		jo.put("width", "100");
+		jo.put("height", "100");
+		jo.put("border", "0");
+		jo.put("align", "left");
 		return jo.toJSONString();
 	}
 	

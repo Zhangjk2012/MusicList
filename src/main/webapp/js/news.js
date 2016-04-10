@@ -130,7 +130,7 @@ $(function(){
     }); 
 
 	$('#win').window({
-		width : 800,
+		width : 850,
 		height : 650,
 		modal : true,
 		closed : true,
@@ -154,7 +154,7 @@ $(function(){
 	});
 	
 	$('#updateWin').window({
-		width : 800,
+		width : 850,
 		height : 650,
         modal : true,
         closed : true,

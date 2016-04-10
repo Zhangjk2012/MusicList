@@ -138,7 +138,9 @@ function createFrame(url) {
                     <li><div>
                         <a target="mainFrame" href="admin/torater">评委阵容</a></div></li>
                     <li><div>
-                        <a target="mainFrame" href="admin/newalbum/torock">榜单介绍</a></div></li>
+                        <a target="mainFrame" href="admin/tolistintroduction">榜单介绍</a></div></li>
+                    <li><div>
+                        <a target="mainFrame" href="admin/tocontactinfo">联系我们</a></div></li>
                     <li><div>
                         <a target="mainFrame" href="admin/newalbum/torock">日常节目</a></div></li>
                     <li><div>

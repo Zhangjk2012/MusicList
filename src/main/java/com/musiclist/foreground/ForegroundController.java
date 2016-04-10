@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.musiclist.entity.Album;
 import com.musiclist.entity.Comment;
+import com.musiclist.entity.Partner;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongList;
 import com.musiclist.entity.News;
@@ -27,6 +28,65 @@ public class ForegroundController {
     
     @Resource
     private ForegroundService foregroundService;
+    /************************* 新闻管理开始 *************************/
+    
+    /**
+     * 获取新闻
+     * @return
+     */
+    @RequestMapping(value="news",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getNews() {
+        JSONObject jo = new JSONObject();
+        try {
+            List<News> bars = foregroundService.getNews();
+            JSONArray ja = new JSONArray();
+            if (bars != null) {
+            	for (News n : bars) {
+					JSONObject j = new JSONObject();
+					j.put("id", n.getId());
+					j.put("picture", n.getPicture());
+					ja.add(j);
+				}
+            }
+            jo.put("data", ja);
+            jo.put("msg", "true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            jo.put("msg", "false");
+        }
+        return jo.toJSONString();
+    }
+    
+    /**
+     * 显示新闻
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="shownews",produces="text/html;charset=UTF-8")
+    public String showNews(int id,ModelMap model) {
+    	News n = foregroundService.showNews(id);
+    	model.put("news", n);
+    	return "shownews";
+    }
+    
+    /************************* 获取合作伙伴 *************************/
+    @RequestMapping(value="getpartners",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getPartners() {
+    	JSONObject jo = new JSONObject();
+        try {
+            List<Partner> p = foregroundService.getPartners();;
+            JSONArray ja = new JSONArray();
+            if (p != null) {
+            	ja.addAll(p);
+            }
+            jo.put("data", ja);
+            jo.put("msg", true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            jo.put("msg", false);
+        }
+        return jo.toJSONString();
+    }
     
     @RequestMapping(value="hotmore",produces="text/html;charset=UTF-8")
     public String getHotMoreList(Integer category,ModelMap model) {
@@ -79,24 +139,6 @@ public class ForegroundController {
                     j.put("songPath", obj[5]);
                     ja.add(j);
                 }
-            }
-            jo.put("data", ja);
-            jo.put("msg", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            jo.put("msg", "false");
-        }
-        return jo.toJSONString();
-    }
-    
-    @RequestMapping(value="titlebars",produces="text/html;charset=UTF-8")
-    public @ResponseBody String getTitleBar() {
-        JSONObject jo = new JSONObject();
-        try {
-            List<News> bars = foregroundService.getTitleBars();
-            JSONArray ja = new JSONArray();
-            if (bars != null) {
-                ja.addAll(bars);
             }
             jo.put("data", ja);
             jo.put("msg", "true");

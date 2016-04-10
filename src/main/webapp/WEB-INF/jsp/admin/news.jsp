@@ -35,7 +35,7 @@
                     </td>
                     <td>副标题:</td>
                     <td>
-                        <input class="f1 easyui-textbox" data-options="required:true" name="subtitle">
+                        <input class="f1 easyui-textbox" name="subtitle">
                     </td>
                 </tr>
                 <tr>
@@ -58,7 +58,7 @@
                             <input id="file_upload" name="file_upload" type="file" multiple="multiple">
                         </div>
 					</td>
-					<td>
+					<td colspan="2">
 						<a href="javascript:void(0)" class="easyui-linkbutton" id="btnUpload"
                                 onclick="javascript: $('#file_upload').uploadify('upload', '*')">上传</a>
                         <a href="javascript:void(0)" class="easyui-linkbutton" id="btnCancelUpload"
@@ -97,7 +97,7 @@
                     </td>
                     <td>副标题:</td>
                     <td>
-                        <input class="f1 easyui-textbox" data-options="required:true" name="subtitle">
+                        <input class="f1 easyui-textbox" name="subtitle">
                     </td>
                 </tr>
                 <tr>

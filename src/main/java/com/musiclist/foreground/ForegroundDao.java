@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.musiclist.dao.BaseDao;
 import com.musiclist.entity.Comment;
+import com.musiclist.entity.Partner;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongList;
 import com.musiclist.entity.News;
@@ -18,10 +19,21 @@ import com.musiclist.entity.News;
 public class ForegroundDao extends BaseDao {
     
     @SuppressWarnings("unchecked")
-    public List<News> getTitleBars() {
-        String hql = "From TitleBar t where t.enable=true order by t.id desc";
+    public List<News> getNews() {
+        String hql = "From News t where t.enable=true order by t.id desc";
         return getSession().createQuery(hql).setMaxResults(8).setFirstResult(0).list();
     }
+    
+    public News showNews(int id) {
+    	String hql = "From News t where t.id=:id";
+        return (News) getSession().createQuery(hql).setInteger("id", id).uniqueResult();
+	}
+    
+    @SuppressWarnings("unchecked")
+	public List<Partner> getPartners() {
+    	String hql = "From Partner p where p.enable=true order by p.id desc";
+        return getSession().createQuery(hql).setMaxResults(8).setFirstResult(0).list();
+	}
     
     @SuppressWarnings("unchecked")
     public List<Object[]> getHotSong(int page,int rows) {
@@ -145,5 +157,5 @@ public class ForegroundDao extends BaseDao {
         String hql = "update music_song set vote_num = vote_num +1 where id=:id";
         return getSession().createSQLQuery(hql).setInteger("id", id).executeUpdate();
     }
-    
+
 }

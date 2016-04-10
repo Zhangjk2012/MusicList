@@ -67,6 +67,11 @@ public class BaseDao {
         Session session = getSession();
         return session.save(bean);
     }
+    
+    public void saveOrUpdate(Object bean) {
+    	Session session = getSession();
+    	session.saveOrUpdate(bean);
+    }
 
     /**
      * 更新

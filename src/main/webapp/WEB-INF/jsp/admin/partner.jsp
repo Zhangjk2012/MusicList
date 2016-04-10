@@ -74,7 +74,7 @@
 	<div id="updateWin" iconCls="icon-edit" title="修改合作厂商信息">
         <form id="updateform" action="admin/updatepartner" data-options="novalidate:true" method="post" enctype="multipart/form-data">
             <table>
-                <<tr>
+                <tr>
                     <td>厂商名称:</td>
                     <td colspan="2">
                     <input type="hidden" name="id"/>

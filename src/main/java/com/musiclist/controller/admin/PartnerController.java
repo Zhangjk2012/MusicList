@@ -46,7 +46,7 @@ public class PartnerController {
         JSONObject o = new JSONObject();
         try {
             List<Partner> list = partnerService.getPartnerList(rows, page);
-            if (list != null && list.size()>0 ) {
+            if (list != null) {
                 Long count  = partnerService.getCount();
                 newArray.addAll(list);
                 o.put("rows", newArray);
