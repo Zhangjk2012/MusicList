@@ -30,13 +30,17 @@
 </head>
 <body>
      <div id="nav" class="m-subnav j-tflag">
-      <div class="wrap f-pr">
-          <ul class="nav">
-              <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
-<!--               <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
- -->          </ul>
-      </div>
-     </div>
+        <div class="wrap f-pr">
+            <ul class="nav">
+                <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
+                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>电台列表</em></a></li>
+                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>背景介绍</em></a></li>
+                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>评委介绍</em></a></li>
+                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>近期活动</em></a></li>
+                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
+            </ul>
+        </div>
+    </div>
     <input type="hidden" id="songcount" value="${songcount}"/>
     <div class="g-bd" id="m-disc-pl-c">
         <div class="g-wrap p-pl f-pr">
@@ -52,73 +56,21 @@
 	<div id="wrapper">
 	   <div id="Pagination" class=""></div>
 	</div>
+	<div class="g-ft">
+		<div class="m-ft">
+			<div class="wrap">
+			     <div class="copy">
+			         <p>合作单位:</p>
+			         <div id="partners"> 
+			         </div>
+			     </div>
+			 </div>
+		</div>
+	</div>
 </body>
 
     <script src="static/js/jquery-1.8.2.min.js"></script>
     <script src="static/js/pagination.min.js"></script>
-    <script type="text/javascript">
-    var pageIndex = 1;
-    var pageSize = 30;
-    $(function(){
-    	$("#Pagination").pagination({
-    		dataSource: function(done){
-                var result = [];
-                var len = $("#songcount").val();
-                var pages = len / pageSize+1;
-                for(var i = 1; i < pages; i++){
-                    result.push(i);
-                }
-                done(result);
-            },
-            callback: pageCallback, //PageCallback() 为翻页调用次函数。 
-    		prevText : "« 上一页", 
-    		nextText : "下一页 »", 
-    		pageRange: 4,
-    		pageSize: 1
-   		}); 
-    });
-    function pageCallback(index, jq) {
-    	initSong(index);
-    } 
-    function initSong(pageIndex) {
-    	$("#musicList").html("");
-    	$.ajax( {  
-            url:'hotmorelist?rows='+pageSize+'&page='+pageIndex,// 跳转到 action  
-            type:'post',  
-            cache:false,
-            dataType:'json',  
-            success:function(data) {  
-                if(data.msg =="true"){  
-                    var d = data.data;
-                    var len = d.length;
-                    if (d.length == 0) {
-                    } else {
-                        $.each(d,function(n,value) {
-                            var html = '<li>';
-                            html+='<div class="u-cover u-cover-1">';
-                            html+='<img class="j-flag" width=140 height=140 src="'+value.picture+'">';
-                            html+='<a title="'+value.name+'" href=\'playmusic?id='+value.id+'\' class="msk"></a>';
-                            html+='<div class="bottom">';
-                            html+='<a class="icon-play f-fr" title="播放" href="javascript:play(\''+value.songPath+'\',\''+value.name+'\');"></a>';
-                            html+='<span class="icon-headset"></span>';
-                            html+='<span class="icon-headset"></span>';
-                            html+='</div></div>';
-                            html+='<p class="dec">';
-                            html+='<a title="'+value.name+'" href=\'playmusic?id='+value.id+'\' class="tit f-thide s-fc0">'+value.name+'</a>';
-                            html+='</p>';
-                            html+='<p>';
-                            html+='<a title="'+value.singer+'" href="javascript:;" class="nm nm-icn f-thide s-fc3">'+value.singer+'</a>';
-                            html+='<sup class="u-icn u-icn-1"></sup>';
-                            html+='<p></li>';
-                            $("#musicList").append(html);
-                        });
-                    }
-                }  
-             }
-        });
-    }
-    function play(url,name) {
-        parent.play(url,name);
-    }
-    </script>
+    <script src="static/js/common.js"></script>
+    <script src="static/js/hotsonglist.js"></script>
 </html>

@@ -88,6 +88,7 @@ public class ForegroundController {
         return jo.toJSONString();
     }
     
+    /************************* 热门推荐 *************************/
     @RequestMapping(value="hotmore",produces="text/html;charset=UTF-8")
     public String getHotMoreList(Integer category,ModelMap model) {
         Long count = foregroundService.getSongCount(category);

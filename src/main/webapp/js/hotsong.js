@@ -205,7 +205,7 @@ function addSongsOK() {
 			cache : false,
 			dataType : 'json',
 			success : function(data) {
-				if (data === true) {
+				if (data.success === true) {
 					$.messager.show({msg : "添加成功。",title : '成功'});
 					songlistgrid.datagrid("reload");
 				} else {

@@ -1,6 +1,5 @@
 $(function(){
 	// 获取合作单位
-	
 	$("#partners") != null && $.get("getpartners",function(data){
 		var d = eval('('+data+')');
 		if (d.msg) {
@@ -12,3 +11,11 @@ $(function(){
 		}
 	});
 });
+
+function goPage(url,id) {
+	parent.turnPage(url+"?id="+id);
+}
+
+function play(url,name) {
+	parent.play(url,name);
+}

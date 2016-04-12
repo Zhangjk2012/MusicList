@@ -104,11 +104,23 @@
             </div>
         </div>
     </div>
+    <div class="g-ft">
+		<div class="m-ft">
+			<div class="wrap">
+			     <div class="copy">
+			         <p>合作单位:</p>
+			         <div id="partners"> 
+			         </div>
+			     </div>
+			 </div>
+		</div>
+	</div>
 </body>
 
     <script src="static/js/jquery-1.8.2.min.js"></script>
 <!--     <script src="static/js/pagination.min.js"></script>
  -->    <script type="text/javascript" src="js/paybutton.js" ></script>
+ -->    <script type="text/javascript" src="static/js/common.js" ></script>
     
     <script type="text/javascript">
   	/* var pageIndex = 1;

@@ -47,18 +47,9 @@
 					<div class="n-rcmd">
 						<div class="v-hd2">
 							<a href="hotmore" class="tit f-ff2 f-tdn">热门推荐</a>
-							<!-- <div class="tab">
-								 <a href="/discover/playlist/?cat=%E6%B5%81%E8%A1%8C" class="s-fc3">流行</a>
-								<span class="line">|</span> <a
-									href="rack.html" class="s-fc3">摇滚</a>
-							</div> -->
-							
 							<span class="more"><a href="hotmore"
 								class="s-fc3">更多</a><i class="cor s-bg s-bg-6">&nbsp;</i></span>
 						</div>
-						
-						<!-- --sdfsdfsd -->
-						
 						<ul id="hotul" class="m-cvrlst f-cb">
 						</ul>
 					</div>
@@ -108,45 +99,10 @@
 	<script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/index.js" ></script>
     <script type="text/javascript" src="js/paybutton.js" ></script>
-    <script type="text/javascript" src="js/main.js" ></script>
-    <script type="text/javascript" src="js/common.js" ></script>
+    <script type="text/javascript" src="static/js/main.js" ></script>
+    <script type="text/javascript" src="static/js/common.js" ></script>
     <script type="text/javascript">
        $(function(){
-           $.ajax( {  
-               url:'hotlist',
-               type:'post',  
-               cache:false,  
-               dataType:'json',  
-               success:function(data) {  
-                   if(data.msg =="true"){  
-                       var d = data.data;
-                       var len = d.length;
-                       if (d.length == 0) {
-                       } else {
-                           $.each(d,function(n,value) {
-                        	   var html = '<li>';
-                        	   html+='<div class="u-cover u-cover-1">';
-                        	   html+='<img class="j-flag" width=140 height=140 src="'+value.picture+'">';
-                        	   html+='<a title="'+value.name+'" href=\'playmusic?id='+value.id+'\' class="msk"></a>';
-                        	   html+='<div class="bottom">';
-                        	   html+='<a class="icon-play f-fr" title="播放" href="javascript:play(\''+value.songPath+'\',\''+value.name+'\');"></a>';
-                        	   html+='<span class="icon-headset"></span>';
-                        	   html+='<span class="icon-headset"></span>';
-                        	   html+='</div></div>';
-                        	   html+='<p class="dec">';
-                        	   html+='<a title="'+value.name+'" href=\'playmusic?id='+value.id+'\' class="tit f-thide s-fc0">'+value.name+'</a>';
-                        	   html+='</p>';
-                        	   html+='<p>';
-                        	   html+='<a title="'+value.singer+'" href="javascript:;" class="nm nm-icn f-thide s-fc3">'+value.singer+'</a>';
-                        	   html+='<sup class="u-icn u-icn-1"></sup>';
-                        	   html+='<p></li>';
-                               $("#hotul").append(html);
-                           });
-                       }
-                   }  
-                }
-           });
-           
            $.ajax( {  
                url:'albumlist',
                type:'post',  
@@ -319,10 +275,6 @@
                    transflag = false;
                }, 1100);
            });
-       }
-       
-       function play(url,name) {
-    	   parent.play(url,name);
        }
        
        function songVoteNum(id,obj) {

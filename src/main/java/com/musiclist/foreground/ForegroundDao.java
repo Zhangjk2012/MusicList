@@ -38,11 +38,13 @@ public class ForegroundDao extends BaseDao {
     @SuppressWarnings("unchecked")
     public List<Object[]> getHotSong(int page,int rows) {
         StringBuilder sb = new StringBuilder();
-		sb.append("SELECT song.id,song.picture,song.song_flag,s.`name` singerName, song.song_name,song.song_path");
+		sb.append("SELECT song.id,song.picture,song.song_flag,");
+		sb.append(" CASE WHEN ss.`name` = \"\" THEN song.singer ELSE ss.`name` END AS singerName,");
+		sb.append(" song.song_name,song.song_path");
 		sb.append(" FROM music_song song");
-		sb.append(" LEFT JOIN music_singer s ON s.id = song.singer ");
-		sb.append(" WHERE song.new_song = TRUE");
-		sb.append(" ORDER BY song.new_song DESC,song.vote_num DESC, song.id DESC");
+		sb.append(" LEFT JOIN (select s.name,a.song_id from music_singer s, music_album_song a,music_albums ma where s.id = ma.singer and ma.id = a.album_id) as ss on ss.song_id = song.id ");
+		sb.append(" WHERE song.hot_song = TRUE");
+		sb.append(" ORDER BY song.id DESC");
         int skip = rows*(page-1);
         return getSession().createSQLQuery(sb.toString()).setMaxResults(rows).setFirstResult(skip).list();
     }
@@ -93,13 +95,15 @@ public class ForegroundDao extends BaseDao {
     
     public Object[] getSongInfo(int id) {
     	StringBuilder sb = new StringBuilder();
-		sb.append("SELECT song.song_path,song.picture,song.id,song.song_name,song.lyric,song.song_flag,s.name singerName,a.name albumName");
-		sb.append(",song.album");		
-		sb.append(" from music_song song");
-		sb.append(" LEFT JOIN music_singer s ON song.singer = s.id");
-		sb.append(" LEFT JOIN music_albums a ON a.id = song.album");
+		sb.append("SELECT song.song_path,song.picture,song.id,song.song_name,song.lyric,song.song_flag,");
+		sb.append(" CASE WHEN ss.singerName = \"\" THEN song.singer ELSE ss.singerName END AS singerName,");
+		sb.append(" CASE WHEN ss.albumName = \"\" THEN song.album ELSE ss.albumName END AS albumName");
+		sb.append(" ,ss.album_id");
+		sb.append(" FROM music_song song");
+		sb.append(" LEFT JOIN (select s.`name` as singerName,a.song_id,ma.`name` as albumName,a.album_id from music_singer s, music_album_song a,music_albums ma where s.id = ma.singer and ma.id = a.album_id and a.song_id = :songId) as ss on ss.song_id = song.id ");
 		sb.append(" where song.id=:id");
-		return (Object[]) getSession().createSQLQuery(sb.toString()).setInteger("id", id).uniqueResult();
+		sb.append(" ORDER BY song.id DESC");
+		return (Object[]) getSession().createSQLQuery(sb.toString()).setInteger("songId", id).setInteger("id", id).uniqueResult();
     }
     
     /**
