@@ -47,29 +47,29 @@ public class ForegroundService {
     }
     
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<Object[]> getNewAlbum(int page,int rows) {
-        return foregroundDao.getNewAlbum(page, rows);
+    public List<Object[]> getNewAlbum(int page,int rows,boolean flag) {
+        return foregroundDao.getNewAlbum(page, rows,flag);
     }
     
     public Album getAlbum(int id) {
         return (Album) foregroundDao.load(Album.class, id);
     }
     
-    public Long getAlbumCount() {
-        return foregroundDao.getAlbumCount();
+    public Long getNewAlbumCount(boolean flag) {
+        return foregroundDao.getNewAlbumCount(flag);
     }
     
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<SongList> getSongCategory() {
-        return foregroundDao.getSongCategory();
+    public List<SongList> getSongListCategory() {
+        return foregroundDao.getSongListCategory();
     }
     
     public Object[] getSongInfo(int id) {
     	return foregroundDao.getSongInfo(id);
     }
     
-    public List<Song> getSongList(int categoryId) {
-        return foregroundDao.getSongByCategory(categoryId);
+    public List<Song> getSongList(int songListId) {
+        return foregroundDao.getSongsByListId(songListId);
     }
     
     public List<Object[]> getAllSongByCategory(int categoryId) {

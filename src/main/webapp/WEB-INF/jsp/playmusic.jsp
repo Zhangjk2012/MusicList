@@ -57,7 +57,7 @@
                                      </span>
                                 </p>
                                 <p class="des s-fc4">
-                                                                            所属专辑：<a href="album?id=${album }" class="s-fc7">${albumName }</a>
+                                                                            所属专辑：<a href="goPage('album',${album })" class="s-fc7">${albumName }</a>
                                 </p>
                                 <div class="m-info">
                                     <div id="content-operation" class="btns f-cb">

@@ -52,44 +52,55 @@ public class ForegroundDao extends BaseDao {
     @SuppressWarnings("unchecked")
     public List<Object[]> getSongsByAlbumId(int albumId) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT song.id,song.song_flag,s.`name` singerName, song.song_name,song.song_path,song.vote_num,song.track_length");
-        sb.append(" FROM music_song song");
-        sb.append(" LEFT JOIN music_singer s ON s.id = song.singer ");
-        sb.append(" WHERE song.album = :id");
-        sb.append(" ORDER BY song.vote_num DESC, song.id DESC");
+        sb.append("SELECT song.id,song.song_flag,");
+        sb.append(" CASE WHEN sa.singerName = \"\" THEN song.singer ELSE sa.singerName END AS singerName,");
+        sb.append(" song.song_name,song.song_path,song.track_length");
+        sb.append(" FROM  music_album_song mas, music_song song,");
+        sb.append(" (select s.name as singerName from music_albums a left join music_singer s on s.id = a.singer where a.id = 1) sa ");
+        sb.append(" WHERE mas.song_id = song.id AND mas.album_id = :id");
+        sb.append(" ORDER BY mas.id DESC");
         return getSession().createSQLQuery(sb.toString()).setInteger("id", albumId).list();
     }
 
     @SuppressWarnings("unchecked")
-    public List<Object[]> getNewAlbum(int page, int rows) {
+    /**
+     * 获取新碟上架
+     * @param page
+     * @param rows
+     * @param flag	流行、摇滚标识
+     * @return
+     */
+    public List<Object[]> getNewAlbum(int page, int rows,boolean flag) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT a.id,a.`name`,a.picture,s.`name` singerName FROM music_albums a ");
-        sb.append(" LEFT JOIN music_singer s ON s.id = a.singer");
-        sb.append(" ORDER BY a.upload_time DESC");
+        sb.append("select a.id,a.`name`,a.picture,s.name as singerName from music_new_album na,music_albums a");
+        sb.append(" left join music_singer s on s.id = a.singer");
+        sb.append(" where na.album_id = a.id and na.flag =:flag ORDER BY na.id DESC");
         int skip = rows*(page-1);
-        return getSession().createSQLQuery(sb.toString()).setMaxResults(rows).setFirstResult(skip).list();
+        return getSession().createSQLQuery(sb.toString()).setBoolean("flag", flag).setMaxResults(rows).setFirstResult(skip).list();
     }
     
     @SuppressWarnings("unchecked")
-    public List<SongList> getSongCategory() {
-        String hql = "From SongCategory s where s.enable = true order by s.id desc";
+    public List<SongList> getSongListCategory() {
+        String hql = "From SongList s where s.enable = true order by s.id desc";
         return getSession().createQuery(hql).setMaxResults(3).setFirstResult(0).list();
     }
     
     @SuppressWarnings("unchecked")
-    public List<Song> getSongByCategory(int categoryId) {
-        String hql = "From Song s where s.songCategory = :id order by s.voteNum desc";
-        return getSession().createQuery(hql).setInteger("id", categoryId).setMaxResults(10).setFirstResult(0).list();
+    public List<Song> getSongsByListId(int id) {
+        String hql = "select s From Song s,SongListSongs ss where ss.songListId = :id and ss.songId = s.id order by ss.id desc";
+        return getSession().createQuery(hql).setInteger("id", id).setMaxResults(10).setFirstResult(0).list();
     }
     
     @SuppressWarnings("unchecked")
     public List<Object[]> getAllSongByCategory(int categoryId) {
     	StringBuilder sb = new StringBuilder();
-        sb.append("SELECT song.id,song.song_flag,s.`name` singerName, song.song_name,song.song_path,song.vote_num,song.track_length");
-        sb.append(" FROM music_song song");
-        sb.append(" LEFT JOIN music_singer s ON s.id = song.singer ");
-        sb.append(" WHERE song.song_category = :id");
-        sb.append(" ORDER BY song.vote_num DESC, song.id DESC");
+        sb.append("SELECT song.id,song.song_flag,");
+        sb.append("CASE WHEN ss.singerName = \"\" THEN song.singer ELSE ss.singerName END AS singerName,");
+        sb.append(" song.song_name,song.song_path,song.track_length");
+        sb.append(" FROM music_song_list_song sl,music_song song");
+        sb.append(" LEFT JOIN (SELECT s.`name` AS singerName,a.song_id FROM music_singer s,music_album_song a,music_albums ma WHERE s.id = ma.singer AND ma.id = a.album_id ) AS ss ON ss.song_id = song.id ");
+        sb.append(" WHERE song.id = sl.song_id and sl.song_list_id = :id");
+        sb.append(" ORDER BY sl.id DESC");
         return getSession().createSQLQuery(sb.toString()).setInteger("id", categoryId).list();
     }
     
@@ -124,9 +135,9 @@ public class ForegroundDao extends BaseDao {
         return result;
     }
     
-    public Long getAlbumCount() {
-        String hql = "select count(*) from Album a";
-        return (Long) getSession().createQuery(hql).uniqueResult();
+    public Long getNewAlbumCount(boolean flag) {
+        String hql = "select count(*) from NewAlbum na where na.flag = :flag";
+        return (Long) getSession().createQuery(hql).setBoolean("flag", flag).uniqueResult();
     }
     
     /**

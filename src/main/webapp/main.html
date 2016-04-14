@@ -17,12 +17,12 @@
     <div id="nav" class="m-subnav j-tflag">
         <div class="wrap f-pr">
             <ul class="nav">
-                <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>电台列表</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>背景介绍</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>评委介绍</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>近期活动</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('main.html',0)" class=""><em>首页</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('toradiostation',0)" class="z-slt"><em>电台列表</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('main.html',0)" class="z-slt"><em>背景介绍</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('main.html',0)" class="z-slt"><em>评委介绍</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('main.html',0)" class="z-slt"><em>近期活动</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('main.html',0)" class="z-slt"><em>联系我们</em></a></li>
             </ul>
         </div>
     </div>
@@ -56,24 +56,40 @@
 					<div class="n-rcmd" id="personalRec"></div>
 					<div class="n-new">
 						<div class="v-hd2">
-							<a href="getmorenewdisc" class="tit f-ff2 f-tdn">新碟上架</a> <span
-								class="more"><a href="getmorenewdisc" class="s-fc3">更多</a><i
+							<a href="javascript:goPage('getmorenewpopulardisc',0)" class="tit f-ff2 f-tdn">流行新碟上架</a> <span
+								class="more"><a href="javascript:goPage('getmorenewpopulardisc',0)" class="s-fc3">更多</a><i
 								class="cor s-bg s-bg-6">&nbsp;</i></span>
 						</div>
 						<div class="n-disk">
-							<div class="inner" id="album-roller">
-								<a id="roller-right" hidefocus="true" href="javascript:void(0)" class="click-flag pre s-bg s-bg-7 f-tdn">&nbsp;</a>
-								<div id="newAlbum" class="roll f-pr">
+							<div class="inner" id="rollerPopular">
+								<a id="rollerPopularRight" hidefocus="true" href="javascript:void(0)" class="click-flag pre s-bg s-bg-7 f-tdn">&nbsp;</a>
+								<div id="newPopularAlbum" class="roll f-pr">
 								</div>
-								<a id="roller-left" hidefocus="true" href="javascript:void(0)"
+								<a id="rollerPopularLeft" hidefocus="true" href="javascript:void(0)"
+									class="click-flag nxt s-bg s-bg-8 f-tdn">&nbsp;</a>
+							</div>
+						</div>
+					</div>
+					<div class="n-new">
+						<div class="v-hd2">
+							<a href="javascript:goPage('getmorenewrockdisc',0)" class="tit f-ff2 f-tdn">摇滚新碟上架</a> <span
+								class="more"><a href="javascript:goPage('getmorenewrockdisc',0)" class="s-fc3">更多</a><i
+								class="cor s-bg s-bg-6">&nbsp;</i></span>
+						</div>
+						<div class="n-disk">
+							<div class="inner" id="rollerRock">
+								<a id="rollerRockRight" hidefocus="true" href="javascript:void(0)" class="click-flag pre s-bg s-bg-7 f-tdn">&nbsp;</a>
+								<div id="newRockAlbum" class="roll f-pr">
+								</div>
+								<a id="rollerRockLeft" hidefocus="true" href="javascript:void(0)"
 									class="click-flag nxt s-bg s-bg-8 f-tdn">&nbsp;</a>
 							</div>
 						</div>
 					</div>
 					<div class="n-bill">
 						<div class="v-hd2">
-							<a href="toplist" class="tit f-ff2 f-tdn">榜单</a> <span
-								class="more"><a href="toplist" class="s-fc3">更多</a><i
+							<a href="javascript:goPage('toplist',-1)" class="tit f-ff2 f-tdn">榜单</a> <span
+								class="more"><a href="javascript:goPage('toplist',-1)" class="s-fc3">更多</a><i
 								class="cor s-bg s-bg-6">&nbsp;</i></span>
 						</div>
 						<div class="n-bilst" id="toplist">
@@ -91,7 +107,6 @@
 			         <p>合作单位:</p>
 			         <div id="partners"> 
 			         </div>
-			         
 			     </div>
 			 </div>
 		</div>
@@ -101,199 +116,5 @@
     <script type="text/javascript" src="js/paybutton.js" ></script>
     <script type="text/javascript" src="static/js/main.js" ></script>
     <script type="text/javascript" src="static/js/common.js" ></script>
-    <script type="text/javascript">
-       $(function(){
-           $.ajax( {  
-               url:'albumlist',
-               type:'post',  
-               cache:false,  
-               dataType:'json',  
-               success:function(data) {  
-                   if(data.msg =="true"){ 
-                       var d = data.data;
-                       var len = d.length;
-                       if (len == 0) {
-                       } else {
-                    	   var i = 1;
-                    	   var k = 0;
-                    	   var html = '<ul class="f-cb roller-flag" style="left:-0px;">';
-                    	   for (i=1;i<=len;i++) {
-                    		   var value = d[i-1];
-                    		   html+='<li>';
-                               html+='<div class="u-cover u-cover-alb1">';
-                               html+='<img class="j-img" width=100 height=100 src="'+value.picture+'"/>';
-                               html+='<a title="'+value.name+'" href="album?id='+value.id+'" class="msk"></a>';
-                               html+='<a class="" title="播放" href="javascript:;"></a>';
-                               html+='</div>';
-                               html+='<p class="f-thide">';
-                               html+='<a title="'+value.name+'" href="album?id='+value.id+'" class="s-fc0 tit">'+value.name+'</a>';
-                               html+='</p>';
-                               html+='<p class="f-thide">';
-                               html+='<a title="'+value.singerName+'" href="javascript:;" class="tit s-fc3">'+value.singerName+'</a>';
-                               html+='<p></li>';
-                               if (i % 5 == 0) {
-                            	   html += "</ul>";
-                            	   $("#newAlbum").append(html);
-                            	   k+= 645;
-                            	   html = "";
-                            	   if (i == len) {
-                            		   break;
-                            	   }
-                            	   html = '<ul class="f-cb roller-flag" style="left: '+k+'px;">';;
-                            	   
-                               }
-                    	   }
-                    	   if (html != "") {
-                    		   html += "</ul>";
-                               $("#newAlbum").append(html);
-                               html = "";
-                    	   }
-                    	   initClick();
-                       }
-                   }  
-                }
-           });
-           
-           //榜单
-           $.ajax( {  
-               url:'songcategory',
-               type:'post',  
-               cache:false,  
-               dataType:'json',  
-               success:function(data) {  
-                   if(data.msg =="true"){ 
-                       var d = data.data;
-                       var len = d.length;
-                       if (len == 0) {
-                       } else {
-                           var i = 1;
-                           for (i=1;i<=len;i++) {
-                               var value = d[i-1];
-                               var html = '';
-                               if (i == 3) {
-                            	   html = '<dl class="blk blk-1">';
-                               } else {
-                            	   html = '<dl class="blk">';
-                               }
-	                           html += '<dt class="top"><div class="cver u-cover u-cover-4">';
-                               html += '<img class="j-img" alert="picture" src="'+value.picture+'" width="100" height="100">';
-                               html += '<a href="toplist?id='+value.id+'" class="msk" title="'+value.name+'"></a>';
-                               html += '</div><div class="tit"><a href="toplist?id='+value.id+'" title="'+value.name+'"><h3 class="f-fs1 f-thide">'+value.name+'</h3></a></div></dt><dd><ol>';
-                               if (value.songs.length != 0) {
-                            	   var songs = value.songs;
-                            	   $.each(songs, function(i,val){    
-                            		   html += '<li onmouseover="this.className=\'z-hvr\'" onmouseout="this.className=\'\'">';
-                            		   html += '<span class="no no-top">'+(i+1)+'</span>';
-                            		   html += '<a href="playmusic?id='+val.id+'" class="nm s-fc0 f-thide" title="'+val.songName+'">'+val.songName+'</a>';
-                            		   html += '<div class="oper"><a href="javascript:play(\''+val.songPath+'\',\''+val.songName+'\');" class="s-bg s-bg-11" title="播放" hidefocus="true"></a>';
-                            		   html += '<a class=" like zan u-icn2 u-icn2-12 " style="margin-top: 3px;margin-right: 0px;"></a> <a href="javascript:;" onclick="songVoteNum(\''+val.id+'\',this)" class="like" style="line-height: 23px;">(<span>'+val.voteNum+'</span>)</a>';
-                            		   html += '</div></li>';
-                           		   });
-                               }
-                           	   html += '</ol><div class="more"><a href="toplist?id='+value.id+'" class="s-fc0">查看全部&gt;</a></div></dd></dl>';
-                               $("#toplist").append(html);
-                           }
-                       }
-                   }  
-                }
-           });
-            autoTurn();
-       });
-       
-       function initClick() {
-    	   var uls = $("#album-roller").find("ul");
-           var transflag = false;
-           $("#roller-right").click(function() {
-               if( transflag ) {
-                   return ;
-               }
-               transflag = true;
-               for( var i=0; i<uls.length; i++ ) {
-                   var ul = $(uls[i]);
-                   var left = parseInt( ul.css("left").replace("px","") );
-                   left = left + 645;
-                   if( left > 1290 ) {
-                       left = -645;
-                       ul.css({
-                           "left":left + "px",
-                           "z-index" : "-1"
-                       }); 
-                   } else {
-                       ul.css({
-                           "-webkit-transition": "left 1s ease-out 0s",
-                           "transition": "left 1s ease-out 0s",
-                           "z-index" : "2",
-                       }); 
-                       ul.css({
-                           "left":left + "px"
-                       });
-                   }
-               }       
-               
-               setTimeout(function() {
-                   $("#roller-right ul").css({
-                       "-webkit-transition": "none",
-                       "transition": "none",
-                       "display" : "block"
-                   });  
-                   transflag = false;
-               }, 1100);
-           });
-           
-           $("#roller-left").click(function() {
-               if( transflag ) {
-                   return ;
-               }
-               transflag = true;
-               for( var i=0; i<uls.length; i++ ) {
-                   var ul = $(uls[i]);
-                   var left = parseInt( ul.css("left").replace("px","") );
-                   left = left - 645;
-                   if( left < -645 ) {
-                       left = 1290;
-                       ul.css({
-                           "left":left + "px",
-                           "z-index" : "-1"
-                       }); 
-                   } else {
-                       ul.css({
-                           "-webkit-transition": "left 1s ease-out 0s",
-                           "transition": "left 1s ease-out 0s",
-                           "z-index" : "2",
-                       }); 
-                       ul.css({
-                           "left":left + "px"
-                       });
-                   }
-               }       
-               setTimeout(function() {
-                   $("#roller-right ul").css({
-                       "-webkit-transition": "none",
-                       "transition": "none",
-                       "display" : "block"
-                   });  
-                   transflag = false;
-               }, 1100);
-           });
-       }
-       
-       function songVoteNum(id,obj) {
-           $.ajax( {  
-               url:'addSongSupportNum',
-               type:'post',  
-               cache:false,
-               data:{"id":id},
-               dataType:'json',  
-               success:function(data) {  
-                   if(data.success =="true"){
-                       var num = parseInt($("> span",obj).html());
-                       $("> span",obj).html(num+1);
-                   } else {
-                       alert("点赞失败。");
-                   }  
-                }
-           });
-       }
-    </script>
 </body>
 </html>

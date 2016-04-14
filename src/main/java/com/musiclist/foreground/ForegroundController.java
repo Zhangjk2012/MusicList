@@ -150,47 +150,6 @@ public class ForegroundController {
         return jo.toJSONString();
     }
     
-    /**
-     * 获取榜单歌曲类别
-     * @return
-     */
-    @RequestMapping(value="songcategory",produces="text/html;charset=UTF-8")
-    public @ResponseBody String getSongCategory() {
-        JSONObject jo = new JSONObject();
-        try {
-            List<SongList> category = foregroundService.getSongCategory();
-            JSONArray ja = new JSONArray();
-            if (category != null && category.size() > 0) {
-                for (SongList sc : category) {
-                	JSONObject categoryJo = new JSONObject();
-                	categoryJo.put("name", sc.getName());
-                	categoryJo.put("picture", sc.getPicture());
-                	categoryJo.put("id", sc.getId());
-                    JSONArray array = new JSONArray();
-                    List<Song> songs= foregroundService.getSongList(sc.getId());
-                    if (songs != null) {
-                    	for (Song song : songs) {
-                    		JSONObject songJo = new JSONObject();
-                    		songJo.put("id", song.getId());
-                    		songJo.put("songName", song.getSongName());
-                    		songJo.put("songPath", song.getSongPath());
-//                    		songJo.put("voteNum", song.getVoteNum());
-                    		array.add(songJo);
-						}
-                    	categoryJo.put("songs", array);
-                    }
-                    ja.add(categoryJo);
-                }
-            }
-            jo.put("data", ja);
-            jo.put("msg", "true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            jo.put("msg", "false");
-        }
-        return jo.toJSONString();
-    }
-    
     @RequestMapping(value="playmusic",produces="text/html;charset=UTF-8")
     public String playMusic(int id,ModelMap model) {
     	String retPage = "";
@@ -308,11 +267,16 @@ public class ForegroundController {
         return jo.toJSONString();
     }
     
-    @RequestMapping(value="albumlist",produces="text/html;charset=UTF-8")
-    public @ResponseBody String getNewAlbum() {
+    /*********************************** 新碟上架 *********************************/
+    /**
+     * 获取流行新碟上架
+     * @return
+     */
+    @RequestMapping(value="popularalbumlist",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getNewPopularAlbum() {
         JSONObject jo = new JSONObject();
         try {
-            List<Object[]> albums = foregroundService.getNewAlbum(1, 20);
+            List<Object[]> albums = foregroundService.getNewAlbum(1, 20,true);
             JSONArray ja = new JSONArray();
             if (albums != null) {
                 for (Object[] obj : albums) {
@@ -333,11 +297,11 @@ public class ForegroundController {
         return jo.toJSONString();
     }
     
-    @RequestMapping(value="albumlistmore",produces="text/html;charset=UTF-8")
-    public @ResponseBody String getNewAlbumMore(int rows, int page) {
+    @RequestMapping(value="rockalbumlist",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getNewRockAlbum() {
         JSONObject jo = new JSONObject();
         try {
-            List<Object[]> albums = foregroundService.getNewAlbum(page, rows);
+            List<Object[]> albums = foregroundService.getNewAlbum(1, 20,false);
             JSONArray ja = new JSONArray();
             if (albums != null) {
                 for (Object[] obj : albums) {
@@ -358,13 +322,81 @@ public class ForegroundController {
         return jo.toJSONString();
     }
     
-    @RequestMapping(value="getmorenewdisc",produces="text/html;charset=UTF-8")
-    public String getNewDiscList(ModelMap model) {
-        Long count = foregroundService.getAlbumCount();
+    @RequestMapping(value="popularalbumlistmore",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getNewPopularAlbumMore(int rows, int page) {
+        JSONObject jo = new JSONObject();
+        try {
+            List<Object[]> albums = foregroundService.getNewAlbum(page, rows,true);
+            JSONArray ja = new JSONArray();
+            if (albums != null) {
+                for (Object[] obj : albums) {
+                    JSONObject j = new JSONObject();
+                    j.put("id", obj[0]);
+                    j.put("name", obj[1]);
+                    j.put("picture", obj[2]);
+                    j.put("singerName", obj[3]);
+                    ja.add(j);
+                }
+            }
+            jo.put("data", ja);
+            jo.put("msg", "true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            jo.put("msg", "false");
+        }
+        return jo.toJSONString();
+    }
+    
+    @RequestMapping(value="rockalbumlistmore",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getNewRockAlbumMore(int rows, int page) {
+    	JSONObject jo = new JSONObject();
+    	try {
+    		List<Object[]> albums = foregroundService.getNewAlbum(page, rows,false);
+    		JSONArray ja = new JSONArray();
+    		if (albums != null) {
+    			for (Object[] obj : albums) {
+    				JSONObject j = new JSONObject();
+    				j.put("id", obj[0]);
+    				j.put("name", obj[1]);
+    				j.put("picture", obj[2]);
+    				j.put("singerName", obj[3]);
+    				ja.add(j);
+    			}
+    		}
+    		jo.put("data", ja);
+    		jo.put("msg", "true");
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		jo.put("msg", "false");
+    	}
+    	return jo.toJSONString();
+    }
+    
+    /**
+     * 进入更多，新碟时，先获取新碟的总数
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="getmorenewpopulardisc",produces="text/html;charset=UTF-8")
+    public String getNewPopularDiscList(ModelMap model) {
+        Long count = foregroundService.getNewAlbumCount(true);
         model.put("albumcount",count);
-        return "newdisc";
+        return "newpopulardisc";
     }
     
+    @RequestMapping(value="getmorenewrockdisc",produces="text/html;charset=UTF-8")
+    public String getNewRockDiscList(ModelMap model) {
+        Long count = foregroundService.getNewAlbumCount(false);
+        model.put("albumcount",count);
+        return "newrockdisc";
+    }
+    
+    /**
+     * 获取专辑信息
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping(value="album",produces="text/html;charset=UTF-8")
     public String turnAlbumPage(int id, ModelMap model) {
         try {
@@ -399,12 +431,52 @@ public class ForegroundController {
                     j.put("singerName", obj[2]);
                     j.put("songName", obj[3]);
                     j.put("songPath", obj[4]);
-                    j.put("voteNum", obj[5]);
-                    j.put("trackLength", obj[6]);
+                    j.put("trackLength", obj[5]);
                     ja.add(j);
                 }
             }
             jo.put("total", songs.size());
+            jo.put("data", ja);
+            jo.put("msg", "true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            jo.put("msg", "false");
+        }
+        return jo.toJSONString();
+    }
+    
+    /******************************* 获取榜单列表 ********************************/
+    /**
+     * 获取榜单歌曲类别
+     * @return
+     */
+    @RequestMapping(value="songlistcategory",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getSongListCategory() {
+        JSONObject jo = new JSONObject();
+        try {
+            List<SongList> songList = foregroundService.getSongListCategory();
+            JSONArray ja = new JSONArray();
+            if (songList != null && songList.size() > 0) {
+                for (SongList sl : songList) {
+                	JSONObject categoryJo = new JSONObject();
+                	categoryJo.put("name", sl.getName());
+                	categoryJo.put("picture", sl.getPicture());
+                	categoryJo.put("id", sl.getId());
+                    JSONArray array = new JSONArray();
+                    List<Song> songs= foregroundService.getSongList(sl.getId());
+                    if (songs != null) {
+                    	for (Song song : songs) {
+                    		JSONObject songJo = new JSONObject();
+                    		songJo.put("id", song.getId());
+                    		songJo.put("songName", song.getSongName());
+                    		songJo.put("songPath", song.getSongPath());
+                    		array.add(songJo);
+						}
+                    	categoryJo.put("songs", array);
+                    }
+                    ja.add(categoryJo);
+                }
+            }
             jo.put("data", ja);
             jo.put("msg", "true");
         } catch (Exception e) {
@@ -424,7 +496,7 @@ public class ForegroundController {
     public @ResponseBody String getCategory() {
 		JSONObject jo = new JSONObject();
 		try {
-			List<SongList> category = foregroundService.getSongCategory();
+			List<SongList> category = foregroundService.getSongListCategory();
 			JSONArray ja = new JSONArray();
 			if (category != null && category.size() > 0) {
 				for (SongList sc : category) {
@@ -458,8 +530,7 @@ public class ForegroundController {
                     j.put("singerName", obj[2]);
                     j.put("songName", obj[3]);
                     j.put("songPath", obj[4]);
-                    j.put("voteNum", obj[5]);
-                    j.put("trackLength", obj[6]);
+                    j.put("trackLength", obj[5]);
                     ja.add(j);
                 }
             }
@@ -486,6 +557,14 @@ public class ForegroundController {
     	jo.put("msg", "true");
         return jo.toJSONString();
     }
+    
+    /*************************** 电台列表 ******************************/
+    
+    @RequestMapping("/toradiostation")
+    public String goRadioStation() {
+    	return "radiostationlist";
+    }
+    
     
     public void replyComment(Comment comment,HttpServletRequest request) {
         
