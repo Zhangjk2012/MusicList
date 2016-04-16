@@ -24,7 +24,7 @@
 	    vertical-align:middle;
 	}
 </style>
-<title>电台列表</title>
+<title>评委列表</title>
 </head>
 <body>
         <div id="nav" class="m-subnav j-tflag">
@@ -46,7 +46,7 @@
                     <div class="n-songtb">
                         <div class="u-title u-title-1 f-cb">
 	                        <h3>
-	                            <span class="f-ff2">电台列表</span>
+	                            <span class="f-ff2">评委列表</span>
 	                        </h3>
 	                    </div>
 	                    <div>
@@ -56,11 +56,10 @@
 	                                    <thead>
 	                                        <tr>
 	                                            <th class="first w1"></th>
-	                                            <th class=""><div class="wp">电台名称</div></th>
+	                                            <th class=""><div class="wp">评委姓名</div></th>
 	                                        </tr>
 	                                    </thead>
 	                                    <tbody id="tBody">
-	                                        
 	                                    </tbody>
 	                                </table>
 	                            </div>
@@ -89,6 +88,6 @@
     <script src="static/js/pagination.min.js"></script>
     <script type="text/javascript" src="js/paybutton.js" ></script>
     <script type="text/javascript" src="static/js/common.js" ></script>
-    <script type="text/javascript" src="static/js/radiostationlist.js" ></script>
+    <script type="text/javascript" src="static/js/raterlist.js" ></script>
     
 </html>

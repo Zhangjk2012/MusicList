@@ -24,21 +24,21 @@
 	    vertical-align:middle;
 	}
 </style>
-<title>电台列表</title>
+<title>榜单介绍</title>
 </head>
 <body>
         <div id="nav" class="m-subnav j-tflag">
-        <div class="wrap f-pr">
-            <ul class="nav">
-                <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>电台列表</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>背景介绍</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>评委介绍</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>近期活动</em></a></li>
-                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
-            </ul>
-        </div>
-    </div>
+	        <div class="wrap f-pr">
+	            <ul class="nav">
+	                <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
+	                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>电台列表</em></a></li>
+	                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>背景介绍</em></a></li>
+	                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>评委介绍</em></a></li>
+	                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>近期活动</em></a></li>
+	                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
+	            </ul>
+	        </div>
+	    </div>
         <div class="g-bd4 f-cb p-share">
            <div class="g-mn4">
             <div class="g-mn4c">
@@ -46,23 +46,15 @@
                     <div class="n-songtb">
                         <div class="u-title u-title-1 f-cb">
 	                        <h3>
-	                            <span class="f-ff2">电台列表</span>
+	                            <span class="f-ff2">${intro.name }</span>
 	                        </h3>
 	                    </div>
 	                    <div>
 	                        <div>
 	                            <div class="j-flag">
-	                                <table class="m-table m-table-rank">
-	                                    <thead>
-	                                        <tr>
-	                                            <th class="first w1"></th>
-	                                            <th class=""><div class="wp">电台名称</div></th>
-	                                        </tr>
-	                                    </thead>
-	                                    <tbody id="tBody">
-	                                        
-	                                    </tbody>
-	                                </table>
+	                                <div style="padding: 5px;">
+	                                   ${intro.content }
+	                                </div>
 	                            </div>
 	                            <div class="j-flag"></div>
 	                        </div>
@@ -86,9 +78,7 @@
 </body>
 
     <script src="static/js/jquery-1.8.2.min.js"></script>
-    <script src="static/js/pagination.min.js"></script>
+<!--     <script src="static/js/pagination.min.js"></script>
     <script type="text/javascript" src="js/paybutton.js" ></script>
-    <script type="text/javascript" src="static/js/common.js" ></script>
-    <script type="text/javascript" src="static/js/radiostationlist.js" ></script>
-    
+ -->    <script type="text/javascript" src="static/js/common.js" ></script>
 </html>

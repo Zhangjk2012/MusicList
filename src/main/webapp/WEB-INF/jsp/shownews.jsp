@@ -119,8 +119,9 @@
 
     <script src="static/js/jquery-1.8.2.min.js"></script>
 <!--     <script src="static/js/pagination.min.js"></script>
- -->    <script type="text/javascript" src="js/paybutton.js" ></script>
- -->    <script type="text/javascript" src="static/js/common.js" ></script>
+    <script type="text/javascript" src="js/paybutton.js" ></script>
+-->
+    <script type="text/javascript" src="static/js/common.js" ></script>
     
     <script type="text/javascript">
   	/* var pageIndex = 1;

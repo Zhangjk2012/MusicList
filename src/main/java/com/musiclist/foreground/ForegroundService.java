@@ -10,7 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.musiclist.entity.Album;
 import com.musiclist.entity.Comment;
+import com.musiclist.entity.ContactInformation;
+import com.musiclist.entity.ListIntroduction;
 import com.musiclist.entity.Partner;
+import com.musiclist.entity.RadioStation;
+import com.musiclist.entity.Rater;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongList;
 import com.musiclist.entity.News;
@@ -109,6 +113,27 @@ public class ForegroundService {
     
     public String getSingerNameById(int id) {
         return foregroundDao.getSingerName(id);
+    }
+    
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<RadioStation> getRadioStations() {
+    	return foregroundDao.getRadioStatios();
+    }
+
+    public ListIntroduction showIntroduction() {
+    	return foregroundDao.showIntroduction();
+	}
+    
+    public List<Rater> getRaters() {
+    	return foregroundDao.getRaters();
+    }
+
+	public ContactInformation contactUs() {
+		return foregroundDao.contactUs();
+	}
+
+    public Rater showRater(int id) {
+    	return foregroundDao.showRater(id);
     }
     
     public void setForegroundDao(ForegroundDao foregroundDao) {

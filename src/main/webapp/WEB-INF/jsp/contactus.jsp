@@ -12,22 +12,24 @@
 <link rel="stylesheet" href="styles/divers.css">
 <link rel="stylesheet" href="styles/core.css">
 <link href="styles/pagination.css" rel="stylesheet" type="text/css">
+<title>联系我们</title>
 
 <style type="text/css">
-    #wrapper{
-	    width: 900px;
-	    margin: 20px auto;
-	    text-align:center;
-	    height:105px;
-	    line-height:105px;
-	    overflow:hidden;
-	    vertical-align:middle;
-	}
+#s-list .m-cvrlst li {
+    width: 154px;
+}
+
+#s-list .m-cvrlst  .u-cover-1 {
+    width: 154px;
+}
+#wrapper{
+    width: 900px;
+    margin: 20px auto;
+}
 </style>
-<title>电台列表</title>
 </head>
 <body>
-        <div id="nav" class="m-subnav j-tflag">
+     <div id="nav" class="m-subnav j-tflag">
         <div class="wrap f-pr">
             <ul class="nav">
                 <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
@@ -39,40 +41,20 @@
             </ul>
         </div>
     </div>
-        <div class="g-bd4 f-cb p-share">
-           <div class="g-mn4">
-            <div class="g-mn4c">
-                <div class="g-wrap6">
-                    <div class="n-songtb">
-                        <div class="u-title u-title-1 f-cb">
-	                        <h3>
-	                            <span class="f-ff2">电台列表</span>
-	                        </h3>
-	                    </div>
-	                    <div>
-	                        <div>
-	                            <div class="j-flag">
-	                                <table class="m-table m-table-rank">
-	                                    <thead>
-	                                        <tr>
-	                                            <th class="first w1"></th>
-	                                            <th class=""><div class="wp">电台名称</div></th>
-	                                        </tr>
-	                                    </thead>
-	                                    <tbody id="tBody">
-	                                        
-	                                    </tbody>
-	                                </table>
-	                            </div>
-	                            <div class="j-flag"></div>
-	                        </div>
-	                    </div>
-                    </div>
-                </div>
+    <div class="g-bd" id="m-disc-pl-c">
+        <div class="g-wrap p-pl f-pr">
+            <div class="u-title f-cb">
+                <h3>
+                    <span class="f-ff2 d-flag">联系我们</span>
+                </h3>
             </div>
+            <br/>
+            <p>联系电话：${c.telephone }</p>
+            <br/>
+            <p>联系地址：${c.address }</p>
         </div>
-    </div>
-    <div class="g-ft">
+	</div>
+	<div class="g-ft">
 		<div class="m-ft">
 			<div class="wrap">
 			     <div class="copy">
@@ -87,8 +69,5 @@
 
     <script src="static/js/jquery-1.8.2.min.js"></script>
     <script src="static/js/pagination.min.js"></script>
-    <script type="text/javascript" src="js/paybutton.js" ></script>
     <script type="text/javascript" src="static/js/common.js" ></script>
-    <script type="text/javascript" src="static/js/radiostationlist.js" ></script>
-    
 </html>

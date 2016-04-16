@@ -14,7 +14,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.musiclist.entity.Album;
 import com.musiclist.entity.Comment;
+import com.musiclist.entity.ContactInformation;
+import com.musiclist.entity.ListIntroduction;
 import com.musiclist.entity.Partner;
+import com.musiclist.entity.RadioStation;
+import com.musiclist.entity.Rater;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongList;
 import com.musiclist.entity.News;
@@ -565,6 +569,85 @@ public class ForegroundController {
     	return "radiostationlist";
     }
     
+    @RequestMapping(value="radiostationlist",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getRadioStations() {
+		JSONObject jo = new JSONObject();
+		try {
+			List<RadioStation> rl = foregroundService.getRadioStations();
+			JSONArray ja = new JSONArray();
+			if (rl != null && rl.size() > 0) {
+				for (RadioStation r : rl) {
+					JSONObject categoryJo = new JSONObject();
+					categoryJo.put("name", r.getName());
+					categoryJo.put("url", r.getUrl());
+					ja.add(categoryJo);
+				}
+			}
+			jo.put("data", ja);
+			jo.put("msg", "true");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.put("msg", "false");
+		}
+		return jo.toJSONString();
+    }
+    
+    /***********************  榜单背景介绍  *********************/
+    @RequestMapping(value="tolistintroduction",produces="text/html;charset=UTF-8")
+    public String goMusicIntroduction(ModelMap model) {
+    	ListIntroduction li = foregroundService.showIntroduction();
+    	model.put("intro", li);
+    	return "introduction";
+    }
+    
+    /***********************  评委介绍  *********************/
+    @RequestMapping(value="toraterintroduction",produces="text/html;charset=UTF-8")
+    public String goRaterIntroduction(ModelMap model) {
+    	return "raterlist";
+    }
+    
+    @RequestMapping(value="raters",produces="text/html;charset=UTF-8")
+    public @ResponseBody String getRaters() {
+		JSONObject jo = new JSONObject();
+		try {
+			List<Rater> rl = foregroundService.getRaters();
+			JSONArray ja = new JSONArray();
+			if (rl != null && rl.size() > 0) {
+				for (Rater r : rl) {
+					JSONObject categoryJo = new JSONObject();
+					categoryJo.put("name", r.getName());
+					categoryJo.put("id", r.getId());
+					ja.add(categoryJo);
+				}
+			}
+			jo.put("data", ja);
+			jo.put("msg", "true");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.put("msg", "false");
+		}
+		return jo.toJSONString();
+    }
+    
+    /**
+     * 获取评委介绍
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="getratercontent",produces="text/html;charset=UTF-8")
+    public String getRaterContent(int id,ModelMap model) {
+    	Rater r = foregroundService.showRater(id);
+    	model.put("rater", r);
+    	return "rater";
+    }
+    
+    /***********************  联系我们  *********************/
+    @RequestMapping(value="contactus",produces="text/html;charset=UTF-8")
+    public String contactUs(ModelMap model) {
+    	ContactInformation c = foregroundService.contactUs();
+    	model.put("c", c);
+    	return "contactus";
+    }
     
     public void replyComment(Comment comment,HttpServletRequest request) {
         

@@ -6,7 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import com.musiclist.dao.BaseDao;
 import com.musiclist.entity.Comment;
+import com.musiclist.entity.ContactInformation;
+import com.musiclist.entity.ListIntroduction;
 import com.musiclist.entity.Partner;
+import com.musiclist.entity.RadioStation;
+import com.musiclist.entity.Rater;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongList;
 import com.musiclist.entity.News;
@@ -172,5 +176,44 @@ public class ForegroundDao extends BaseDao {
         String hql = "update music_song set vote_num = vote_num +1 where id=:id";
         return getSession().createSQLQuery(hql).setInteger("id", id).executeUpdate();
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<RadioStation> getRadioStatios() {
+        String hql = "From RadioStation r where r.enable = true order by r.id desc";
+        return getSession().createQuery(hql).setMaxResults(3).setFirstResult(0).list();
+    }
+
+	public ListIntroduction showIntroduction() {
+		String hql = "From ListIntroduction l order by l.id desc";
+		@SuppressWarnings("unchecked")
+		List<ListIntroduction> l = getSession().createQuery(hql).setMaxResults(1).setFirstResult(0).list();
+		if (l != null && l.size()>0) {
+			return l.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Rater> getRaters() {
+		String hql = "From Rater r order by r.id desc";
+        return getSession().createQuery(hql).setMaxResults(3).setFirstResult(0).list();
+	}
+
+	public Rater showRater(int id) {
+		 String hql = "from Rater where id=:id";
+	     return (Rater) getSession().createQuery(hql).setInteger("id", id).uniqueResult();
+	}
+
+	public ContactInformation contactUs() {
+		String hql = "From ContactInformation";
+		@SuppressWarnings("unchecked")
+		List<ContactInformation> l = getSession().createQuery(hql).setMaxResults(1).setFirstResult(0).list();
+		if (l != null && l.size()>0) {
+			return l.get(0);
+		} else {
+			return null;
+		}
+	}
 
 }

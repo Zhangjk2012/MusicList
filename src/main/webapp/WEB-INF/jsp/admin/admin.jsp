@@ -140,6 +140,8 @@ function createFrame(url) {
                     <li><div>
                         <a target="mainFrame" href="admin/tolistintroduction">榜单介绍</a></div></li>
                     <li><div>
+                        <a target="mainFrame" href="admin/toactivity">近期活动</a></div></li>
+                    <li><div>
                         <a target="mainFrame" href="admin/tocontactinfo">联系我们</a></div></li>
                     <li><div>
                         <a target="mainFrame" href="admin/newalbum/torock">日常节目</a></div></li>
