@@ -144,11 +144,11 @@ function createFrame(url) {
                     <li><div>
                         <a target="mainFrame" href="admin/tocontactinfo">联系我们</a></div></li>
                     <li><div>
-                        <a target="mainFrame" href="admin/newalbum/torock">日常节目</a></div></li>
+                        <a target="mainFrame" href="admin/dailyshow">日常节目</a></div></li>
                     <li><div>
-                        <a target="mainFrame" href="admin/newalbum/torock">摇滚节目</a></div></li>
+                        <a target="mainFrame" href="admin/rockshow">摇滚节目</a></div></li>
                     <li><div>
-                        <a target="mainFrame" href="admin/newalbum/torock">流行节目</a></div></li>
+                        <a target="mainFrame" href="admin/popularshow">流行节目</a></div></li>
 				</ul>
 			</div>
 	    </div>

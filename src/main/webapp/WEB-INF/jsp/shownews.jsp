@@ -28,17 +28,17 @@
 </head>
 <body>
         <div id="nav" class="m-subnav j-tflag">
-	        <div class="wrap f-pr">
-	            <ul class="nav">
-	                <li><a hidefocus="true" href="main.html" class=""><em>首页</em></a></li>
-	                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>电台列表</em></a></li>
-	                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>背景介绍</em></a></li>
-	                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>评委介绍</em></a></li>
-	                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>近期活动</em></a></li>
-	                <li><a hidefocus="true" href="/discover/toplist" class="z-slt"><em>联系我们</em></a></li>
-	            </ul>
-	        </div>
-	    </div>
+        <div class="wrap f-pr">
+            <ul class="nav">
+                <li><a hidefocus="true" href="javascript:goPage('main.html',0)" class=""><em>首页</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('toradiostation',0)" class="z-slt"><em>电台列表</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('tolistintroduction',0)" class="z-slt"><em>榜单介绍</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('toraterintroduction',0)" class="z-slt"><em>评委介绍</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('activity',0)" class="z-slt"><em>近期活动</em></a></li>
+                <li><a hidefocus="true" href="javascript:goPage('contactus',0)" class="z-slt"><em>联系我们</em></a></li>
+            </ul>
+        </div>
+    </div>
         <div class="g-bd4 f-cb p-share">
            <div class="g-mn4">
             <div class="g-mn4c">

@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.musiclist.entity.ActivityInfo;
 import com.musiclist.entity.Album;
 import com.musiclist.entity.Comment;
 import com.musiclist.entity.ContactInformation;
+import com.musiclist.entity.DailyShow;
 import com.musiclist.entity.ListIntroduction;
 import com.musiclist.entity.Partner;
 import com.musiclist.entity.RadioStation;
@@ -22,6 +24,7 @@ import com.musiclist.entity.Rater;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongList;
 import com.musiclist.entity.News;
+import com.musiclist.entity.TalkShow;
 
 /**  
  * @author ZJK
@@ -647,6 +650,63 @@ public class ForegroundController {
     	ContactInformation c = foregroundService.contactUs();
     	model.put("c", c);
     	return "contactus";
+    }
+    
+    /***********************  近期活动  *********************/
+    @RequestMapping(value="activity",produces="text/html;charset=UTF-8")
+    public String activity(ModelMap model) {
+    	ActivityInfo a = foregroundService.activity();
+    	model.put("a", a);
+    	return "activity";
+    }
+    
+    /***********************  日常节目  *********************/
+    @RequestMapping(value="dailyshow",produces="text/html;charset=UTF-8")
+    public @ResponseBody String dailyShow() {
+    	JSONObject jo = new JSONObject();
+		try {
+			List<DailyShow> ds = foregroundService.getDailyShows();
+			JSONArray ja = new JSONArray();
+			if (ds != null && ds.size() > 0) {
+				for (DailyShow d : ds) {
+					JSONObject j = new JSONObject();
+					j.put("name", d.getName());
+					j.put("url", d.getUrl());
+					ja.add(j);
+				}
+			}
+			jo.put("data", ja);
+			jo.put("msg", "true");
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo.put("msg", "false");
+		}
+		return jo.toJSONString();
+    }
+    
+    /***********************  摇滚节目  *********************/
+    @RequestMapping(value="talkshow",produces="text/html;charset=UTF-8")
+    public @ResponseBody String talkShow(int type) {
+    	JSONObject jo = new JSONObject();
+    	try {
+    		List<TalkShow> ds = foregroundService.getTalkShows(type);
+    		JSONArray ja = new JSONArray();
+    		if (ds != null && ds.size() > 0) {
+    			for (TalkShow d : ds) {
+    				JSONObject j = new JSONObject();
+    				j.put("name", d.getName());
+    				j.put("url", d.getUrl());
+    				j.put("pic", d.getPicUrl());
+    				ja.add(j);
+    			}
+    		}
+    		jo.put("data", ja);
+    		jo.put("msg", "true");
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		jo.put("msg", "false");
+    	}
+    	return jo.toJSONString();
     }
     
     public void replyComment(Comment comment,HttpServletRequest request) {

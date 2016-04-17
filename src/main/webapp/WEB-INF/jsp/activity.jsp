@@ -24,7 +24,7 @@
 	    vertical-align:middle;
 	}
 </style>
-<title>榜单介绍</title>
+<title>近期活动</title>
 </head>
 <body>
         <div id="nav" class="m-subnav j-tflag">
@@ -46,17 +46,21 @@
                     <div class="n-songtb">
                         <div class="u-title u-title-1 f-cb">
 	                        <h3>
-	                            <span class="f-ff2">${intro.name }</span>
+	                            活动主题：<span class="f-ff2">${a.name }</span>
 	                        </h3>
 	                    </div>
 	                    <div>
 	                        <div>
 	                            <div class="j-flag">
 	                                <div style="padding: 5px;">
-	                                   ${intro.content }
+	                                   <img alt="活动图片" style="width:800px;height:300px;" src="${a.path }">
 	                                </div>
 	                            </div>
-	                            <div class="j-flag"></div>
+	                            <div class="j-flag">
+	                                <div style="padding: 5px;">
+	                                   ${a.content }
+	                                </div>
+	                            </div>
 	                        </div>
 	                    </div>
                     </div>
@@ -80,5 +84,6 @@
     <script src="static/js/jquery-1.8.2.min.js"></script>
 <!--     <script src="static/js/pagination.min.js"></script>
     <script type="text/javascript" src="js/paybutton.js" ></script>
- -->    <script type="text/javascript" src="static/js/common.js" ></script>
+-->
+    <script type="text/javascript" src="static/js/common.js" ></script>
 </html>

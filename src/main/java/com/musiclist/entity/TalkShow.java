@@ -9,13 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 日常节目
+ * 访谈节目
  * @author Miner
  *
  */
-@Table(name="music_daily_show")
+@Table(name="music_talk_show")
 @Entity
-public class DailyShow {
+public class TalkShow {
 
 	@Id
     @GeneratedValue(strategy = IDENTITY)
@@ -28,8 +28,15 @@ public class DailyShow {
 	@Column(name = "url", nullable = false)
 	private String url;
 	
+	@Column(name = "pic_url", nullable = false)
+	private String picUrl;
+	
 	@Column(name="enable")
 	private Boolean enable = true;
+	
+	/** 摇滚或者流行,true is rock ,else popular */
+	@Column(name="type", nullable = false)
+	private Boolean type;
 
 	public Integer getId() {
 		return id;
@@ -61,6 +68,22 @@ public class DailyShow {
 
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
+	}
+
+	public String getPicUrl() {
+		return picUrl;
+	}
+
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
+	}
+
+	public Boolean getType() {
+		return type;
+	}
+
+	public void setType(Boolean type) {
+		this.type = type;
 	}
 	
 }

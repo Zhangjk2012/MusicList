@@ -225,6 +225,77 @@ $(function(){
             }  
          }
     });
+    //日常节目
+    $.ajax( {  
+        url:'dailyshow',
+        type:'post',  
+        cache:false,  
+        dataType:'json',  
+        success:function(data) {  
+            if(data.msg =="true"){ 
+                var d = data.data;
+                var len = d.length;
+                if (len == 0) {
+                } else {
+                    var i = 1;
+                    for (i=1;i<=len;i++) {
+                        var value = d[i-1];
+                        var html = '<li> <a href="javascript:play(\''+value.url+'\',\''+value.name+'\');" class="itm f-tdn">';
+                        html += '<div class="ifo"><h4>';
+                        html += '<span class="nm f-fs1 f-ib f-thide">'+value.name+'</span>';
+                        html += '</h4></div></a></li>';
+                        $("#dailyshow").append(html);
+                    }
+                }
+            }  
+         }
+    });
+    //摇滚节目
+    $.ajax( {  
+    	url:'talkshow?type=1',
+    	type:'post',  
+    	cache:false,  
+    	dataType:'json',  
+    	success:function(data) {  
+    		if(data.msg =="true"){ 
+    			var d = data.data;
+    			var len = d.length;
+    			if (len == 0) {
+    			} else {
+    				var i = 1;
+    				for (i=1;i<=len;i++) {
+    					var value = d[i-1];
+    					var html = '<li> <a href="javascript:play(\''+value.url+'\',\''+value.name+'\');" class="cver">';
+    					html += '<img class="j-img" style="width:100%;" src="'+value.pic+'"></a></li>';
+    					$("#rockshow").append(html);
+    				}
+    			}
+    		}  
+    	}
+    });
+    //流行节目
+    $.ajax( {  
+    	url:'talkshow?type=0',
+    	type:'post',  
+    	cache:false,  
+    	dataType:'json',  
+    	success:function(data) {  
+    		if(data.msg =="true"){ 
+    			var d = data.data;
+    			var len = d.length;
+    			if (len == 0) {
+    			} else {
+    				var i = 1;
+    				for (i=1;i<=len;i++) {
+    					var value = d[i-1];
+    					var html = '<li> <a href="javascript:play(\''+value.url+'\',\''+value.name+'\');" class="cver">';
+    					html += '<img class="j-img" style="width:100%;" src="'+value.pic+'"></a></li>';
+    					$("#popularshow").append(html);
+    				}
+    			}
+    		}  
+    	}
+    });
 	autoTurn();
 });
 var populartransflag = false;

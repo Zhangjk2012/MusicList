@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.musiclist.dao.BaseDao;
+import com.musiclist.entity.ActivityInfo;
 import com.musiclist.entity.Comment;
 import com.musiclist.entity.ContactInformation;
+import com.musiclist.entity.DailyShow;
 import com.musiclist.entity.ListIntroduction;
 import com.musiclist.entity.Partner;
 import com.musiclist.entity.RadioStation;
@@ -14,6 +16,7 @@ import com.musiclist.entity.Rater;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongList;
 import com.musiclist.entity.News;
+import com.musiclist.entity.TalkShow;
 
 /**  
  * @author ZJK
@@ -214,6 +217,31 @@ public class ForegroundDao extends BaseDao {
 		} else {
 			return null;
 		}
+	}
+
+	public ActivityInfo activity() {
+		String hql = "From ActivityInfo";
+		@SuppressWarnings("unchecked")
+		List<ActivityInfo> l = getSession().createQuery(hql).setMaxResults(1).setFirstResult(0).list();
+		if (l != null && l.size()>0) {
+			return l.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	public List<DailyShow> getDailyShows() {
+		String hql = "From DailyShow where enable = true order by id desc";
+		@SuppressWarnings("unchecked")
+		List<DailyShow> l = getSession().createQuery(hql).setMaxResults(7).setFirstResult(0).list();
+		return l;
+	}
+
+	public List<TalkShow> getTalkShows(int type) {
+		String hql = "From TalkShow where enable = true and type = :type order by id desc";
+		@SuppressWarnings("unchecked")
+		List<TalkShow> l = getSession().createQuery(hql).setInteger("type", type).setMaxResults(5).setFirstResult(0).list();
+		return l;
 	}
 
 }

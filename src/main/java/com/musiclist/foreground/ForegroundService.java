@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.musiclist.entity.ActivityInfo;
 import com.musiclist.entity.Album;
 import com.musiclist.entity.Comment;
 import com.musiclist.entity.ContactInformation;
+import com.musiclist.entity.DailyShow;
 import com.musiclist.entity.ListIntroduction;
 import com.musiclist.entity.Partner;
 import com.musiclist.entity.RadioStation;
@@ -18,6 +20,7 @@ import com.musiclist.entity.Rater;
 import com.musiclist.entity.Song;
 import com.musiclist.entity.SongList;
 import com.musiclist.entity.News;
+import com.musiclist.entity.TalkShow;
 
 /**  
  * @author ZJK
@@ -135,6 +138,18 @@ public class ForegroundService {
     public Rater showRater(int id) {
     	return foregroundDao.showRater(id);
     }
+    
+    public ActivityInfo activity() {
+    	return foregroundDao.activity();
+	}
+    
+    public List<DailyShow> getDailyShows() {
+		return foregroundDao.getDailyShows();
+	}
+    
+    public List<TalkShow> getTalkShows(int type) {
+		return foregroundDao.getTalkShows(type);
+	}
     
     public void setForegroundDao(ForegroundDao foregroundDao) {
         this.foregroundDao = foregroundDao;

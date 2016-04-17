@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/bootstrap/easyui.css" />
 <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="static/uploadify/uploadify.css" />
+<link rel="stylesheet" type="text/css" href="kindeditor/themes/simple/simple.css" />
 <style type="text/css">
 	.f1{
         width:200px;
@@ -28,20 +29,40 @@
 		              <td>活动主题:</td>
 		              <td>
 		                <input name="id" id="id" value="${info.id }" type="hidden"></input>
-		                <input name="telephone" id="telephone" value="${info.name }" data-options="required:true" class="f1 easyui-textbox"></input>
+		                <input name="name" value="${info.name }" data-options="required:true" class="f1 easyui-textbox"></input>
 		              </td>
 		          </tr>
 		          <tr>
-		          	  <td>活动图片:</td>
-		              <td>
-		                  <input class="f1 easyui-textbox" id="address" value="${info.path }" data-options="required:true" name="address">
-		              </td>
-		          </tr>
+                    <td>活动图片:</td>
+                    <td colspan="3"><img id="img" class="f1" height="150" src="${info.path }"/></td>
+                  </tr>
+                  <tr>
+                    <td colspan="4">
+                       <div id="fileQueue"></div> 
+                    </td>
+                  </tr>
 		          <tr>
-		          	  <td>活动内容介绍:</td>
-		              <td>
-		                  <input class="f1 easyui-textbox" id="address" value="${info.content }" data-options="required:true" name="address">
-		              </td>
+                    <td>上传图片:</td>
+                    <td>
+                        <div>
+                            <input type="hidden" id="picture" name="path" value="${info.path }" />
+                            <input id="file_upload" name="file_upload" type="file" multiple="multiple">
+                        </div>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" id="btnUpload"
+                                onclick="javascript: $('#file_upload').uploadify('upload', '*')">上传</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" id="btnCancelUpload"
+                            onclick="javascript:clearUplaoder()">取消</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>活动内容介绍:</td>
+                  </tr>
+		          <tr>
+		             <td colspan="4">
+                        <textarea name="content" id="content" style="width:700px;height:300px;visibility:hidden;">${info.content }</textarea>
+                     </td>
 		          </tr>
 		      </table>
 		  </form>
@@ -54,45 +75,10 @@
     <script type="text/javascript" src="static/js/jquery.min.js"></script>
     <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="static/easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript">
-    function cancelInfo() {
-    	var id = $("#id").val();
-    	if (id !== "") {
-	    	$.ajax({
-	            url : 'admin/removecontactInfo',
-	            data : {"id":id},
-	            method:'post',
-	            dataType : 'json',
-	            success : function(r) {
-	                if (r.success) {
-	                    $.messager.show({msg : "取消成功。",title : '成功'});
-	                    $('#id').val('');
-	                    $('#telephone').textbox('clear');
-	                    $('#address').textbox('clear');
-	                } else {
-	                    $.messager.alert('错误',"取消失败。",'error');
-	                }
-	            }
-	        });
-    	}
-    }
-    function submitForm() {
-        $('#infoform').form('submit', {
-            onSubmit : function() {
-                return $(this).form('enableValidation').form('validate');
-            },
-            success : function(data) {
-            	var d = eval("("+data+")");
-            	if (d.id) {
-            		$("#id").val(d.id);
-            	}
-                $.messager.show({
-                    msg : "保存成功。",
-                    title : '成功'
-                });
-            }
-        });
-    }
-    </script>
+    <script type="text/javascript" src="static/uploadify/jquery.uploadify.min.js"></script>
+    <script type="text/javascript" src="kindeditor/kindeditor-min.js"></script>
+    <script type="text/javascript" src="kindeditor/lang/zh_CN.js"></script>
+    <script type="text/javascript" src="js/uploadfile.js"></script>
+    <script type="text/javascript" src="js/activity.js"></script>
 </body>
 </html>
