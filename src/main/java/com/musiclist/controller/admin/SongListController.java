@@ -1,6 +1,7 @@
 package com.musiclist.controller.admin;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -111,20 +112,28 @@ public class SongListController {
         return newArray.toJSONString();
     }
     
+    /**
+     * 获取榜单歌曲
+     * @param songListId
+     * @return
+     */
     @RequestMapping(value="getSongListSongs",produces="text/html;charset=UTF-8")
     public @ResponseBody String getSelectSongs(int songListId) {
     	JSONArray newArray = new JSONArray();  
         JSONObject o = new JSONObject();
         try {
-            List<Song> list = songListService.getSongListSongs(songListId);
-            if (list != null) {
-                for (Song s : list) {
+            List<Object[]> listObj = songListService.getSongListSongs(songListId);
+            if (listObj != null) {
+                for (Object[] obj : listObj) {
+                	Song s = (Song) obj[0];
                     JSONObject jo = new JSONObject();
                     jo.put("id", s.getId());
                     jo.put("songName", s.getSongName());
                     jo.put("albumName", s.getAlbumName());
                     jo.put("singerName", s.getSingerName());
                     jo.put("songFlag", s.isSongFlag());
+                    jo.put("songOrder", obj[1]==null?"":obj[1]);
+                    jo.put("songListId", obj[2]==null?"":obj[2]);
                     jo.put("briefIntroduction", s.getBriefIntroduction());
                     jo.put("picture", s.getPicture());
                     newArray.add(jo);
@@ -137,6 +146,13 @@ public class SongListController {
         return o.toJSONString();
     }
 
+    /**
+     * 获取可选的榜单歌曲
+     * @param songName
+     * @param rows
+     * @param page
+     * @return
+     */
     @RequestMapping(value="getselectsonglistsongs",produces="text/html;charset=UTF-8")
     public @ResponseBody String getSelectSongList(String songName,int rows, int page) {
     	JSONArray newArray = new JSONArray();  
@@ -180,6 +196,16 @@ public class SongListController {
     	return o.toJSONString();
     } 
     
+    @RequestMapping("listSongOrder")
+    public @ResponseBody String listSongOrder(HttpServletRequest request) {
+    	@SuppressWarnings("unchecked")
+		Map<Integer,String[]> orderMap = request.getParameterMap();
+    	int ret = songListService.updateListSongOrder(orderMap);
+    	JSONObject o = new JSONObject();
+    	o.put("success", true);
+    	o.put("result", ret);
+    	return o.toJSONString();
+    }
     
 	public void setSongListService(SongListService songListService) {
 		this.songListService = songListService;

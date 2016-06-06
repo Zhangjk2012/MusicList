@@ -54,8 +54,8 @@ public class SongListDao extends BaseDao {
     }
     
     @SuppressWarnings("unchecked")
-	public List<Song> getSongListSongs(int songListId) {
-    	String hql = "select s From SongListSongs sl,Song s where s.id=sl.songId and sl.songListId=:songListId order by sl.id desc";
+	public List<Object[]> getSongListSongs(int songListId) {
+    	String hql = "select s,sl.order,sl.id From SongListSongs sl,Song s where s.id=sl.songId and sl.songListId=:songListId order by sl.order asc nulls last, sl.id desc";
         return getSession().createQuery(hql).setInteger("songListId", songListId).list();
     }
     
@@ -96,5 +96,9 @@ public class SongListDao extends BaseDao {
 	public void removeSongBySongId(int songId) {
 		String hql = "delete SongListSongs s where s.songId=:id";
         getSession().createQuery(hql).setInteger("id", songId).executeUpdate();
+	}
+
+	public int updateSongOrder(String sql) {
+		return getSession().createSQLQuery(sql).executeUpdate();
 	}
 }

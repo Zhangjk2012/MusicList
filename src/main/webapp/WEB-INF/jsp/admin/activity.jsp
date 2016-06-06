@@ -31,10 +31,8 @@
 		                <input name="id" id="id" value="${info.id }" type="hidden"></input>
 		                <input name="name" value="${info.name }" data-options="required:true" class="f1 easyui-textbox"></input>
 		              </td>
-		          </tr>
-		          <tr>
-                    <td>活动图片:</td>
-                    <td colspan="3"><img id="img" class="f1" height="150" src="${info.path }"/></td>
+                      <td>活动图片:</td>
+                      <td><img id="img" class="f1" height="130" src="${info.path }"/></td>
                   </tr>
                   <tr>
                     <td colspan="4">

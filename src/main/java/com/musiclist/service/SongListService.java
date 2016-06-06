@@ -1,6 +1,8 @@
 package com.musiclist.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +43,7 @@ public class SongListService {
      * @param songListId
      * @return
      */
-    public List<Song> getSongListSongs(int songListId) {
+    public List<Object[]> getSongListSongs(int songListId) {
     	return songListDao.getSongListSongs(songListId);
     }
     
@@ -84,4 +86,24 @@ public class SongListService {
 		this.songListDao = songListDao;
 	}
 
+	public int updateListSongOrder(Map<Integer, String[]> orderMap) {
+		if (orderMap != null && orderMap.size() > 0) {
+			StringBuffer sb = new StringBuffer();
+			sb.append("UPDATE music_song_list_song SET song_order = CASE id ");
+			StringBuffer ids = new StringBuffer();
+			for (Entry<Integer, String[]> entry : orderMap.entrySet()) {
+				sb.append(" WHEN ");
+				sb.append(entry.getKey());
+				sb.append(" THEN ");
+				sb.append(entry.getValue()[0]);
+				ids.append(entry.getKey());
+				ids.append(",");
+			}
+			sb.append(" END WHERE id IN (");
+			sb.append(ids.substring(0, ids.length()-1));
+			sb.append(")");
+			return songListDao.updateSongOrder(sb.toString());
+		}
+		return -1;
+	}
 }

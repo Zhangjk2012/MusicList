@@ -28,7 +28,26 @@ public class SongListSongs {
 	private Integer songListId;
 	 
 	@Column(name="vote_num")
-	private int voteNum;
+	private Integer voteNum = null;
+	
+	public Integer getVoteNum() {
+		return voteNum;
+	}
+
+	public void setVoteNum(Integer voteNum) {
+		this.voteNum = voteNum;
+	}
+
+	@Column(name="song_order")
+	private Integer order = null;
+
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
 
 	public Integer getId() {
 		return id;
@@ -53,13 +72,4 @@ public class SongListSongs {
 	public void setSongListId(Integer songListId) {
 		this.songListId = songListId;
 	}
-
-	public int getVoteNum() {
-		return voteNum;
-	}
-
-	public void setVoteNum(int voteNum) {
-		this.voteNum = voteNum;
-	}
-	
 }

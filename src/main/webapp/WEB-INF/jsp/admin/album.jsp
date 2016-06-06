@@ -164,7 +164,7 @@
     <script type="text/javascript" src="static/easyui/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="static/uploadify/swfobject.js"></script>
     <script type="text/javascript" src="static/uploadify/jquery.uploadify.min.js"></script>
-    <script type="text/javascript" src="js/album.js"></script>
+    <script type="text/javascript" src="source/album.js"></script>
     <script type="text/javascript" src="js/uploadfile.js"></script>
 </body>
 </html>

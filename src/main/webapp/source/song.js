@@ -9,6 +9,7 @@ $(function(){
 		fitColumns:true,
 		loadMsg:'loading...',
 		singleSelect:true,
+		pageSize: 20,
 		frozenColumns:[[ 
             {field:'ck',checkbox:true} 
         ]], 

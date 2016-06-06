@@ -156,6 +156,8 @@
 	    <artifactId>maven-war-plugin</artifactId>
 	    <version>2.4</version>
 	    <configuration>
+	      <source>1.7</source>  
+          <target>1.7</target>  
 	     <includeEmptyDirectories>true</includeEmptyDirectories>
 	    </configuration>
 	   </plugin>

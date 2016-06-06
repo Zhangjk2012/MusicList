@@ -187,7 +187,7 @@
     <script type="text/javascript" src="static/easyui/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="static/uploadify/swfobject.js"></script>
     <script type="text/javascript" src="static/uploadify/jquery.uploadify.min.js"></script>
-    <script type="text/javascript" src="js/song.js"></script>
+    <script type="text/javascript" src="source/song.js"></script>
     <script type="text/javascript" src="js/uploadfile.js"></script>
     <script type="text/javascript" src="kindeditor/kindeditor-min.js"></script>
     <script type="text/javascript" src="kindeditor/lang/zh_CN.js"></script>

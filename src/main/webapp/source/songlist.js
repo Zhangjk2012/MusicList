@@ -6,6 +6,7 @@ var songListSelect;
 $(function(){
 	datagrid=$("#songlistlist").datagrid({
 		url:"admin/songlistlist",//加载的URL
+		pageSize: 20,
 	    isField:"id",
 		pagination:true,//显示分页
 		rownumbers:true,
@@ -125,7 +126,9 @@ $(function(){
             {field:'ck',checkbox:true} 
         ]], 
 		columns:[[      //每个列具体内容
-		      {field:'id',title:'id',hidden:true},          
+		      {field:'id',title:'id',hidden:true},    
+		      {field:'songListId',title:'songListId',hidden:true},    
+		      {field:'songOrder',title:'歌曲排序',width:50,editor:{type:'numberbox',options:{ "min": 1,"max":10}}},
               {field:'songName',title:'歌曲名称',width:50},
               {field:'singerName',title:'歌手',width:50},
               {field:'albumName',title:'专辑',width:50},
@@ -162,6 +165,8 @@ $(function(){
                  	}
                  },
           ]],
+          onDblClickRow: onDblClickRow,
+          onEndEdit: onEndEdit,
           onLoadSuccess : function(data) {
 				$(".note").tooltip({
 					onShow : function() {
@@ -174,7 +179,7 @@ $(function(){
 		   },
 			toolbar : [ //工具条
 			{
-				text : "删除",
+				text : "删除音乐",
 				iconCls : "icon-remove",
 				handler : function() {
 					var row = $("#songlist").datagrid('getSelected');
@@ -184,6 +189,10 @@ $(function(){
 						$.messager.confirm('确定','您确定要删除吗',
 						function(t) {
 							if (t) {
+								if (editIndex != undefined){
+						            $('#songlist').datagrid('cancelEdit', editIndex);
+						            editIndex = undefined;
+								}
 								$.ajax({
 									url : 'admin/deleteSongListSong',
 									data : {songId:row.id},
@@ -202,10 +211,23 @@ $(function(){
 						})
 					}
 				}
+			},"-",{
+				text:'保存编辑',
+				iconCls : "icon-save",
+				handler : accept,
+			},"-",{
+				text:'取消编辑',
+				iconCls : "icon-undo",
+				handler : reject,
+			},"-",{
+				text:'提交保存',
+				iconCls : "icon-undo",
+				handler : submitOrder,
 			}]
 	});
 	
 	$("#selectsonglist").datagrid({
+		pageSize: 50,
 	    isField:"id",
 		pagination:true,//显示分页
 		rownumbers:true,
@@ -248,7 +270,7 @@ $(function(){
 	
 	$('#songListWin').window({
 	    width : 800,
-	    height : 600,
+	    height : 500,
 	    modal : true,
 	    closed : true,
 	    resizable:false,
@@ -431,3 +453,80 @@ function cancelAddSong() {
 	$('#songListWin').window("close");
 }
 
+var editIndex = undefined;
+function endEditing(){
+    if (editIndex == undefined){return true}
+    if ($('#songlist').datagrid('validateRow', editIndex)){
+        $('#songlist').datagrid('endEdit', editIndex);
+        editIndex = undefined;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function onDblClickRow(index, row){
+    if (editIndex != index){
+        if (endEditing()){
+            $('#songlist').datagrid('selectRow', index).datagrid('beginEdit', index);
+            var ed = $('#songlist').datagrid('getEditor', {index:index,field:"songOrder"});
+            if (ed){
+                ($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
+            }
+            editIndex = index;
+        } else {
+            setTimeout(function(){
+                $('#songlist').datagrid('selectRow', editIndex);
+            },0);
+        }
+    }
+}
+
+function onEndEdit(index, row){
+    var ed = $("#songlist").datagrid('getEditor', {
+        index: index,
+        field: 'songOrder'
+    });
+    row.songOrder = $(ed.target).numberbox('getValue');
+}
+
+function accept(){
+    if (endEditing()){
+        $("#songlist").datagrid('acceptChanges');
+    }
+}
+
+function reject(){
+    $("#songlist").datagrid('rejectChanges');
+    editIndex = undefined;
+}
+
+function submitOrder() {
+	if (endEditing()){
+		var rows = $('#songlist').datagrid('getRows');
+		var result={};
+		$(rows).each(function(index,data){
+			if (data.songOrder != "") {
+				result[data.songListId]=data.songOrder;
+			}
+		});
+		$.ajax({
+			url : 'admin/listSongOrder',// 跳转到 action  
+			data : result,
+			type : 'post',
+			cache : false,
+			dataType : 'json',
+			success : function(data) {
+				if (data.success === true) {
+					$.messager.show({msg : "修改成功。",title : '成功'});
+					$("#songlist").datagrid("reload");
+				} else {
+					$.messager.show({msg : "修改失败。",title : '失败'});
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+    }
+}

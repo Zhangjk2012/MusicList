@@ -46,7 +46,7 @@ public class ForegroundDao extends BaseDao {
     public List<Object[]> getHotSong(int page,int rows) {
         StringBuilder sb = new StringBuilder();
 		sb.append("SELECT song.id,song.picture,song.song_flag,");
-		sb.append(" CASE WHEN ss.`name` = \"\" THEN song.singer ELSE ss.`name` END AS singerName,");
+		sb.append(" CASE WHEN ss.`name` IS NULL THEN song.singer ELSE ss.`name` END AS singerName,");
 		sb.append(" song.song_name,song.song_path");
 		sb.append(" FROM music_song song");
 		sb.append(" LEFT JOIN (select s.name,a.song_id from music_singer s, music_album_song a,music_albums ma where s.id = ma.singer and ma.id = a.album_id) as ss on ss.song_id = song.id ");
@@ -60,13 +60,13 @@ public class ForegroundDao extends BaseDao {
     public List<Object[]> getSongsByAlbumId(int albumId) {
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT song.id,song.song_flag,");
-        sb.append(" CASE WHEN sa.singerName = \"\" THEN song.singer ELSE sa.singerName END AS singerName,");
+        sb.append(" CASE WHEN sa.singerName IS NULL THEN song.singer ELSE sa.singerName END AS singerName,");
         sb.append(" song.song_name,song.song_path,song.track_length");
         sb.append(" FROM  music_album_song mas, music_song song,");
-        sb.append(" (select s.name as singerName from music_albums a left join music_singer s on s.id = a.singer where a.id = 1) sa ");
+        sb.append(" (select s.name as singerName from music_albums a left join music_singer s on s.id = a.singer where a.id = :aid) sa ");
         sb.append(" WHERE mas.song_id = song.id AND mas.album_id = :id");
         sb.append(" ORDER BY mas.id DESC");
-        return getSession().createSQLQuery(sb.toString()).setInteger("id", albumId).list();
+        return getSession().createSQLQuery(sb.toString()).setInteger("aid", albumId).setInteger("id", albumId).list();
     }
 
     @SuppressWarnings("unchecked")
@@ -94,7 +94,7 @@ public class ForegroundDao extends BaseDao {
     
     @SuppressWarnings("unchecked")
     public List<Song> getSongsByListId(int id) {
-        String hql = "select s From Song s,SongListSongs ss where ss.songListId = :id and ss.songId = s.id order by ss.id desc";
+        String hql = "select s From Song s,SongListSongs ss where ss.songListId = :id and ss.songId = s.id order by ss.order asc nulls last, ss.id desc";
         return getSession().createQuery(hql).setInteger("id", id).setMaxResults(10).setFirstResult(0).list();
     }
     
@@ -102,7 +102,7 @@ public class ForegroundDao extends BaseDao {
     public List<Object[]> getAllSongByCategory(int categoryId) {
     	StringBuilder sb = new StringBuilder();
         sb.append("SELECT song.id,song.song_flag,");
-        sb.append("CASE WHEN ss.singerName = \"\" THEN song.singer ELSE ss.singerName END AS singerName,");
+        sb.append("CASE WHEN ss.singerName IS NULL THEN song.singer ELSE ss.singerName END AS singerName,");
         sb.append(" song.song_name,song.song_path,song.track_length");
         sb.append(" FROM music_song_list_song sl,music_song song");
         sb.append(" LEFT JOIN (SELECT s.`name` AS singerName,a.song_id FROM music_singer s,music_album_song a,music_albums ma WHERE s.id = ma.singer AND ma.id = a.album_id ) AS ss ON ss.song_id = song.id ");
@@ -114,8 +114,8 @@ public class ForegroundDao extends BaseDao {
     public Object[] getSongInfo(int id) {
     	StringBuilder sb = new StringBuilder();
 		sb.append("SELECT song.song_path,song.picture,song.id,song.song_name,song.lyric,song.song_flag,");
-		sb.append(" CASE WHEN ss.singerName = \"\" THEN song.singer ELSE ss.singerName END AS singerName,");
-		sb.append(" CASE WHEN ss.albumName = \"\" THEN song.album ELSE ss.albumName END AS albumName");
+		sb.append(" CASE WHEN ss.singerName IS NULL THEN song.singer ELSE ss.singerName END AS singerName,");
+		sb.append(" CASE WHEN ss.albumName IS NULL THEN song.album ELSE ss.albumName END AS albumName");
 		sb.append(" ,ss.album_id");
 		sb.append(" FROM music_song song");
 		sb.append(" LEFT JOIN (select s.`name` as singerName,a.song_id,ma.`name` as albumName,a.album_id from music_singer s, music_album_song a,music_albums ma where s.id = ma.singer and ma.id = a.album_id and a.song_id = :songId) as ss on ss.song_id = song.id ");
@@ -183,7 +183,7 @@ public class ForegroundDao extends BaseDao {
     @SuppressWarnings("unchecked")
     public List<RadioStation> getRadioStatios() {
         String hql = "From RadioStation r where r.enable = true order by r.id desc";
-        return getSession().createQuery(hql).setMaxResults(3).setFirstResult(0).list();
+        return getSession().createQuery(hql).list();
     }
 
 	public ListIntroduction showIntroduction() {
@@ -200,7 +200,7 @@ public class ForegroundDao extends BaseDao {
 	@SuppressWarnings("unchecked")
 	public List<Rater> getRaters() {
 		String hql = "From Rater r order by r.id desc";
-        return getSession().createQuery(hql).setMaxResults(3).setFirstResult(0).list();
+        return getSession().createQuery(hql).list();
 	}
 
 	public Rater showRater(int id) {
